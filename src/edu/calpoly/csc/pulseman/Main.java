@@ -19,6 +19,7 @@ public class Main extends BasicGame {
 	private volatile static LinkedList<String> messageQueue = new LinkedList<String>();
 	public enum GameState {MENU, GAME, GAMEOVER};
 	private static GameState state = GameState.MENU;
+	private static final int width = 1280, height = 720;
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
 	
 	
@@ -28,6 +29,14 @@ public class Main extends BasicGame {
 	
 	public static void setState(GameState state) {
 		Main.state = state;
+	}
+	
+	public static int getScreenWidth() {
+		return width;
+	}
+	
+	public static int getScreenHeight() {
+		return height;
 	}
 	
 	
@@ -80,7 +89,8 @@ public class Main extends BasicGame {
 		System.setProperty("net.java.games.input.librarypath", System.getProperty("org.lwjgl.librarypath"));
 		AppGameContainer app = new AppGameContainer(new Main());
 
-		app.setDisplayMode(800, 600, false);
+		app.setTargetFrameRate(60);
+		app.setDisplayMode(width, height, false);
 		app.start();
 	}
 

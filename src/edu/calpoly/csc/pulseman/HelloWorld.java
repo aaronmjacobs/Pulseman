@@ -25,7 +25,7 @@ public class HelloWorld extends BasicGame
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
-		playa = new Player();
+		playa = new Player(42, 42);
 		playa.init(new Image("res/brick.png"));
 		Tile.init(new Image("res/brick.png"));
 		World.getWorld().loadLevel("res/level001.bmp");
