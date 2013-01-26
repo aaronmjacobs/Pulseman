@@ -21,6 +21,7 @@ import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class World {
 	public static int kPixelsPerTile = 32;
+	public static int kVectorCenter = 50;
 	
 	private static World world = new World();
 	private int lvlWidth, lvlHeight;
@@ -101,13 +102,14 @@ public class World {
 			break;
 		case kMovingTile:
 			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .5f, 
-					new Vector2f(kPixelsPerTile * color.getGreen(), kPixelsPerTile * color.getBlue()))));
+					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
+							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
 			break;
 		case kSpike:
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
 					new OscillateBehavior(xPos, yPos, .5f, 
-					new Vector2f(kPixelsPerTile * color.getGreen(), 
-							kPixelsPerTile * color.getBlue()))));
+					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
+							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
 		}
 	}
 	
