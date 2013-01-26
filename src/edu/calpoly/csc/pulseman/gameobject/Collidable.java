@@ -26,7 +26,7 @@ public abstract class Collidable implements GameObject
 	protected static Rectangle getCollision(Rectangle r1, Rectangle r2)
 	{
 		float x = Math.max(r1.getMinX(), r2.getMinX());
-		float y = Math.min(r1.getMaxY(), r2.getMaxY());
+		float y = Math.max(r1.getMinY(), r2.getMinY());
 		float width = Math.min(r1.getMaxX(), r2.getMaxX()) - x;
 		float height = Math.min(r1.getMaxY(), r2.getMaxY()) - y;
 

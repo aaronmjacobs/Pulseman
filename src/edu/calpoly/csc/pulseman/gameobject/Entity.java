@@ -37,7 +37,7 @@ public abstract class Entity extends Collidable
 				handleCollision(collidables.get(i));
 			}
 		}
-		
+
 		bounds.setLocation(position.x, position.y);
 	}
 
@@ -53,22 +53,18 @@ public abstract class Entity extends Collidable
 
 		if(min == distToTop)
 		{
-			System.out.println("bottom");
 			position.y -= collision.getHeight();
 		}
 		else if(min == distToBottom)
 		{
-			System.out.println("top");
 			position.y += collision.getHeight();
 		}
 		else if(min == distToLeft)
 		{
-			System.out.println("right");
 			position.x -= collision.getWidth();
 		}
 		else
 		{
-			System.out.println("left");
 			position.x += collision.getWidth();
 		}
 	}
