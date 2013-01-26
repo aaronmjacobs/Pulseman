@@ -21,7 +21,7 @@ public class GameScreen implements GameInterface, KeyListener
 	public static final float MAX_MULT = 20.0f;
 	public static final float MAX_SPEEDUP = 10.0f;
 
-	private static final boolean PULSE_ENABLED = true;
+	private static final boolean PULSE_ENABLED = false;
 
 	private Camera cam = new Camera();
 	private AtomicFloat timeMult;
@@ -34,7 +34,6 @@ public class GameScreen implements GameInterface, KeyListener
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-
 		cam.render(gc, g, World.getWorld().getPlayer());
 
 		World.getWorld().render(gc, g);
