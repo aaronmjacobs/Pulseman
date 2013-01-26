@@ -1,8 +1,8 @@
 package edu.calpoly.csc.pulseman;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.util.LinkedList;
-import java.util.Queue;
 
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.*;
@@ -21,7 +21,7 @@ public class HelloWorld extends BasicGame
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
-		
+
 	}
 
 	@Override
@@ -45,14 +45,7 @@ public class HelloWorld extends BasicGame
 
 	public static void main(String[] args) throws SlickException
 	{
-		new Thread(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				MessageHandler.listenForConnection();
-			}
-		}).start();
+		listenForConnection();
 
 		MessageHandler.addmessageReceiver(new MessageReceiver()
 		{
@@ -64,6 +57,19 @@ public class HelloWorld extends BasicGame
 					messageQueue.offer(message);
 				}
 			}
+
+			@Override
+			public void onConnectionEstablished(InetAddress client)
+			{
+				System.out.println("Connection established: " + client.getHostAddress());
+			}
+
+			@Override
+			public void onConnectionLost(InetAddress client)
+			{
+				System.out.println("Connection lost: " + client.getHostAddress());
+				listenForConnection();
+			}
 		});
 
 		System.setProperty("org.lwjgl.librarypath", new File(new File(System.getProperty("user.dir"), "native"), LWJGLUtil.getPlatformName()).getAbsolutePath());
@@ -72,5 +78,17 @@ public class HelloWorld extends BasicGame
 
 		app.setDisplayMode(800, 600, false);
 		app.start();
+	}
+
+	public static void listenForConnection()
+	{
+		new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				MessageHandler.listenForConnection();
+			}
+		}).start();
 	}
 }
