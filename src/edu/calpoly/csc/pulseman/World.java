@@ -21,7 +21,7 @@ import edu.calpoly.csc.pulseman.gameobject.Player;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class World {
-	public static int kPixelsPerTile = 32;
+	public static int kPixelsPerTile = 48;
 	public static int kVectorCenter = 50;
 	
 	private static World world = new World();
