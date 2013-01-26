@@ -30,20 +30,25 @@ public class Main extends BasicGame {
 		
 		private class Heart {
 			public Image image;
-			public int scale;
+			public float scale;
+			public int beat;
 			public void init(Image image) {
 				this.image = image;
 				scale = 1;
+				beat = 1;
 			}
 			public void update(GameContainer gc, int delta) {
-				if (scale < 100)
+				if (scale > 1.2)
+					beat = 0;
+				if (scale < 1.0)
+					beat = 1;
+				if (beat == 1)
 				{
-					scale += .001;
-					if (delta > 1)
-						System.out.println(delta + " < delta" + scale);
+					scale += .0005 * delta;
 				}
-				else if (scale > 1)
-					scale -= .01 * delta;
+				else
+					scale -= .0005 * delta;
+				
 			}
 			public void render(GameContainer gc, Graphics g) {
 				image.draw(0, 0, scale);
