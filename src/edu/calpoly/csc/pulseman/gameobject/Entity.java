@@ -1,5 +1,7 @@
 package edu.calpoly.csc.pulseman.gameobject;
 
-public class Entity {
-
+public abstract class Entity implements GameObject {
+	void handleTileCollision(Tile tile) {
+		
+	}
 }

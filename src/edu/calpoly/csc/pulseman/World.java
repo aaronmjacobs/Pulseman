@@ -8,13 +8,17 @@ import edu.calpoly.csc.pulseman.gameobject.GameObject;
 
 public class World {
 	private static World world = new World();
-	private static List<Collidable> collideables = new ArrayList<Collidable>();
+	private static List<Collidable> collidables = new ArrayList<Collidable>();
 	private static List<GameObject> nonCollideables = new ArrayList<GameObject>();
 	
 	private World() {}
 	
 	static World getWorld() {
 		return world;
+	}
+	
+	static List<Collidable> getCollidables() {
+		return collidables;
 	}
 	
 	static void loadLevel(String fileName) {
