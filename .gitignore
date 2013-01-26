@@ -4,3 +4,7 @@
 *.jar
 *.war
 *.ear
+
+# Eclipse crap #
+*.classpath
+*.project
