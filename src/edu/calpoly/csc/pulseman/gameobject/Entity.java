@@ -9,6 +9,8 @@ import edu.calpoly.csc.pulseman.World;
 
 public abstract class Entity extends Collidable
 {
+	protected static final int TOP = 0, BOTTOM = 1, LEFT = 2, RIGHT = 3;
+
 	protected Vector2f position, velocity, acceleration;
 
 	public Entity(Rectangle rect)
@@ -41,10 +43,12 @@ public abstract class Entity extends Collidable
 		bounds.setLocation(position.x, position.y);
 	}
 
-	private void handleCollision(Collidable collidable)
+	protected int handleCollision(Collidable collidable)
 	{
+		int ret;
+
 		Rectangle collision = getCollision(this.bounds, collidable.bounds);
-		System.out.println(collision);
+		// System.out.println(collision);
 		float distToTop = Math.abs((this.bounds.getMaxY() - collidable.bounds.getMinY()));
 		float distToBottom = Math.abs((this.bounds.getMinY() - collidable.bounds.getMaxY()));
 		float distToLeft = Math.abs((this.bounds.getMaxX() - collidable.bounds.getMinX()));
@@ -56,23 +60,29 @@ public abstract class Entity extends Collidable
 		{
 			position.y -= collision.getHeight();
 			velocity.y = 0.0f;
+			ret = BOTTOM;
 		}
 		else if(min == distToBottom)
 		{
 			position.y += collision.getHeight();
 			velocity.y = 0.0f;
+			ret = TOP;
 		}
 		else if(min == distToLeft)
 		{
 			position.x -= collision.getWidth();
 			velocity.x = 0.0f;
+			ret = RIGHT;
 		}
 		else
 		{
 			position.x += collision.getWidth();
 			velocity.x = 0.0f;
+			ret = LEFT;
 		}
 
 		bounds.setLocation(position.x, position.y);
+
+		return ret;
 	}
 }
