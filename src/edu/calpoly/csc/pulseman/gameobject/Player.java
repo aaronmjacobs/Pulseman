@@ -6,6 +6,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 
+import edu.calpoly.csc.pulseman.Main;
+import edu.calpoly.csc.pulseman.Main.GameState;
+
 public class Player extends Entity
 {
 	private static Image image;
@@ -57,7 +60,7 @@ public class Player extends Entity
 	{
 		if(collidable instanceof KillingObstacle)
 		{
-			// Do something
+			Main.setState(GameState.GAMEOVER);
 		}
 		else
 		{

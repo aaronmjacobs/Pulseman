@@ -22,7 +22,6 @@ public class GameScreen implements GameInterface, KeyListener {
 	
 	private static final boolean pulseEnabled = false;
 	
-	private Player playa;
 	private Camera cam = new Camera();
 	private AtomicFloat timeMult;
 	
@@ -33,10 +32,8 @@ public class GameScreen implements GameInterface, KeyListener {
 	@Override
 	public void render(GameContainer gc, Graphics g) {
 
-		cam.render(gc, g, playa);
-		g.drawString("Hello World", 100, 100);
+		cam.render(gc, g, World.getWorld().getPlayer());
 		
-		playa.render(gc, g);
 		World.getWorld().render(gc, g);
 		LinkedList<String> messageQueue = Main.getMessageQueue();
 		synchronized(messageQueue)
@@ -51,7 +48,6 @@ public class GameScreen implements GameInterface, KeyListener {
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 		Player.init(new Image("res/brick.png"));
-		playa = new Player(200, 200);
 		
 		KillingObstacle.init("res/spike.png");
 		Tile.init(new Image("res/brick.png"));
@@ -68,8 +64,6 @@ public class GameScreen implements GameInterface, KeyListener {
 				/ MAX_MULT);
 		
 		World.getWorld().update(gc, dt);
-		playa.update(gc, dt);
-		
 	}
 
 	@Override

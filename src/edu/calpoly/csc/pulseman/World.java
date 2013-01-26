@@ -17,6 +17,7 @@ import edu.calpoly.csc.pulseman.gameobject.GameObject;
 import edu.calpoly.csc.pulseman.gameobject.KillingObstacle;
 import edu.calpoly.csc.pulseman.gameobject.MovingTile;
 import edu.calpoly.csc.pulseman.gameobject.OscillateBehavior;
+import edu.calpoly.csc.pulseman.gameobject.Player;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class World {
@@ -28,6 +29,7 @@ public class World {
 	private int lvlWidth, lvlHeight;
 	private List<Collidable> collidables = new ArrayList<Collidable>();
 	private List<GameObject> nonCollidables = new ArrayList<GameObject>();
+	private Player player;
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
 	private Vector2f goalPortal = new Vector2f(0.0f, 0.0f);
 	
@@ -76,6 +78,7 @@ public class World {
 	}
 	
 	public void render(GameContainer gc, Graphics g) {
+		player.render(gc, g);
 		for (Collidable obj: collidables) {
 			obj.render(gc, g);
 		}
@@ -85,6 +88,7 @@ public class World {
 	}
 	
 	public void update(GameContainer gc, int dt) {
+		player.update(gc, dt);
 		for (Collidable obj: collidables) {
 			obj.update(gc, dt);
 		}
@@ -102,7 +106,7 @@ public class World {
 		case kNothing:
 			break;
 		case kPlayerSpawn:
-			playerSpawn.set(xPos + 10, yPos - 10);
+			player = new Player(xPos, yPos);
 			break;
 		case kTile:
 			collidables.add(new Tile(xPos, yPos));
@@ -118,6 +122,10 @@ public class World {
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
 		}
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 	
 	public int getLevelWidth() {
