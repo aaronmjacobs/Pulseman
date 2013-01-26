@@ -88,7 +88,7 @@ public abstract class Entity extends Collidable
 		diffy *= (bounds.getWidth() + collidable.bounds.getWidth()) / ((bounds.getHeight() + collidable.bounds.getHeight()));
 
 		// Horizontal
-		if(oldYCrossover)
+		if(oldYCrossover && !oldXCrossover)
 		{
 			if(diffx >= 0)
 			{

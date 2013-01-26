@@ -24,7 +24,7 @@ public class Enemy extends Entity {
 	
 	public void render(GameContainer gc, Graphics g) {
 		g.drawImage(image, position.x, position.y);
-		System.out.println("There, for grace now go");
+		//System.out.println("There, for grace now go");
 	}
 
 	public void update(GameContainer gc, int delta) {
