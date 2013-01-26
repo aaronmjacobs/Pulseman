@@ -20,10 +20,10 @@ public class World {
 	public static int kPixelsPerTile = 32;
 	
 	private static World world = new World();
-	private static int lvlWidth, lvlHeight;
-	private static List<Collidable> collidables = new ArrayList<Collidable>();
-	private static List<GameObject> nonCollidables = new ArrayList<GameObject>();
-	private static Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
+	private int lvlWidth, lvlHeight;
+	private List<Collidable> collidables = new ArrayList<Collidable>();
+	private List<GameObject> nonCollidables = new ArrayList<GameObject>();
+	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
 	
 	private static enum TileType {kNothing, kTile, kPlayerSpawn, kEnemy, kFlippedEnemy};
 	private static Map<Color, TileType> ColorMap = new HashMap<Color, TileType>();
@@ -42,11 +42,11 @@ public class World {
 		return world;
 	}
 	
-	static List<Collidable> getCollidables() {
+	 public List<Collidable> getCollidables() {
 		return collidables;
 	}
 	
-	static void loadLevel(String fileName) throws SlickException {
+	public void loadLevel(String fileName) throws SlickException {
 		Image level = new Image(fileName);
 		int width = level.getWidth(), height = level.getHeight();
 		
@@ -67,7 +67,7 @@ public class World {
 		}
 	}
 	
-	private static void PixelToObject(Color color, int xPos, int yPos) throws SlickException {
+	private void PixelToObject(Color color, int xPos, int yPos) throws SlickException {
 		TileType type = ColorMap.get(color); 
 		if (type == null) {
 			throw new RuntimeException("Color not found in color map, color: " + color);
@@ -84,15 +84,15 @@ public class World {
 		}
 	}
 	
-	static int getLevelWidth() {
+	public int getLevelWidth() {
 		return lvlWidth;
 	}
 	
-	static int getLevelHeight() {
+	public int getLevelHeight() {
 		return lvlHeight;
 	}
 	
-	public static Vector2f getPlayerSpawn() {
+	public Vector2f getPlayerSpawn() {
 		return playerSpawn;
 	}
 	
