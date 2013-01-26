@@ -11,8 +11,10 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.geom.Vector2f;
 
 import edu.calpoly.csc.pulseman.MessageHandler.MessageReceiver;
 
@@ -24,13 +26,36 @@ public class Main extends BasicGame {
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
 	
 		Sound debugMusic;
-	
+		public static int tVelocity;
+		
+		private class Heart {
+			public Image image;
+			public int scale;
+			public void init(Image image) {
+				this.image = image;
+				scale = 1;
+			}
+			public void update(GameContainer gc, int delta) {
+				if (scale < 1.50)
+				{
+					scale += .25 * delta;
+					if (delta > 1)
+						System.out.println(delta + " < delta");
+				}
+				else if (scale > 1)
+					scale -= .25 * delta;
+			}
+			public void render(GameContainer gc, Graphics g) {
+				image.draw(0, 0, scale);
+				g.drawString(new String("" + tVelocity), 300, 100);
+			}
+			
+		}
+		public static Heart heart;
+		
+		
 	public Main() {
 		super("Pulse of Nature");
-	}
-	
-	public static void setState(GameState state) {
-		Main.state = state;
 	}
 	
 	public static int getScreenWidth() {
@@ -41,11 +66,16 @@ public class Main extends BasicGame {
 		return height;
 	}
 	
+	public static void setState(GameState state) {
+		Main.state = state;
+	}
+	
 	
 	
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		interfaceMap.get(state).render(gc, g);
+		heart.render(gc, g);
 	}
 
 	@Override
@@ -59,7 +89,11 @@ public class Main extends BasicGame {
 		interfaceMap.put(GameState.GAME, game);
 		
 		debugMusic = new Sound("res/music.ogg");
-		debugMusic.play();	}
+		debugMusic.play();
+		heart = new Heart();
+		heart.init(new Image("res/heart.png"));
+	}
+		
 	
 	public static void main(String[] arg) throws SlickException {
 		listenForConnection();
@@ -72,6 +106,7 @@ public class Main extends BasicGame {
 				synchronized(messageQueue)
 				{
 					messageQueue.offer(message);
+								tVelocity += 10000;
 				}
 			}
 
@@ -93,14 +128,16 @@ public class Main extends BasicGame {
 		System.setProperty("net.java.games.input.librarypath", System.getProperty("org.lwjgl.librarypath"));
 		AppGameContainer app = new AppGameContainer(new Main());
 
-		app.setTargetFrameRate(60);
-		app.setDisplayMode(width, height, false);
+		app.setDisplayMode(800, 600, false);
 		app.start();
 	}
 
 	@Override
 	public void update(GameContainer gc, int dt) throws SlickException {
 		interfaceMap.get(state).update(gc, dt);
+				heart.update(gc, dt);
+				if (tVelocity > 0)
+					tVelocity -= 0.0001;
 	}
 	
 	public static void listenForConnection()
