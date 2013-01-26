@@ -16,7 +16,7 @@ public class HelloWorld extends BasicGame
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
-
+		
 	}
 
 	@Override
