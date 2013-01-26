@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ProtocolException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 public class MessageHandler
 {
-	public static final int PORT = 42000;
+	public static final int PORT = 42000, SOCKET_TIMEOUT = 5000;
 
 	private static Socket clientSocket = null;
 	private static ServerSocket serverSocket = null;
@@ -33,7 +34,15 @@ public class MessageHandler
 		{
 			serverSocket = new ServerSocket(PORT);
 			clientSocket = serverSocket.accept();
-			System.out.println("Connected");
+			clientSocket.setSoTimeout(SOCKET_TIMEOUT);
+
+			synchronized(messageReceivers)
+			{
+				for(int i = 0; i < messageReceivers.size(); ++i)
+				{
+					messageReceivers.get(i).onConnectionEstablished(clientSocket.getInetAddress());
+				}
+			}
 
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -86,9 +95,23 @@ public class MessageHandler
 			}
 		}
 
+		if(serverSocket != null)
+		{
+			try
+			{
+				serverSocket.close();
+			}
+			catch(IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		out = null;
 		in = null;
 		clientSocket = null;
+		serverSocket = null;
 	}
 
 	public static synchronized boolean isConnected()
@@ -120,7 +143,6 @@ public class MessageHandler
 			{
 				while(alive && (inputLine = in.readLine()) != null)
 				{
-					// System.out.println(inputLine);
 					out.println("received: " + counter++);
 
 					synchronized(messageReceivers)
@@ -128,6 +150,22 @@ public class MessageHandler
 						for(int i = 0; i < messageReceivers.size(); ++i)
 						{
 							messageReceivers.get(i).onMessageReceived(inputLine);
+						}
+					}
+				}
+
+				// If we are still alive, alert that the connection was lost
+				if(alive)
+				{
+					InetAddress clientAddress = clientSocket.getInetAddress();
+
+					disconnect();
+
+					synchronized(messageReceivers)
+					{
+						for(int i = 0; i < messageReceivers.size(); ++i)
+						{
+							messageReceivers.get(i).onConnectionLost(clientAddress);
 						}
 					}
 				}
@@ -143,6 +181,11 @@ public class MessageHandler
 		}
 	}
 
+	/**
+	 * Adds a MessageReceiver to the list of receivers
+	 * 
+	 * @param receiver The MessageReceiver to add
+	 */
 	public static void addmessageReceiver(MessageReceiver receiver)
 	{
 		synchronized(messageReceivers)
@@ -151,6 +194,11 @@ public class MessageHandler
 		}
 	}
 
+	/**
+	 * Removes a MessageReceiver from the list of receivers
+	 * 
+	 * @param receiver The MessageReceiver to remove
+	 */
 	public static void removemessageReceiver(MessageReceiver receiver)
 	{
 		synchronized(messageReceivers)
@@ -172,5 +220,15 @@ public class MessageHandler
 		 * @param message The message received by the client
 		 */
 		public void onMessageReceived(String message);
+
+		/**
+		 * Called when the connection to the client is established
+		 */
+		public void onConnectionEstablished(InetAddress client);
+
+		/**
+		 * Called when the connection to the client is lost
+		 */
+		public void onConnectionLost(InetAddress client);
 	}
 }
