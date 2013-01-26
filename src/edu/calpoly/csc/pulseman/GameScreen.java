@@ -12,13 +12,16 @@ import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class GameScreen implements GameInterface {
 	Player playa;
+	Camera cam = new Camera();
 	
 	@Override
 	public void render(GameContainer gc, Graphics g) {
+
+		cam.render(gc, g, playa);
 		g.drawString("Hello World", 100, 100);
+		
 		playa.render(gc, g);
 		World.getWorld().render(gc, g);
-		
 		LinkedList<String> messageQueue = Main.getMessageQueue();
 		synchronized(messageQueue)
 		{

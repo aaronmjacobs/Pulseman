@@ -14,12 +14,17 @@ public class Camera {
 		pos = new Vector2f(0, 0);
 	}
 	
+	public Camera(int x, int y) {
+		pos = new Vector2f(0, 0);
+	}
+	
 	/**
 	 * Calculates where we want the camera to be and gradually interpolates the
 	 * camera toward the destination
 	 */
-	public void update(GameContainer gc, Graphics g, Player p) {
-		g.translate(-pos.x, -pos.y);
+	public void render(GameContainer gc, Graphics g, Player p) {
+		g.translate(-(float)(p.getHitBox().getX() - Main.getScreenWidth() / 2.0), 
+					-(float)(p.getHitBox().getY() - Main.getScreenHeight() / 2.0));
 	}
 	
 	/**

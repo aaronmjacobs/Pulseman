@@ -11,6 +11,8 @@ public class Player extends Entity
 	private static Image image;
 	private final static float PLAYER_SPEED = 2.0f;
 
+	private boolean jumping;
+
 	public static void init(Image image)
 	{
 		Player.image = image;
@@ -19,12 +21,13 @@ public class Player extends Entity
 	public Player(int x, int y)
 	{
 		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
+		jumping = true;
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		image.draw(position.x, position.y, 1);
+		g.drawImage(image, position.x, position.y);
 	}
 
 	@Override
@@ -41,8 +44,27 @@ public class Player extends Entity
 			position.x += PLAYER_SPEED;
 		}
 
+		if(input.isKeyDown(Input.KEY_SPACE) && !jumping)
+		{
+			velocity.y -= 0.02f * delta;
+			jumping = true;
+		}
+
 		acceleration.y = 0.00002f * delta;
 
 		super.update(delta);
+	}
+
+	@Override
+	protected int handleCollision(Collidable collidable)
+	{
+		int ret = super.handleCollision(collidable);
+
+		if(ret == BOTTOM)
+		{
+			jumping = false;
+		}
+
+		return ret;
 	}
 }
