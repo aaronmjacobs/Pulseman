@@ -12,6 +12,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import edu.calpoly.csc.pulseman.gameobject.Collidable;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
+import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class World {
 	public static int kPixelsPerTile = 32;
@@ -65,6 +66,12 @@ public class World {
 		}
 		switch(type) {
 		case kNothing:
+			break;
+		case kPlayerSpawn:
+			playerSpawn.set(xPos + 10, yPos - 10);
+			break;
+		case kTile:
+			collidables.add(new Tile(xPos, yPos));
 			break;
 		}
 	}
