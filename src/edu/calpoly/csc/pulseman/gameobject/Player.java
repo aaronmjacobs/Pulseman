@@ -14,8 +14,7 @@ public class Player implements Collidable {
 	
 	public void init(Image image) {
 		this.image = image;
-		position.x = 200;
-		position.y = 200;
+		position = new  Vector2f(200, 200);
 	}
 	
 	@Override
@@ -29,21 +28,21 @@ public class Player implements Collidable {
 		 
         if(input.isKeyDown(Input.KEY_A))
         {
-        	position.x -= 5;
+        	position.x -= .5;
         }
  
         if(input.isKeyDown(Input.KEY_D))
         {
-        	position.x += 5;
+        	position.x += .5;
         }
  
         if(input.isKeyDown(Input.KEY_W))
         {
-            position.y -= 5;
+            position.y -= .5;
         }
         if(input.isKeyDown(Input.KEY_S))
         {
-        	position.y += 5;
+        	position.y += .5;
         }
 	}
 
