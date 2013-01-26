@@ -46,7 +46,7 @@ public class Player extends Entity
 
 		if(input.isKeyDown(Input.KEY_SPACE) && floor != null)
 		{
-			velocity.y -= 0.3f;
+			velocity.y -= 0.4f;
 		}
 
 		acceleration.y = 0.00045f;

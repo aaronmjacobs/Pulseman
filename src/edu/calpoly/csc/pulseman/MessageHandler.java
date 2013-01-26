@@ -34,7 +34,7 @@ public class MessageHandler
 		{
 			serverSocket = new ServerSocket(PORT);
 			clientSocket = serverSocket.accept();
-			clientSocket.setSoTimeout(SOCKET_TIMEOUT);
+			//clientSocket.setSoTimeout(SOCKET_TIMEOUT);
 
 			synchronized(messageReceivers)
 			{

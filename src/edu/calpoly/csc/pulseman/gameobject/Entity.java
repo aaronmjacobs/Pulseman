@@ -88,17 +88,29 @@ public abstract class Entity extends Collidable
 		diffy *= (bounds.getWidth() + collidable.bounds.getWidth()) / ((bounds.getHeight() + collidable.bounds.getHeight()));
 
 		// Horizontal
-		if(oldYCrossover && Math.abs(diffx) > Math.abs(diffy))
+		if(oldYCrossover)
 		{
 			if(diffx >= 0)
 			{
-				//System.out.println("right " + position.x + " " + crossover.getWidth());
-				position.x += crossover.getWidth();
+				if(velocity.x > collidable.bounds.getWidth() / 2)
+				{
+					position.x -= crossover.getWidth();
+				}
+				else
+				{
+					position.x += crossover.getWidth();
+				}
 			}
 			else
 			{
-				//System.out.println("left " + position.x + " " + crossover.getWidth());
-				position.x -= crossover.getWidth();
+				if(velocity.x < -collidable.bounds.getWidth() / 2)
+				{
+					position.x += crossover.getWidth();
+				}
+				else
+				{
+					position.x -= crossover.getWidth();
+				}
 			}
 
 			velocity.x = 0.0f;
@@ -110,7 +122,14 @@ public abstract class Entity extends Collidable
 			// Below
 			if(diffy >= 0)
 			{
-				position.y += crossover.getHeight();
+				if(velocity.y > collidable.bounds.getHeight() / 2)
+				{
+					position.y -= crossover.getHeight();
+				}
+				else
+				{
+					position.y += crossover.getHeight();
+				}
 
 				if(velocity.y < 0.0f)
 				{
@@ -120,7 +139,15 @@ public abstract class Entity extends Collidable
 			else
 			// Above
 			{
-				position.y -= crossover.getHeight();
+				if(velocity.y < -collidable.bounds.getHeight() / 2)
+				{
+					position.y += crossover.getHeight();
+				}
+				else
+				{
+					position.y -= crossover.getHeight();
+				}
+				
 				floor = collidable;
 				velocity.y = 0.0f;
 			}
