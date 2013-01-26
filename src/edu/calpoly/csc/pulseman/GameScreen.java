@@ -37,7 +37,7 @@ public class GameScreen implements GameInterface {
 		Player.init(new Image("res/brick.png"));
 		playa = new Player(200, 200);
 		Tile.init(new Image("res/brick.png"));
-		World.getWorld().loadLevel("res/level001.bmp");
+		World.getWorld().loadLevel("res/level001.png");
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import org.newdawn.slick.geom.Vector2f;
 import edu.calpoly.csc.pulseman.gameobject.Collidable;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
 import edu.calpoly.csc.pulseman.gameobject.MovingTile;
+import edu.calpoly.csc.pulseman.gameobject.OscillateBehavior;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class World {
@@ -27,15 +28,15 @@ public class World {
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
 	
 	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy, kFlippedEnemy};
-	private static Map<Color, TileType> ColorMap = new HashMap<Color, TileType>();
+	private static Map<Integer, TileType> ColorMap = new HashMap<Integer, TileType>();
 	
 	static {
-		ColorMap.put(new Color(1.0f, 1.0f, 1.0f), TileType.kNothing);
-		ColorMap.put(new Color(0, 120.0f / 255.0f, 0), TileType.kPlayerSpawn);
-		ColorMap.put(new Color(2.0f / 255.0f, 50.0f / 255.0f , 50.0f / 255.0f), TileType.kTile);
-		ColorMap.put(new Color(100.0f / 255.0f, 20.0f / 255.0f , 20.0f / 255.0f), TileType.kEnemy);
-		ColorMap.put(new Color(110.0f / 255.0f, 20.0f / 255.0f , 20.0f / 255.0f), TileType.kFlippedEnemy);
-		ColorMap.put(new Color(1.0f , 0.0f / 255.0f , 0.0f / 255.0f), TileType.kMovingTile);
+		ColorMap.put(new Integer(255), TileType.kNothing);
+		ColorMap.put(new Integer(254), TileType.kPlayerSpawn);
+		ColorMap.put(new Integer(253), TileType.kTile);
+		ColorMap.put(new Integer(252), TileType.kEnemy);
+		ColorMap.put(new Integer(251), TileType.kFlippedEnemy);
+		ColorMap.put(new Integer(250), TileType.kMovingTile);
 	}
 	
 	private World() {}
@@ -82,9 +83,9 @@ public class World {
 	}
 	
 	private void PixelToObject(Color color, int xPos, int yPos) throws SlickException {
-		TileType type = ColorMap.get(color); 
+		TileType type = ColorMap.get(color.getRed()); 
 		if (type == null) {
-			throw new RuntimeException("Color not found in color map, color: " + color);
+			throw new RuntimeException("Color not found in color map, red: " + color.getRed());
 		}
 		switch(type) {
 		case kNothing:
@@ -96,7 +97,8 @@ public class World {
 			collidables.add(new Tile(xPos, yPos));
 			break;
 		case kMovingTile:
-			collidables.add(new MovingTile(xPos, yPos, 64, 1.0f));
+			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .005f, 
+					new Vector2f(kPixelsPerTile * color.getGreen(), kPixelsPerTile * color.getBlue()))));
 			break;
 		}
 	}
