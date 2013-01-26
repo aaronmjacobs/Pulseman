@@ -44,6 +44,7 @@ public abstract class Entity extends Collidable
 	private void handleCollision(Collidable collidable)
 	{
 		Rectangle collision = getCollision(this.bounds, collidable.bounds);
+		System.out.println(collision);
 		float distToTop = Math.abs((this.bounds.getMaxY() - collidable.bounds.getMinY()));
 		float distToBottom = Math.abs((this.bounds.getMinY() - collidable.bounds.getMaxY()));
 		float distToLeft = Math.abs((this.bounds.getMaxX() - collidable.bounds.getMinX()));
@@ -54,18 +55,24 @@ public abstract class Entity extends Collidable
 		if(min == distToTop)
 		{
 			position.y -= collision.getHeight();
+			velocity.y = 0.0f;
 		}
 		else if(min == distToBottom)
 		{
 			position.y += collision.getHeight();
+			velocity.y = 0.0f;
 		}
 		else if(min == distToLeft)
 		{
 			position.x -= collision.getWidth();
+			velocity.x = 0.0f;
 		}
 		else
 		{
 			position.x += collision.getWidth();
+			velocity.x = 0.0f;
 		}
+
+		bounds.setLocation(position.x, position.y);
 	}
 }
