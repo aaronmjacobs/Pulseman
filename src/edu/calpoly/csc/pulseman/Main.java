@@ -36,14 +36,14 @@ public class Main extends BasicGame {
 				scale = 1;
 			}
 			public void update(GameContainer gc, int delta) {
-				if (scale < 1.50)
+				if (scale < 100)
 				{
-					scale += .25 * delta;
+					scale += .001;
 					if (delta > 1)
-						System.out.println(delta + " < delta");
+						System.out.println(delta + " < delta" + scale);
 				}
 				else if (scale > 1)
-					scale -= .25 * delta;
+					scale -= .01 * delta;
 			}
 			public void render(GameContainer gc, Graphics g) {
 				image.draw(0, 0, scale);
@@ -129,6 +129,7 @@ public class Main extends BasicGame {
 		AppGameContainer app = new AppGameContainer(new Main());
 
 		app.setDisplayMode(800, 600, false);
+		app.setTargetFrameRate(60);
 		app.start();
 	}
 
