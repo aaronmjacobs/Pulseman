@@ -8,6 +8,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import edu.calpoly.csc.pulseman.HelloWorld;
+
 public class Player extends Collidable {
 	private static Image image;
 	Vector2f position;
@@ -28,21 +30,21 @@ public class Player extends Collidable {
 		 
         if(input.isKeyDown(Input.KEY_A))
         {
-        	position.x -= .5;
+        	position.x -= .5 * HelloWorld.tVelocity;
         }
  
         if(input.isKeyDown(Input.KEY_D))
         {
-        	position.x += .5;
+        	position.x += .5 * HelloWorld.tVelocity;
         }
  
         if(input.isKeyDown(Input.KEY_W))
         {
-            position.y -= .5;
+            position.y -= .5 * HelloWorld.tVelocity;
         }
         if(input.isKeyDown(Input.KEY_S))
         {
-        	position.y += .5;
+        	position.y += .5 * HelloWorld.tVelocity;
         }
 	}
 

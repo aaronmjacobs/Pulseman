@@ -15,7 +15,7 @@ public class HelloWorld extends BasicGame
 {
 	private volatile static LinkedList<String> messageQueue = new LinkedList<String>();
 	Player playa;
-	static int tVelocity;
+	public static int tVelocity;
 	
 	public HelloWorld()
 	{
@@ -36,8 +36,8 @@ public class HelloWorld extends BasicGame
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
 		playa.update(gc, delta);
-		if (tVelocity - .01 >= 0)
-			tVelocity -= .01;
+		if (tVelocity - .00001 >= 0)
+			tVelocity -= .00001;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class HelloWorld extends BasicGame
 				synchronized(messageQueue)
 				{
 					messageQueue.offer(message);
-					tVelocity += 10; 
+					tVelocity += 100; 
 				}
 			}
 
