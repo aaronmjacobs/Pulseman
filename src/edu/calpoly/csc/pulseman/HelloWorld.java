@@ -9,6 +9,7 @@ import org.newdawn.slick.*;
 
 import edu.calpoly.csc.pulseman.MessageHandler.MessageReceiver;
 import edu.calpoly.csc.pulseman.gameobject.Player;
+import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class HelloWorld extends BasicGame
 {
@@ -25,6 +26,8 @@ public class HelloWorld extends BasicGame
 	{
 		playa = new Player();
 		playa.init(new Image("res/brick.png"));
+		Tile.init(new Image("res/brick.png"));
+		World.getWorld().loadLevel("res/level001.bmp");
 	}
 
 	@Override
@@ -38,6 +41,8 @@ public class HelloWorld extends BasicGame
 	{
 		g.drawString("Hello World", 100, 100);
 		playa.render(gc, g);
+		World.getWorld().render(gc, g);
+		
 		synchronized(messageQueue)
 		{
 			for(int i = 0; i < messageQueue.size(); ++i)

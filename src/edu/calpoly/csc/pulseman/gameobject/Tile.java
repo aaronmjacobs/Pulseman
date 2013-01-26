@@ -5,10 +5,12 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 
 public class Tile implements Collidable {
 	private static Image image;
 	private Rectangle hitBox;
+	private Vector2f position;
 	
 	
 	static public void init(Image image) {
@@ -17,13 +19,14 @@ public class Tile implements Collidable {
 	
 	public Tile(int x, int y) {
 		hitBox = new Rectangle(x, y, image.getWidth(), image.getHeight());
+		position = new Vector2f(x, y);
 	}
 	
 	
 	
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-		// TODO Auto-generated method stub
+		g.drawImage(image, position.x, position.y);
 		
 	}
 
