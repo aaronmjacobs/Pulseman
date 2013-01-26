@@ -147,7 +147,7 @@ public abstract class Entity extends Collidable
 				{
 					position.y -= crossover.getHeight();
 				}
-				
+
 				floor = collidable;
 				velocity.y = 0.0f;
 			}

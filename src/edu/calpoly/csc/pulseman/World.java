@@ -89,13 +89,13 @@ public class World {
 	}
 	
 	public void update(GameContainer gc, int dt) {
-		player.update(gc, dt);
 		for (Collidable obj: collidables) {
 			obj.update(gc, dt);
 		}
 		for (GameObject obj: nonCollidables) {
 			obj.update(gc, dt);
 		}
+		player.update(gc, dt);
 	}
 	
 	private void PixelToObject(Color color, int xPos, int yPos) throws SlickException {
