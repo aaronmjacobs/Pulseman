@@ -5,6 +5,11 @@ import org.newdawn.slick.geom.Rectangle;
 public abstract class Collidable implements GameObject
 {
 	protected Rectangle bounds;
+	
+	public Collidable(Rectangle rect)
+	{
+		bounds = rect;
+	}
 
 	public Rectangle getHitBox()
 	{

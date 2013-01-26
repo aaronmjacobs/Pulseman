@@ -9,11 +9,12 @@ import edu.calpoly.csc.pulseman.World;
 
 public abstract class Entity extends Collidable
 {
-	private Vector2f position, velocity, acceleration;
+	protected Vector2f position, velocity, acceleration;
 
-	public Entity()
+	public Entity(Rectangle rect)
 	{
-		position = new Vector2f();
+		super(rect);
+		position = new Vector2f(rect.getX(), rect.getY());
 		velocity = new Vector2f();
 		acceleration = new Vector2f();
 	}
@@ -36,6 +37,8 @@ public abstract class Entity extends Collidable
 				handleCollision(collidables.get(i));
 			}
 		}
+		
+		bounds.setLocation(position.x, position.y);
 	}
 
 	private void handleCollision(Collidable collidable)
@@ -50,18 +53,22 @@ public abstract class Entity extends Collidable
 
 		if(min == distToTop)
 		{
+			System.out.println("bottom");
 			position.y -= collision.getHeight();
 		}
 		else if(min == distToBottom)
 		{
+			System.out.println("top");
 			position.y += collision.getHeight();
 		}
 		else if(min == distToLeft)
 		{
+			System.out.println("right");
 			position.x -= collision.getWidth();
 		}
 		else
 		{
+			System.out.println("left");
 			position.x += collision.getWidth();
 		}
 	}

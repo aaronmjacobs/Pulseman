@@ -31,8 +31,8 @@ public class GameScreen implements GameInterface {
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		playa = new Player();
-		playa.init(new Image("res/brick.png"));
+		Player.init(new Image("res/brick.png"));
+		playa = new Player(200, 200);
 		Tile.init(new Image("res/brick.png"));
 		World.getWorld().loadLevel("res/level001.bmp");
 	}

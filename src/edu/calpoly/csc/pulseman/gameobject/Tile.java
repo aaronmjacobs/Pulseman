@@ -9,7 +9,6 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Tile extends Collidable {
 	private static Image image;
-	private Rectangle hitBox;
 	private Vector2f position;
 	
 	
@@ -18,7 +17,7 @@ public class Tile extends Collidable {
 	}
 	
 	public Tile(int x, int y) {
-		hitBox = new Rectangle(x, y, image.getWidth(), image.getHeight());
+		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
 		position = new Vector2f(x, y);
 	}
 	
@@ -34,11 +33,6 @@ public class Tile extends Collidable {
 	public void update(GameContainer gc, int delta) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public Rectangle getHitBox() {
-		return hitBox;
 	}
 
 }

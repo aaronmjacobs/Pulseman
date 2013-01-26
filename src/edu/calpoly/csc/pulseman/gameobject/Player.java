@@ -10,13 +10,15 @@ import org.newdawn.slick.geom.Vector2f;
 
 import edu.calpoly.csc.pulseman.HelloWorld;
 
-public class Player extends Collidable {
+public class Player extends Entity {
 	private static Image image;
-	Vector2f position;
+	private final static float PLAYER_SPEED = 2.0f;
 	
-	public void init(Image image) {
-		this.image = image;
-		position = new  Vector2f(200, 200);
+	public static void init(Image image) {
+		Player.image = image;
+	}
+	public Player(int x, int y) {
+		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
 	}
 	
 	@Override
@@ -30,22 +32,24 @@ public class Player extends Collidable {
 		 
         if(input.isKeyDown(Input.KEY_A))
         {
-        	position.x -= .5 * HelloWorld.tVelocity;
+        	position.x -= PLAYER_SPEED;
         }
  
         if(input.isKeyDown(Input.KEY_D))
         {
-        	position.x += .5 * HelloWorld.tVelocity;
+        	position.x += PLAYER_SPEED;
         }
  
         if(input.isKeyDown(Input.KEY_W))
         {
-            position.y -= .5 * HelloWorld.tVelocity;
+            position.y -= PLAYER_SPEED;
         }
         if(input.isKeyDown(Input.KEY_S))
         {
-        	position.y += .5 * HelloWorld.tVelocity;
+        	position.y += PLAYER_SPEED;
         }
+        
+        super.update(delta);
 	}
 
 	@Override
