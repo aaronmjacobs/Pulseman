@@ -43,6 +43,7 @@ public class GameScreen implements GameInterface {
 	@Override
 	public void update(GameContainer gc, int dt) {
 		playa.update(gc, dt);
+		World.getWorld().update(gc, dt);
 	}
 	
 }

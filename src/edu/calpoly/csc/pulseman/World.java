@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import edu.calpoly.csc.pulseman.gameobject.Collidable;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
+import edu.calpoly.csc.pulseman.gameobject.MovingTile;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class World {
@@ -25,7 +26,7 @@ public class World {
 	private List<GameObject> nonCollidables = new ArrayList<GameObject>();
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
 	
-	private static enum TileType {kNothing, kTile, kPlayerSpawn, kEnemy, kFlippedEnemy};
+	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy, kFlippedEnemy};
 	private static Map<Color, TileType> ColorMap = new HashMap<Color, TileType>();
 	
 	static {
@@ -34,6 +35,7 @@ public class World {
 		ColorMap.put(new Color(2.0f / 255.0f, 50.0f / 255.0f , 50.0f / 255.0f), TileType.kTile);
 		ColorMap.put(new Color(100.0f / 255.0f, 20.0f / 255.0f , 20.0f / 255.0f), TileType.kEnemy);
 		ColorMap.put(new Color(110.0f / 255.0f, 20.0f / 255.0f , 20.0f / 255.0f), TileType.kFlippedEnemy);
+		ColorMap.put(new Color(1.0f , 0.0f / 255.0f , 0.0f / 255.0f), TileType.kMovingTile);
 	}
 	
 	private World() {}
@@ -65,6 +67,18 @@ public class World {
 		for (Collidable obj: collidables) {
 			obj.render(gc, g);
 		}
+		for (GameObject obj: nonCollidables) {
+			obj.render(gc, g);
+		}
+	}
+	
+	public void update(GameContainer gc, int dt) {
+		for (Collidable obj: collidables) {
+			obj.update(gc, dt);
+		}
+		for (GameObject obj: nonCollidables) {
+			obj.update(gc, dt);
+		}
 	}
 	
 	private void PixelToObject(Color color, int xPos, int yPos) throws SlickException {
@@ -80,6 +94,9 @@ public class World {
 			break;
 		case kTile:
 			collidables.add(new Tile(xPos, yPos));
+			break;
+		case kMovingTile:
+			collidables.add(new MovingTile(xPos, yPos, 64, 1.0f));
 			break;
 		}
 	}
