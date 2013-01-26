@@ -24,7 +24,7 @@ public class Player extends Entity
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		image.draw(position.x, position.y, 1);
+		g.drawImage(image, position.x, position.y);
 	}
 
 	@Override
