@@ -87,6 +87,8 @@ public class GameScreen implements GameInterface, KeyListener {
 	public void keyPressed(int key, char c) {
 		if (key == Input.KEY_1) {
 			timeMult.set(timeMult.get() + 1.0f);
+		} else if (key == Input.KEY_0) {
+			Main.setState(Main.GameState.GAMEOVER);
 		}
 	}
 

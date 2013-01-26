@@ -24,10 +24,12 @@ public class World {
 	public static int kVectorCenter = 50;
 	
 	private static World world = new World();
+	private static String lastLevel;
 	private int lvlWidth, lvlHeight;
 	private List<Collidable> collidables = new ArrayList<Collidable>();
 	private List<GameObject> nonCollidables = new ArrayList<GameObject>();
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
+	private Vector2f goalPortal = new Vector2f(0.0f, 0.0f);
 	
 	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy, 
 		kFlippedEnemy, kSpike};
@@ -53,7 +55,12 @@ public class World {
 		return collidables;
 	}
 	
+	public void loadLastLevel() throws SlickException {
+		loadLevel(lastLevel);
+	}
+	
 	public void loadLevel(String fileName) throws SlickException {
+		lastLevel = fileName;
 		Image level = new Image(fileName);
 		int width = level.getWidth(), height = level.getHeight();
 		
@@ -124,6 +131,5 @@ public class World {
 	public Vector2f getPlayerSpawn() {
 		return playerSpawn;
 	}
-	
 	
 }

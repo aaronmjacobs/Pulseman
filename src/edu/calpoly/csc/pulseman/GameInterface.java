@@ -9,5 +9,5 @@ public interface GameInterface {
 
 	public void init(GameContainer gc) throws SlickException;
 
-	public void update(GameContainer gc, int dt);
+	public void update(GameContainer gc, int dt) throws SlickException ;
 }

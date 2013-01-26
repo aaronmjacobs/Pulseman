@@ -22,6 +22,8 @@ public class Main extends BasicGame {
 	private volatile static LinkedList<String> messageQueue = new LinkedList<String>();
 	public enum GameState {MENU, GAME, GAMEOVER};
 	private static GameState state = GameState.MENU;
+	private static int curLevel = 0;
+	private static String[] levels = {"level001.png", "level002.png"};
 	private static final int width = 1280, height = 720;
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
 	
@@ -93,6 +95,10 @@ public class Main extends BasicGame {
 		game.init(gc);
 		interfaceMap.put(GameState.GAME, game);
 		
+		GameOver gameOver = new GameOver();
+		gameOver.init(gc);
+		interfaceMap.put(GameState.GAMEOVER, gameOver);
+		
 		debugMusic = new Sound("res/music.ogg");
 		debugMusic.play();
 		heart = new Heart();
@@ -133,7 +139,7 @@ public class Main extends BasicGame {
 		System.setProperty("net.java.games.input.librarypath", System.getProperty("org.lwjgl.librarypath"));
 		AppGameContainer app = new AppGameContainer(new Main());
 
-		app.setDisplayMode(800, 600, false);
+		app.setDisplayMode(width, height, false);
 		app.setTargetFrameRate(60);
 		app.setVSync(true);
 		app.start();
