@@ -135,6 +135,7 @@ public class Main extends BasicGame {
 
 		app.setDisplayMode(800, 600, false);
 		app.setTargetFrameRate(60);
+		app.setVSync(true);
 		app.start();
 	}
 

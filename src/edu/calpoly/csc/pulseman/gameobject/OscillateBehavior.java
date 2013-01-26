@@ -18,7 +18,7 @@ public class OscillateBehavior implements ObjectBehavior {
 	
 	@Override
 	public void update(Rectangle box, int dt) {
-		param += speed;
+		param += speed * (float)dt / 1000.0f;
 		if (param > 1.0f) {
 			speed = -speed;
 			param = 1.0f;

@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import edu.calpoly.csc.pulseman.gameobject.Collidable;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
+import edu.calpoly.csc.pulseman.gameobject.KillingObstacle;
 import edu.calpoly.csc.pulseman.gameobject.MovingTile;
 import edu.calpoly.csc.pulseman.gameobject.OscillateBehavior;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
@@ -27,7 +28,8 @@ public class World {
 	private List<GameObject> nonCollidables = new ArrayList<GameObject>();
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
 	
-	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy, kFlippedEnemy};
+	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy, 
+		kFlippedEnemy, kSpike};
 	private static Map<Integer, TileType> ColorMap = new HashMap<Integer, TileType>();
 	
 	static {
@@ -37,6 +39,7 @@ public class World {
 		ColorMap.put(new Integer(252), TileType.kEnemy);
 		ColorMap.put(new Integer(251), TileType.kFlippedEnemy);
 		ColorMap.put(new Integer(250), TileType.kMovingTile);
+		ColorMap.put(new Integer(249), TileType.kSpike);
 	}
 	
 	private World() {}
@@ -97,9 +100,14 @@ public class World {
 			collidables.add(new Tile(xPos, yPos));
 			break;
 		case kMovingTile:
-			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .005f, 
+			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .5f, 
 					new Vector2f(kPixelsPerTile * color.getGreen(), kPixelsPerTile * color.getBlue()))));
 			break;
+		case kSpike:
+			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
+					new OscillateBehavior(xPos, yPos, .5f, 
+					new Vector2f(kPixelsPerTile * color.getGreen(), 
+							kPixelsPerTile * color.getBlue()))));
 		}
 	}
 	
