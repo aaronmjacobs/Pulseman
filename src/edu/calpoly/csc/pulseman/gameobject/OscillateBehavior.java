@@ -1,6 +1,5 @@
 package edu.calpoly.csc.pulseman.gameobject;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
