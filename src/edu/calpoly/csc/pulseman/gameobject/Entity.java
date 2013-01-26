@@ -31,13 +31,17 @@ public abstract class Entity extends Collidable
 		velocity.y += acceleration.y * delta;
 
 		// Update position
+		if(Math.abs(velocity.x * delta) > 20)
+		{
+			System.out.println("big diff");
+		}
 		position.x += velocity.x * delta;
 		position.y += velocity.y * delta;
 
 		handleAllCollisions(delta);
 	}
 
-	public void handleAllCollisions(int delta)
+	private void handleAllCollisions(int delta)
 	{
 		Rectangle oldBounds = new Rectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 
@@ -88,10 +92,12 @@ public abstract class Entity extends Collidable
 		{
 			if(diffx >= 0)
 			{
+				//System.out.println("right " + position.x + " " + crossover.getWidth());
 				position.x += crossover.getWidth();
 			}
 			else
 			{
+				//System.out.println("left " + position.x + " " + crossover.getWidth());
 				position.x -= crossover.getWidth();
 			}
 
