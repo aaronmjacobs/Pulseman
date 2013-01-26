@@ -1,7 +1,14 @@
 package edu.calpoly.csc.pulseman.gameobject;
 
-public abstract class Entity implements GameObject {
-	void handleTileCollision(Tile tile) {
-		
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
+
+public abstract class Entity extends Collidable
+{
+	private Vector2f position, velocity, acceleration;
+
+	public void handleTileCollision(Tile tile)
+	{
+		Rectangle collision = getCollision(this.bounds, tile.bounds);
 	}
 }

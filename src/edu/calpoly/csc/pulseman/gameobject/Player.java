@@ -8,7 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-public class Player implements Collidable {
+public class Player extends Collidable {
 	private static Image image;
 	Vector2f position;
 	
