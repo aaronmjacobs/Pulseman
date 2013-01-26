@@ -25,7 +25,6 @@ public abstract class Entity extends Collidable
 		velocity.y += acceleration.y * delta;
 
 		// Update position
-		Vector2f oldPosition = new Vector2f(position);
 		position.x += velocity.x * delta;
 		position.y += velocity.y * delta;
 
@@ -34,42 +33,36 @@ public abstract class Entity extends Collidable
 		{
 			if(bounds.intersects(collidables.get(i).bounds))
 			{
-				handleCollision(collidables.get(i), oldPosition);
+				handleCollision(collidables.get(i));
 			}
 		}
 	}
 
-	private void handleCollision(Collidable collidable, Vector2f oldPosition)
+	private void handleCollision(Collidable collidable)
 	{
 		Rectangle collision = getCollision(this.bounds, collidable.bounds);
+		float distToTop = Math.abs((this.bounds.getMaxY() - collidable.bounds.getMinY()));
+		float distToBottom = Math.abs((this.bounds.getMinY() - collidable.bounds.getMaxY()));
+		float distToLeft = Math.abs((this.bounds.getMaxX() - collidable.bounds.getMinX()));
+		float distToRight = Math.abs((this.bounds.getMinX() - collidable.bounds.getMaxX()));
 
-		// If it is a vertical collision
-		if(collision.getHeight() >= collision.getWidth())
+		float min = Math.min(Math.min(distToTop, distToBottom), Math.min(distToLeft, distToRight));
+
+		if(min == distToTop)
 		{
-			// If we're falling on the object
-			if(velocity.y >= 0)
-			{
-				position.y -= collision.getHeight();
-			}
-			else
-			// If we're 'hitting our head' on the object
-			{
-				position.y += collision.getHeight();
-			}
+			position.y -= collision.getHeight();
+		}
+		else if(min == distToBottom)
+		{
+			position.y += collision.getHeight();
+		}
+		else if(min == distToLeft)
+		{
+			position.x -= collision.getWidth();
 		}
 		else
-		// If it is a horizontal collision
 		{
-			// If we're hitting an object to our right
-			if(velocity.x >= 0)
-			{
-				position.x -= collision.getWidth();
-			}
-			else
-			// If we're hitting an object to our left
-			{
-				position.x += collision.getWidth();
-			}
+			position.x += collision.getWidth();
 		}
 	}
 }
