@@ -38,11 +38,11 @@ public class World {
 	
 	private World() {}
 	
-	static World getWorld() {
+	public static World getWorld() {
 		return world;
 	}
 	
-	 public List<Collidable> getCollidables() {
+	public List<Collidable> getCollidables() {
 		return collidables;
 	}
 	

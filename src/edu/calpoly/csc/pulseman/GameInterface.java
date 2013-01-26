@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 public interface GameInterface {
 	public void render(GameContainer gc, Graphics g);
 
-	public void init(GameContainer gc);
+	public void init(GameContainer gc) throws SlickException;
 
 	public void update(GameContainer gc, int dt);
 }
