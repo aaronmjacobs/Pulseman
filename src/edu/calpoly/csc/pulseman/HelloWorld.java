@@ -15,10 +15,11 @@ public class HelloWorld extends BasicGame
 {
 	private volatile static LinkedList<String> messageQueue = new LinkedList<String>();
 	Player playa;
+	static int tVelocity;
 	
 	public HelloWorld()
 	{
-		super("Hello World");
+		super("Hello World ");
 	}
 
 	@Override
@@ -28,18 +29,21 @@ public class HelloWorld extends BasicGame
 		playa.init(new Image("res/brick.png"));
 		Tile.init(new Image("res/brick.png"));
 		World.getWorld().loadLevel("res/level001.bmp");
+		tVelocity = 0;
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
 		playa.update(gc, delta);
+		if (tVelocity - .01 >= 0)
+			tVelocity -= .01;
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		g.drawString("Hello World", 100, 100);
+		g.drawString(new String("Hello World"  + tVelocity), 100, 100);
 		playa.render(gc, g);
 		World.getWorld().render(gc, g);
 		
@@ -64,6 +68,7 @@ public class HelloWorld extends BasicGame
 				synchronized(messageQueue)
 				{
 					messageQueue.offer(message);
+					tVelocity += 10; 
 				}
 			}
 
