@@ -12,6 +12,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 import edu.calpoly.csc.pulseman.MessageHandler.MessageReceiver;
 
@@ -21,6 +22,7 @@ public class Main extends BasicGame {
 	private static GameState state = GameState.MENU;
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
 	
+		Sound debugMusic;
 	
 	public Main() {
 		super("Pulse of Nature");
@@ -46,7 +48,9 @@ public class Main extends BasicGame {
 		GameScreen game = new GameScreen();
 		game.init(gc);
 		interfaceMap.put(GameState.GAME, game);
-	}
+		
+		debugMusic = new Sound("res/music.ogg");
+		debugMusic.play();	}
 	
 	public static void main(String[] arg) throws SlickException {
 		listenForConnection();
