@@ -7,7 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-public class Tile implements Collidable {
+public class Tile extends Collidable {
 	private static Image image;
 	private Rectangle hitBox;
 	private Vector2f position;
