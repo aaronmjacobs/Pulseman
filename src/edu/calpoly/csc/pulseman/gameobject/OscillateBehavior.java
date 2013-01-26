@@ -34,6 +34,7 @@ public class OscillateBehavior implements ObjectBehavior
 			speed = -speed;
 			param = 0.0f;
 		}
+		
 		Vector2f newPos = leftRange.copy().scale(1.0f - param).add(rightRange.copy().scale(param));
 		box.setLocation(newPos);
 
@@ -44,6 +45,7 @@ public class OscillateBehavior implements ObjectBehavior
 	{
 		box.setX(box.getX() + positionChange.x);
 		box.setY(box.getY() + positionChange.y);
+		System.out.println(positionChange.y);
 	}
 
 }
