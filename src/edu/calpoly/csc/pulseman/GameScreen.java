@@ -52,7 +52,7 @@ public class GameScreen implements GameInterface, KeyListener
 	public void init(GameContainer gc) throws SlickException
 	{
 		Player.init(new Image("res/monk.png"));
-		Enemy.init(new Image("res/e.png"));
+		Enemy.init(new Image("res/enemy.png"));
 
 		KillingObstacle.init("res/spike.png");
 		Tile.init(new Image("res/brick.png"));
