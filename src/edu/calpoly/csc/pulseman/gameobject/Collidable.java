@@ -8,7 +8,7 @@ public abstract class Collidable implements GameObject
 	
 	public Collidable(Rectangle rect)
 	{
-		bounds = rect;
+		bounds = new Rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	public Rectangle getHitBox()

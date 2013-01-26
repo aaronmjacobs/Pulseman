@@ -9,9 +9,7 @@ import org.newdawn.slick.geom.Rectangle;
 public class Player extends Entity
 {
 	private static Image image;
-	private final static float PLAYER_SPEED = 2.0f;
-
-	private boolean jumping;
+	private final static float PLAYER_SPEED = 0.25f;
 
 	public static void init(Image image)
 	{
@@ -21,7 +19,6 @@ public class Player extends Entity
 	public Player(int x, int y)
 	{
 		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
-		jumping = true;
 	}
 
 	@Override
@@ -37,34 +34,21 @@ public class Player extends Entity
 
 		if(input.isKeyDown(Input.KEY_A))
 		{
-			position.x -= PLAYER_SPEED;
+			position.x -= PLAYER_SPEED * delta;
 		}
 		if(input.isKeyDown(Input.KEY_D))
 		{
-			position.x += PLAYER_SPEED;
+			position.x += PLAYER_SPEED * delta;
 		}
 
-		if(input.isKeyDown(Input.KEY_SPACE) && !jumping)
+		if(input.isKeyDown(Input.KEY_SPACE) && floor != null)
 		{
-			velocity.y -= 0.02f * delta;
-			jumping = true;
+			velocity.y -= 0.3f;
+			System.out.println("jump");
 		}
 
-		acceleration.y = 0.00002f * delta;
+		acceleration.y = 0.00045f;
 
 		super.update(delta);
-	}
-
-	@Override
-	protected int handleCollision(Collidable collidable)
-	{
-		int ret = super.handleCollision(collidable);
-
-		if(ret == BOTTOM)
-		{
-			jumping = false;
-		}
-
-		return ret;
 	}
 }

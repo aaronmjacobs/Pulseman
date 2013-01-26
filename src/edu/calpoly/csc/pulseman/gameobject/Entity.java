@@ -12,6 +12,7 @@ public abstract class Entity extends Collidable
 	protected static final int TOP = 0, BOTTOM = 1, LEFT = 2, RIGHT = 3;
 
 	protected Vector2f position, velocity, acceleration;
+	protected Collidable floor;
 
 	public Entity(Rectangle rect)
 	{
@@ -19,6 +20,8 @@ public abstract class Entity extends Collidable
 		position = new Vector2f(rect.getX(), rect.getY());
 		velocity = new Vector2f();
 		acceleration = new Vector2f();
+
+		floor = null;
 	}
 
 	public void update(int delta)
@@ -31,58 +34,79 @@ public abstract class Entity extends Collidable
 		position.x += velocity.x * delta;
 		position.y += velocity.y * delta;
 
+		handleAllCollisions();
+	}
+
+	public void handleAllCollisions()
+	{
+		Rectangle oldBounds = new Rectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+
+		bounds.setLocation(position);
+
+		floor = null;
 		List<Collidable> collidables = World.getWorld().getCollidables();
+
 		for(int i = 0; i < collidables.size(); ++i)
 		{
 			if(bounds.intersects(collidables.get(i).bounds))
 			{
-				handleCollision(collidables.get(i));
+				handleCollision(collidables.get(i), oldBounds);
 			}
 		}
-
-		bounds.setLocation(position.x, position.y);
 	}
 
-	protected int handleCollision(Collidable collidable)
+	protected void handleCollision(Collidable collidable, Rectangle oldBounds)
 	{
-		int ret;
+		Rectangle crossover = getCollision(bounds, collidable.bounds);
+		Rectangle oldCrossover = getCollision(oldBounds, collidable.bounds);
 
-		Rectangle collision = getCollision(this.bounds, collidable.bounds);
-		// System.out.println(collision);
-		float distToTop = Math.abs((this.bounds.getMaxY() - collidable.bounds.getMinY()));
-		float distToBottom = Math.abs((this.bounds.getMinY() - collidable.bounds.getMaxY()));
-		float distToLeft = Math.abs((this.bounds.getMaxX() - collidable.bounds.getMinX()));
-		float distToRight = Math.abs((this.bounds.getMinX() - collidable.bounds.getMaxX()));
-
-		float min = Math.min(Math.min(distToTop, distToBottom), Math.min(distToLeft, distToRight));
-
-		if(min == distToTop)
+		if(crossover.getWidth() <= 0 || crossover.getHeight() <= 0)
 		{
-			position.y -= collision.getHeight();
+			return;
+		}
+
+		boolean oldXCrossover = oldCrossover.getWidth() > 0.1f;
+		boolean oldYCrossover = oldCrossover.getHeight() > 0.1f;
+
+		float diffx = bounds.getCenterX() - collidable.bounds.getCenterX();
+		float diffy = bounds.getCenterY() - collidable.bounds.getCenterY();
+
+		diffx *= ((bounds.getHeight() + collidable.bounds.getHeight()) / (bounds.getWidth() + collidable.bounds.getWidth()));
+		diffy *= (bounds.getWidth() + collidable.bounds.getWidth()) / ((bounds.getHeight() + collidable.bounds.getHeight()));
+
+		// Vertical
+		if(oldXCrossover)
+		{
+			// Below
+			if(diffy >= 0)
+			{
+				position.y += crossover.getHeight();
+			}
+			else
+			// Above
+			{
+				position.y -= crossover.getHeight();
+				floor = collidable;
+			}
+
 			velocity.y = 0.0f;
-			ret = BOTTOM;
-		}
-		else if(min == distToBottom)
-		{
-			position.y += collision.getHeight();
-			velocity.y = 0.0f;
-			ret = TOP;
-		}
-		else if(min == distToLeft)
-		{
-			position.x -= collision.getWidth();
-			velocity.x = 0.0f;
-			ret = RIGHT;
-		}
-		else
-		{
-			position.x += collision.getWidth();
-			velocity.x = 0.0f;
-			ret = LEFT;
 		}
 
-		bounds.setLocation(position.x, position.y);
+		// Horizontal
+		if(oldYCrossover)
+		{
+			if(diffx >= 0)
+			{
+				position.x += crossover.getWidth();
+			}
+			else
+			{
+				position.x -= crossover.getWidth();
+			}
 
-		return ret;
+			velocity.x = 0.0f;
+		}
+
+		bounds.setLocation(position);
 	}
 }
