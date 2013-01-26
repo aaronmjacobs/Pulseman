@@ -34,8 +34,11 @@ public class Main extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		StartMenu menu = new StartMenu();
 		menu.init(gc);
+		interfaceMap.put(GameState.MENU, menu);
 		
 		GameScreen game = new GameScreen();
+		game.init(gc);
+		interfaceMap.put(GameState.GAME, game);
 	}
 	
 	public static void main(String[] arg) throws SlickException {
@@ -48,8 +51,8 @@ public class Main extends BasicGame {
 	}
 
 	@Override
-	public void update(GameContainer arg0, int arg1) throws SlickException {
-		// TODO Auto-generated method stub
+	public void update(GameContainer gc, int dt) throws SlickException {
+		interfaceMap.get(state).update(gc, dt);
 	}
 
 }
