@@ -1,5 +1,7 @@
 package edu.calpoly.csc.pulseman.gameobject;
 
+import java.util.List;
+
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -21,17 +23,25 @@ public abstract class Entity extends Collidable
 		// Update velocity
 		velocity.x += acceleration.x * delta;
 		velocity.y += acceleration.y * delta;
-		
+
 		// Update position
+		Vector2f oldPosition = new Vector2f(position);
 		position.x += velocity.x * delta;
 		position.y += velocity.y * delta;
-		
-		World.getWorld().getCollidables();
+
+		List<Collidable> collidables = World.getWorld().getCollidables();
+		for(int i = 0; i < collidables.size(); ++i)
+		{
+			if(bounds.intersects(collidables.get(i).bounds))
+			{
+				handleCollision(collidables.get(i), oldPosition);
+			}
+		}
 	}
 
-	public void handleTileCollision(Tile tile)
+	private void handleCollision(Collidable collidable, Vector2f oldPosition)
 	{
-		Rectangle collision = getCollision(this.bounds, tile.bounds);
+		Rectangle collision = getCollision(this.bounds, collidable.bounds);
 
 		// If it is a vertical collision
 		if(collision.getHeight() >= collision.getWidth())
