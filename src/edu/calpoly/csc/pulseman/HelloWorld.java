@@ -8,11 +8,13 @@ import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.*;
 
 import edu.calpoly.csc.pulseman.MessageHandler.MessageReceiver;
+import edu.calpoly.csc.pulseman.gameobject.Player;
 
 public class HelloWorld extends BasicGame
 {
 	private volatile static LinkedList<String> messageQueue = new LinkedList<String>();
-
+	Player playa;
+	
 	public HelloWorld()
 	{
 		super("Hello World");
@@ -21,19 +23,21 @@ public class HelloWorld extends BasicGame
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
-
+		playa = new Player();
+		playa.init(new Image("res/brick.png"));
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
-
+		playa.update(gc, delta);
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
 		g.drawString("Hello World", 100, 100);
+		playa.render(gc, g);
 		synchronized(messageQueue)
 		{
 			for(int i = 0; i < messageQueue.size(); ++i)
