@@ -7,7 +7,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-<<<<<<< HEAD
 public class Tile implements Collidable {
 	private static Image image;
 	private Rectangle hitBox;
@@ -18,9 +17,6 @@ public class Tile implements Collidable {
 		Tile.image = image;
 	}
 	
-=======
-public class Tile extends Collidable {
->>>>>>> Began implementation of Entity class
 	public Tile(int x, int y) {
 		hitBox = new Rectangle(x, y, image.getWidth(), image.getHeight());
 		position = new Vector2f(x, y);
