@@ -11,6 +11,7 @@ import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Input;
 
+import edu.calpoly.csc.pulseman.gameobject.Enemy;
 import edu.calpoly.csc.pulseman.gameobject.KillingObstacle;
 import edu.calpoly.csc.pulseman.gameobject.Player;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
@@ -51,6 +52,7 @@ public class GameScreen implements GameInterface, KeyListener
 	public void init(GameContainer gc) throws SlickException
 	{
 		Player.init(new Image("res/monk.png"));
+		Enemy.init(new Image("res/e.png"));
 
 		KillingObstacle.init("res/spike.png");
 		Tile.init(new Image("res/brick.png"));

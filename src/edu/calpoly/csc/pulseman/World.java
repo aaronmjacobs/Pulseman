@@ -13,6 +13,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import edu.calpoly.csc.pulseman.gameobject.Collidable;
+import edu.calpoly.csc.pulseman.gameobject.Enemy;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
 import edu.calpoly.csc.pulseman.gameobject.KillingObstacle;
 import edu.calpoly.csc.pulseman.gameobject.MovingTile;
@@ -116,6 +117,10 @@ public class World {
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
 			break;
+		case kEnemy:
+			collidables.add(new Enemy(xPos, yPos, new OscillateBehavior(xPos, yPos, .5f, 
+					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
+							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
 		case kSpike:
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
 					new OscillateBehavior(xPos, yPos, .5f, 
