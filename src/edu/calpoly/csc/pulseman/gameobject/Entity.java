@@ -34,14 +34,23 @@ public abstract class Entity extends Collidable
 		position.x += velocity.x * delta;
 		position.y += velocity.y * delta;
 
-		handleAllCollisions();
+		handleAllCollisions(delta);
 	}
 
-	public void handleAllCollisions()
+	public void handleAllCollisions(int delta)
 	{
 		Rectangle oldBounds = new Rectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 
 		bounds.setLocation(position);
+
+		if(floor != null && floor instanceof MovingTile)
+		{
+			MovingTile tile = (MovingTile)floor;
+			tile.updateOther(bounds);
+
+			position.x = bounds.getX();
+			position.y = bounds.getY();
+		}
 
 		floor = null;
 		List<Collidable> collidables = World.getWorld().getCollidables();
@@ -74,26 +83,8 @@ public abstract class Entity extends Collidable
 		diffx *= ((bounds.getHeight() + collidable.bounds.getHeight()) / (bounds.getWidth() + collidable.bounds.getWidth()));
 		diffy *= (bounds.getWidth() + collidable.bounds.getWidth()) / ((bounds.getHeight() + collidable.bounds.getHeight()));
 
-		// Vertical
-		if(oldXCrossover)
-		{
-			// Below
-			if(diffy >= 0)
-			{
-				position.y += crossover.getHeight();
-			}
-			else
-			// Above
-			{
-				position.y -= crossover.getHeight();
-				floor = collidable;
-			}
-
-			velocity.y = 0.0f;
-		}
-
 		// Horizontal
-		if(oldYCrossover)
+		if(oldYCrossover && Math.abs(diffx) > Math.abs(diffy))
 		{
 			if(diffx >= 0)
 			{
@@ -105,6 +96,28 @@ public abstract class Entity extends Collidable
 			}
 
 			velocity.x = 0.0f;
+		}
+
+		// Vertical
+		if(oldXCrossover)
+		{
+			// Below
+			if(diffy >= 0)
+			{
+				position.y += crossover.getHeight();
+
+				if(velocity.y < 0.0f)
+				{
+					velocity.y = 0.0f;
+				}
+			}
+			else
+			// Above
+			{
+				position.y -= crossover.getHeight();
+				floor = collidable;
+				velocity.y = 0.0f;
+			}
 		}
 
 		bounds.setLocation(position);

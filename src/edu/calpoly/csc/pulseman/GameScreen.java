@@ -67,8 +67,9 @@ public class GameScreen implements GameInterface, KeyListener {
 			dt = (int)((float)dt * MAX_SPEEDUP * Math.min(timeMult.get(), MAX_MULT) 
 				/ MAX_MULT);
 		
-		playa.update(gc, dt);
 		World.getWorld().update(gc, dt);
+		playa.update(gc, dt);
+		
 	}
 
 	@Override
