@@ -51,4 +51,17 @@ public class Player extends Entity
 
 		super.update(delta);
 	}
+
+	@Override
+	protected void handleCollision(Collidable collidable, Rectangle oldBounds)
+	{
+		if(collidable instanceof KillingObstacle)
+		{
+			// Do something
+		}
+		else
+		{
+			super.handleCollision(collidable, oldBounds);
+		}
+	}
 }
