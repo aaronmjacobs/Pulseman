@@ -31,10 +31,12 @@ public class GameScreen implements GameInterface, KeyListener
 
 	private static final String DESERT = "desert";
 	private static final String FLATLANDS = "flatlands";
-	private static final String FOREST = "forest";
+	private static final String PLATEAU = "plateau";
+	private static final String CANYON = "canyon";
+
 
 	public static final String[] levelToScheme =
-	{ DESERT, DESERT, FLATLANDS, FLATLANDS, FLATLANDS, FLATLANDS};
+	{ DESERT, DESERT, FLATLANDS, PLATEAU, CANYON, CANYON, CANYON, CANYON};
 
 	private boolean pulseEnabled = false;
 
@@ -78,14 +80,29 @@ public class GameScreen implements GameInterface, KeyListener
 		{ sky, layer1, layer2, layer3 };
 
 		SchemeLoader.createScheme(DESERT, desertProps, desertBG, new Color(253.0f / 255.0f , 210.0f / 255.0f, 78.0f / 255.0f));
-
+		Image[] flatLandBG = { new Image("res/bg/24.png"), new Image("res/bg/23.png"), new Image("res/bg/22.png"), new Image("res/bg/21.png")};
+		
+		
 		Image[] grass =
 			{ new Image("res/grass/grass1.png"), new Image("res/grass/grass2.png"), new Image("res/grass/grass3.png"), new Image("res/grass/grass4.png"), };
-		Animation grassAnim = new Animation(grass, 5000);
+		Image[] tree =
+			{ new Image("res/tree/tree1.png"), new Image("res/tree/tree2.png"), new Image("res/tree/tree3.png"), new Image("res/tree/tree4.png"), };
+		
+		Animation treeAnim = new Animation(tree, 5000);
+		Animation grassAnim = new Animation(grass, 500);
 		Animation[] grassLandProps =
-			{ grassAnim };
-		SchemeLoader.createScheme(FLATLANDS, grassLandProps, desertBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
+			{ grassAnim, treeAnim };
+		SchemeLoader.createScheme(FLATLANDS, grassLandProps, flatLandBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
 
+		Image[] plateauBG = { new Image("res/bg/34.png"), new Image("res/bg/33.png"), new Image("res/bg/32.png"), new Image("res/bg/31.png")};
+		SchemeLoader.createScheme(PLATEAU, grassLandProps, plateauBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
+
+		
+		Image[] canyonBG = { new Image("res/bg/44.png"), new Image("res/bg/43.png"), new Image("res/bg/42.png"), new Image("res/bg/41.png")};
+		SchemeLoader.createScheme(CANYON, desertProps, canyonBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
+
+
+		
 		Image[] monkWalk =
 		{ new Image("res/Player/MonkWalk1.png"), new Image("res/Player/MonkWalk2.png"), new Image("res/Player/MonkWalk3.png"), new Image("res/Player/MonkWalk4.png") };
 		Image[] enemyWalk =
