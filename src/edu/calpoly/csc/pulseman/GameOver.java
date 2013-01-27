@@ -25,6 +25,10 @@ public class GameOver implements GameInterface {
 			World.getWorld().loadLastLevel();
 			Main.setState(Main.GameState.GAME);;
 		}
+		if(gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) 
+		{
+			Main.reset();
+		}
 		
 	}
 

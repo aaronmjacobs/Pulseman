@@ -91,6 +91,10 @@ public class WinScreen implements GameInterface {
 		{
 			psY += PS_SPEED;
 		}
+		
+		if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+			Main.reset();
+		}
 
 	}
 	

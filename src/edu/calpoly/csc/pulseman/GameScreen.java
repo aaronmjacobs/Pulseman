@@ -146,9 +146,13 @@ public class GameScreen implements GameInterface, KeyListener
 		{
 			playerTwoTap();
 		}
-		else if(key == Input.KEY_0)
+		if(key == Input.KEY_0)
 		{
 			pulseEnabled = !pulseEnabled;
+		}
+		if(key == Input.KEY_ESCAPE) 
+		{
+			Main.reset();
 		}
 	}
 
