@@ -163,8 +163,8 @@ public class GameScreen implements GameInterface, KeyListener
 
 	private class Heart implements GameObject
 	{
-		private static final float SCALE_RATE = 0.0007f;
-		
+		private static final float SCALE_RATE = 0.00055f;
+
 		public Image image;
 		public float scale;
 		public int beat;
