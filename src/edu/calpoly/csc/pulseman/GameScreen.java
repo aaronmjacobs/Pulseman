@@ -24,7 +24,7 @@ public class GameScreen implements GameInterface, KeyListener
 
 	private static final boolean PULSE_ENABLED = false;
 
-	private Camera cam = new Camera();
+	private Camera cam;
 	private AtomicFloat timeMult;
 
 	public GameScreen()
@@ -51,6 +51,10 @@ public class GameScreen implements GameInterface, KeyListener
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
+		
+		Image bgImage = new Image("res/bg.png");
+		Image parallax = new Image("res/parallax.png");
+		cam = new Camera(bgImage, parallax);
 		Player.init(new Image("res/monk.png"));
 		Enemy.init(new Image("res/enemy.png"));
 
