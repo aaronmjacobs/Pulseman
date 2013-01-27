@@ -1,5 +1,8 @@
 package edu.calpoly.csc.pulseman;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -8,9 +11,10 @@ import org.newdawn.slick.SlickException;
 
 public class StartMenu implements GameInterface
 {
-	Image menuButton;
-	Image menuTitle;
-	Image connectButton, connectingButton, connectedButton;
+	private Image menuButton;
+	private Image menuTitle;
+	private Image connectButton, connectingButton, connectedButton;
+	private volatile int countdown = 0;
 
 	private final float[] buttonLoc =
 	{ 200, 400 }, connectLoc =
@@ -29,6 +33,8 @@ public class StartMenu implements GameInterface
 		else if(Main.getAndroidState() == Main.AndroidStates.CONNECTING)
 		{
 			g.drawImage(connectingButton, connectLoc[0], connectLoc[1]);
+
+			g.drawString(String.valueOf(countdown), connectLoc[0] + connectingButton.getWidth(), connectLoc[1] + connectingButton.getHeight() / 2);
 		}
 		else
 		{
@@ -61,9 +67,22 @@ public class StartMenu implements GameInterface
 				Main.setState(Main.GameState.GAME);
 			}
 
-			if(x >= connectLoc[0] && x <= connectLoc[0] + connectButton.getWidth() && y >= connectLoc[1] && y <= connectLoc[1] + connectButton.getHeight())
+			if(Main.getAndroidState() == Main.AndroidStates.NOT_CONNECTED || (x >= connectLoc[0] && x <= connectLoc[0] + connectButton.getWidth() && y >= connectLoc[1] && y <= connectLoc[1] + connectButton.getHeight()))
 			{
 				listenForConnection();
+
+				countdown = MessageHandler.SOCKET_TIMEOUT / 1000 + 1;
+				new Timer("Countdown Timer").schedule(new TimerTask()
+				{
+					@Override
+					public void run()
+					{
+						if(--countdown < 0)
+						{
+							cancel();
+						}
+					}
+				}, 0, 1000);
 			}
 		}
 	}
