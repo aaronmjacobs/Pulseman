@@ -69,7 +69,6 @@ public class World {
 	}
 	
 	public Orientation calcSpikeOrientation(int x, int y, Image map) {
-		System.out.println("blah");
 		if (x - kPixelsPerTile > 0 && isTile(x - kPixelsPerTile, y, map)) 
 			return Orientation.RIGHT;
 		else if (x + kPixelsPerTile < lvlWidth && isTile(x + kPixelsPerTile, y, map)) 

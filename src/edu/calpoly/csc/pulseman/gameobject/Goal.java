@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.particles.ConfigurableEmitter;
 import org.newdawn.slick.particles.ParticleEmitter;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.particles.effects.FireEmitter;
@@ -16,6 +17,12 @@ public class Goal extends Collidable {
 	public Goal(int x, int y) throws SlickException {
 		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
 		ps = new ParticleSystem(new Image("res/orb.png"));
+		/*ConfigurableEmitter emitter = new ConfigurableEmitter("emitter");
+		emitter.useAdditive = true;
+		emitter.useOriented = true;
+		emitter.spawnCount.setMax(20.0f);
+		emitter.spawnCount.setMax(10.0f);
+		ps.addEmitter(emitter);*/
 		ps.addEmitter(new FireEmitter());
 	}
 

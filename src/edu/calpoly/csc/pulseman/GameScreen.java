@@ -15,6 +15,7 @@ import org.newdawn.slick.Input;
 import edu.calpoly.csc.pulseman.gameobject.Enemy;
 import edu.calpoly.csc.pulseman.gameobject.Goal;
 import edu.calpoly.csc.pulseman.gameobject.KillingObstacle;
+import edu.calpoly.csc.pulseman.gameobject.MovingTile;
 import edu.calpoly.csc.pulseman.gameobject.Player;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
 
@@ -71,6 +72,7 @@ public class GameScreen implements GameInterface, KeyListener
 		Player.init(new Animation(monkWalk, 300), new Image("res/Player/MonkStand.png"), new Image("res/Player/MonkJump5.png"));
 		Enemy.init(new Animation(enemyWalk, 300));
 		Goal.init(new Image("res/mountain.png"));
+		MovingTile.init(new Image("res/orb.png"));
 
 		KillingObstacle.init("res/spike.png");
 		Tile.init(new Image("res/brick.png"));
