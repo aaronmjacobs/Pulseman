@@ -35,8 +35,9 @@ public class World {
 	private Player player;
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
 	
-	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy, 
-		kFlippedEnemy, kSpike, kGoal};
+	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy,
+		kSpike, kGoal,
+		kTimeTile, kTimeMovingTile, kTimeEnemy, kTimeSpike};
 	private static Map<Integer, TileType> ColorMap = new HashMap<Integer, TileType>();
 	
 	static {
@@ -44,10 +45,14 @@ public class World {
 		ColorMap.put(new Integer(254), TileType.kPlayerSpawn);
 		ColorMap.put(new Integer(253), TileType.kTile);
 		ColorMap.put(new Integer(252), TileType.kEnemy);
-		ColorMap.put(new Integer(251), TileType.kFlippedEnemy);
 		ColorMap.put(new Integer(250), TileType.kMovingTile);
 		ColorMap.put(new Integer(249), TileType.kSpike);
 		ColorMap.put(new Integer(248), TileType.kGoal);
+		
+		ColorMap.put(new Integer(10), TileType.kTimeTile);
+		ColorMap.put(new Integer(11), TileType.kTimeMovingTile);
+		ColorMap.put(new Integer(12), TileType.kTimeEnemy);
+		ColorMap.put(new Integer(13), TileType.kTimeSpike);
 	}
 	
 	private World() {}
@@ -152,6 +157,14 @@ public class World {
 			break;
 		case kGoal:
 			collidables.add(new Goal(xPos, yPos));
+			break;
+		case kTimeTile:
+			break;
+		case kTimeMovingTile:
+			break;
+		case kTimeEnemy:
+			break;
+		case kTimeSpike:
 			break;
 		}
 
