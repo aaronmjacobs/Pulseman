@@ -112,14 +112,23 @@ public class World {
 	
 	public void update(GameContainer gc, int dt, int affectedDt) {
 		for (Collidable obj: collidables) {
-			obj.update(gc, dt);
+			if (obj.isAffectedByPulse())
+				obj.update(gc, affectedDt);
+			else
+				obj.update(gc, dt);
 		}
 		for (GameObject obj: nonCollidables) {
-			obj.update(gc, dt);
+			if (obj.isAffectedByPulse())
+				obj.update(gc, affectedDt);
+			else
+				obj.update(gc, dt);
 		}
 		for (Enemy enemy : enemies)
 		{
-			enemy.update(gc, dt);
+			if (enemy.isAffectedByPulse())
+				enemy.update(gc, affectedDt);
+			else
+				enemy.update(gc, dt);
 		}
 		player.update(gc, dt);
 	}
