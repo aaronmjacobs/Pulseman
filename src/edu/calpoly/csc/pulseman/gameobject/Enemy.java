@@ -11,6 +11,8 @@ import edu.calpoly.csc.pulseman.World;
 
 public class Enemy extends Entity implements Murderer
 {
+	public static final float ENEMY_SPEED = Player.PLAYER_SPEED * 1.25f;
+
 	private static Image image;
 	private Direction direction;
 
@@ -87,11 +89,11 @@ public class Enemy extends Entity implements Murderer
 
 		if(direction == Direction.LEFT)
 		{
-			position.x -= Player.PLAYER_SPEED * delta;
+			position.x -= ENEMY_SPEED * delta;
 		}
 		else
 		{
-			position.x += Player.PLAYER_SPEED * delta;
+			position.x += ENEMY_SPEED * delta;
 		}
 
 		super.update(gc, delta);
