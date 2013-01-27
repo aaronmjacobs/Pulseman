@@ -26,6 +26,8 @@ public class World {
 	public static int kPixelsPerTile = 48;
 	public static int kVectorCenter = 50;
 	
+	private static final float kAlphaToSpeed = 1.0f;
+	
 	private static World world = new World();
 	private static String lastLevel;
 	private int lvlWidth, lvlHeight;
@@ -148,7 +150,8 @@ public class World {
 			collidables.add(new Tile(xPos, yPos));
 			break;
 		case kMovingTile:
-			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .3f, 
+			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos,
+					kAlphaToSpeed * color.getAlpha() / 255.0f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
 			break;
@@ -157,7 +160,8 @@ public class World {
 			break;
 		case kSpike:
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
-					new OscillateBehavior(xPos, yPos, .3f, 
+					new OscillateBehavior(xPos, yPos,
+							kAlphaToSpeed *  color.getAlpha() / 255.0f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
 			break;
@@ -165,7 +169,8 @@ public class World {
 			collidables.add(new Goal(xPos, yPos));
 			break;
 		case kTimeMovingTile:
-			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .3f, 
+			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos,
+					kAlphaToSpeed *  color.getAlpha() / 255.0f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
 			break;
@@ -174,7 +179,7 @@ public class World {
 			break;
 		case kTimeSpike:
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
-					new OscillateBehavior(xPos, yPos, .3f, 
+					new OscillateBehavior(xPos, yPos, kAlphaToSpeed *  color.getAlpha() / 255.0f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
 			break;
