@@ -17,6 +17,7 @@ import edu.calpoly.csc.pulseman.gameobject.Enemy;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
 import edu.calpoly.csc.pulseman.gameobject.Goal;
 import edu.calpoly.csc.pulseman.gameobject.KillingObstacle;
+import edu.calpoly.csc.pulseman.gameobject.KillingObstacle.Orientation;
 import edu.calpoly.csc.pulseman.gameobject.MovingTile;
 import edu.calpoly.csc.pulseman.gameobject.OscillateBehavior;
 import edu.calpoly.csc.pulseman.gameobject.Player;
@@ -60,6 +61,23 @@ public class World {
 		return world;
 	}
 	
+	public boolean isTile(int x, int y, Image map) {
+		TileType tt = ColorMap.get(map.getColor(x / kPixelsPerTile, y / kPixelsPerTile));
+		return tt == TileType.kTile || tt == TileType.kMovingTile;
+	}
+	
+	public Orientation calcSpikeOrientation(int x, int y, Image map) {
+		if (x - 1 > 0 && isTile(x - 1, y, map)) 
+			return Orientation.LEFT;
+		else if (x + 1 < Main.getScreenWidth() && isTile(x + 1, y, map)) 
+			return Orientation.RIGHT;
+		else if (y + 1 < Main.getScreenHeight() && isTile(x, y + 1, map)) 
+			return Orientation.UP;
+		else if (y - 1 < 0 && isTile(x, y - 1, map)) 
+			return Orientation.DOWN;
+		return Orientation.UP;
+	}
+	
 	public List<Collidable> getCollidables() {
 		return collidables;
 	}
@@ -93,7 +111,7 @@ public class World {
 		lvlHeight = height * kPixelsPerTile;
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				PixelToObject(level.getColor(x, y), x * kPixelsPerTile, y * kPixelsPerTile);
+				PixelToObject(level.getColor(x, y), x * kPixelsPerTile, y * kPixelsPerTile, level);
 			}
 		}
 	}
@@ -135,8 +153,9 @@ public class World {
 		player.update(gc, dt);
 	}
 	
-	private void PixelToObject(Color color, int xPos, int yPos) throws SlickException {
-		TileType type = ColorMap.get(color.getRed()); 
+	private void PixelToObject(Color color, int xPos, int yPos, Image map) throws SlickException {
+		TileType type = ColorMap.get(color.getRed());
+		Orientation orient;
 		if (type == null) {
 			throw new RuntimeException("Color not found in color map, red: " + color.getRed());
 		}
@@ -159,11 +178,12 @@ public class World {
 			enemies.add(new Enemy(xPos, yPos, false));
 			break;
 		case kSpike:
+			orient = calcSpikeOrientation(xPos, yPos, map);
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
 					new OscillateBehavior(xPos, yPos,
 							kAlphaToSpeed *  color.getAlpha() / 255.0f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
+							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false, orient));
 			break;
 		case kGoal:
 			collidables.add(new Goal(xPos, yPos));
@@ -178,10 +198,11 @@ public class World {
 			enemies.add(new Enemy(xPos, yPos, false));
 			break;
 		case kTimeSpike:
+			orient = calcSpikeOrientation(xPos, yPos, map);
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
 					new OscillateBehavior(xPos, yPos, kAlphaToSpeed *  color.getAlpha() / 255.0f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
+							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true, orient));
 			break;
 		}
 
