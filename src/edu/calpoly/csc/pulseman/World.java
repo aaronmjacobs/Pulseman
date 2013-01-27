@@ -84,6 +84,7 @@ public class World {
 		
 		collidables.clear();
 		nonCollidables.clear();
+		enemies.clear();
 		lvlWidth = width * kPixelsPerTile;
 		lvlHeight = height * kPixelsPerTile;
 		for (int x = 0; x < width; x++) {
