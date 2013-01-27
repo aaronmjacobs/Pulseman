@@ -35,11 +35,11 @@ public class Player extends Entity
 	{
 		Input input = gc.getInput();
 
-		if(input.isKeyDown(Input.KEY_A))
+		if(input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT))
 		{
 			position.x -= PLAYER_SPEED * delta;
 		}
-		if(input.isKeyDown(Input.KEY_D))
+		if(input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT))
 		{
 			position.x += PLAYER_SPEED * delta;
 		}
