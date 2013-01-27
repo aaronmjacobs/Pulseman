@@ -86,7 +86,7 @@ public class GameScreen implements GameInterface, KeyListener
 
 		KillingObstacle.init("res/spike.png");
 		Tile.init(new Image("res/brick.png"));
-		World.getWorld().nextLevel();
+		
 		gc.getInput().addKeyListener(this);
 
 		World.getWorld().addLevelLoadListener(new LevelLoadListener()
@@ -97,6 +97,9 @@ public class GameScreen implements GameInterface, KeyListener
 				timeMult.set(0.0f);
 			}
 		});
+		
+		World.getWorld().nextLevel();
+		World.getWorld().loadLastLevel();
 	}
 
 	@Override

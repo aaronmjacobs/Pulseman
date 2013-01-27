@@ -228,7 +228,7 @@ public class World
 			break;
 		case kTile:
 			collidables.add(new Tile(xPos, yPos));
-			if(getTileType(xPos, yPos, map) == TileType.SURFACE && new Random().nextBoolean())
+			if(getTileType(xPos, yPos, map) == TileType.SURFACE && new Random().nextInt() % 4 == 0)
 			{
 				Animation prop = SchemeLoader.getProp();
 				int newObjYPos = yPos - prop.getHeight();
