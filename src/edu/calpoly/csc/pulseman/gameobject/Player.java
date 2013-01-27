@@ -13,6 +13,7 @@ import edu.calpoly.csc.pulseman.Main.GameState;
 
 public class Player extends Entity
 {
+	Direction dir;
 	private static Animation anim;
 	private final static float PLAYER_SPEED = 0.25f;
 
@@ -24,12 +25,16 @@ public class Player extends Entity
 	public Player(int x, int y)
 	{
 		super(new Rectangle(x, y, anim.getWidth(), anim.getHeight()));
+		dir = Direction.LEFT;
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		g.drawImage(anim.getCurrentFrame(), position.x, position.y);
+		/*if (dir == Direction.RIGHT)
+			g.drawImage(anim.getCurrentFrame(), position.x, position.y);*/
+		/*else (dir == Direction.Left) 
+			g.dr*/
 	}
 
 	@Override
@@ -39,10 +44,12 @@ public class Player extends Entity
 		anim.update(delta);
 		if(input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT))
 		{
+			dir = Direction.LEFT;
 			position.x -= PLAYER_SPEED * delta;
 		}
 		if(input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT))
 		{
+			dir = Direction.RIGHT;
 			position.x += PLAYER_SPEED * delta;
 		}
 

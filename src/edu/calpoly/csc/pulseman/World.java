@@ -136,6 +136,7 @@ public class World {
 					new OscillateBehavior(xPos, yPos, .5f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
+			break;
 		case kGoal:
 			collidables.add(new Goal(xPos, yPos));
 			break;
