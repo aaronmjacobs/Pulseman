@@ -253,7 +253,7 @@ public class World
 			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, kAlphaToSpeed * color.getAlpha() / 255.0f, new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
 			break;
 		case kTimeEnemy:
-			enemies.add(new Enemy(xPos, yPos, false));
+			enemies.add(new Enemy(xPos, yPos, true));
 			break;
 		case kTimeSpike:
 			orient = calcSpikeOrientation(xPos, yPos, map);
