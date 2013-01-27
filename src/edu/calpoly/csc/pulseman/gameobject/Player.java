@@ -126,7 +126,7 @@ public class Player extends Entity
 			{
 				if(bounds.intersects(enemies.get(i).bounds))
 				{
-					handleCollision(enemies.get(i), oldBounds);
+					super.handleCollision(enemies.get(i), oldBounds);
 				}
 			}
 		}
