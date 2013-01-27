@@ -57,10 +57,11 @@ public class GameScreen implements GameInterface, KeyListener
 		Image bgImage = new Image("res/bg.png");
 		Image parallax = new Image("res/parallax.png");
 		cam = new Camera(bgImage, parallax);
-		Image[] monkWalk = {new Image("res/Player/MonkWalk0000.png"),
-				new Image("res/Player/MonkWalk0001.png"),
-				new Image("res/Player/MonkWalk0002.png"),
-				new Image("res/Player/MonkWalk0003.png")};
+		Image[] monkWalk = {new Image("res/Player/MonkWalk1.png"),
+				new Image("res/Player/MonkWalk2.png"),
+				new Image("res/Player/MonkWalk3.png"),
+				new Image("res/Player/MonkWalk4.png")};
+		
 		Player.init(new Animation(monkWalk, 300));
 		Enemy.init(new Image("res/enemy.png"));
 		Goal.init(new Image("res/mountain.png"));
