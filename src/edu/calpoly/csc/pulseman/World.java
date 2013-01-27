@@ -95,13 +95,13 @@ public class World
 
 	public Orientation calcSpikeOrientation(int x, int y, Image map)
 	{
-		if(x - kPixelsPerTile > 0 && isTile(x - kPixelsPerTile, y, map))
+		if(x - kPixelsPerTile >= 0 && isTile(x - kPixelsPerTile, y, map))
 			return Orientation.RIGHT;
 		else if(x + kPixelsPerTile < lvlWidth && isTile(x + kPixelsPerTile, y, map))
 			return Orientation.LEFT;
 		else if(y + kPixelsPerTile < lvlHeight && isTile(x, y + kPixelsPerTile, map))
 			return Orientation.UP;
-		else if(y - kPixelsPerTile> 0 && isTile(x, y - kPixelsPerTile, map))
+		else if(y - kPixelsPerTile>= 0 && isTile(x, y - kPixelsPerTile, map))
 			return Orientation.DOWN;
 		return Orientation.UP;
 	}

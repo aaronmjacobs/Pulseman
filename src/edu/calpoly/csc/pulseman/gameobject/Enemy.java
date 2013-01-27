@@ -42,6 +42,7 @@ public class Enemy extends Entity implements Murderer
 			g.drawImage(anim.getCurrentFrame(), position.x, position.y);
 	}
 
+	@Override
 	public void update(GameContainer gc, int delta)
 	{
 		super.update(gc, delta);
