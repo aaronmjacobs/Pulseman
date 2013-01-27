@@ -72,7 +72,7 @@ public class Player extends Entity
 		anim.update(delta);
 		state = STAND;
 
-		if(bounds.getMinX() < 0.0f || bounds.getMaxX() > World.getWorld().getLevelWidth() || bounds.getMaxY() > World.getWorld().getLevelHeight())
+		if(bounds.getMaxY() > World.getWorld().getLevelHeight())
 		{
 			Main.setState(GameState.GAMEOVER);
 		}

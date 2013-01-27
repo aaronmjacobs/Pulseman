@@ -103,7 +103,7 @@ public abstract class Entity extends Collidable
 		}
 		else if(position.x + bounds.getWidth() > World.getWorld().getLevelWidth())
 		{
-			position.x = World.getWorld().getLevelWidth();
+			position.x = World.getWorld().getLevelWidth() - bounds.getWidth();
 		}
 
 		if(isOnGround())
@@ -132,15 +132,6 @@ public abstract class Entity extends Collidable
 		Rectangle oldBounds = new Rectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 
 		bounds.setLocation(position);
-
-		/*if(floor != null && floor instanceof MovingTile)
-		{
-			MovingTile tile = (MovingTile)floor;
-			tile.updateOther(bounds);
-
-			position.x = bounds.getX();
-			position.y = bounds.getY();
-		}*/
 
 		floor = null;
 
