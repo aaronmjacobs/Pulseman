@@ -36,8 +36,7 @@ public class World {
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
 	
 	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy,
-		kSpike, kGoal,
-		kTimeTile, kTimeMovingTile, kTimeEnemy, kTimeSpike};
+		kSpike, kGoal, kTimeMovingTile, kTimeEnemy, kTimeSpike};
 	private static Map<Integer, TileType> ColorMap = new HashMap<Integer, TileType>();
 	
 	static {
@@ -48,8 +47,6 @@ public class World {
 		ColorMap.put(new Integer(250), TileType.kMovingTile);
 		ColorMap.put(new Integer(249), TileType.kSpike);
 		ColorMap.put(new Integer(248), TileType.kGoal);
-		
-		ColorMap.put(new Integer(10), TileType.kTimeTile);
 		ColorMap.put(new Integer(11), TileType.kTimeMovingTile);
 		ColorMap.put(new Integer(12), TileType.kTimeEnemy);
 		ColorMap.put(new Integer(13), TileType.kTimeSpike);
@@ -144,27 +141,33 @@ public class World {
 		case kMovingTile:
 			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .5f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
+							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
 			break;
 		case kEnemy:
-			enemies.add(new Enemy(xPos, yPos, true));
+			enemies.add(new Enemy(xPos, yPos, false));
 			break;
 		case kSpike:
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
-					new OscillateBehavior(xPos, yPos, .5f, 
+					new OscillateBehavior(xPos, yPos, .3f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
+							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
 			break;
 		case kGoal:
 			collidables.add(new Goal(xPos, yPos));
 			break;
-		case kTimeTile:
-			break;
 		case kTimeMovingTile:
+			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .3f, 
+					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
+							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
 			break;
 		case kTimeEnemy:
+			enemies.add(new Enemy(xPos, yPos, false));
 			break;
 		case kTimeSpike:
+			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
+					new OscillateBehavior(xPos, yPos, .3f, 
+					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
+							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
 			break;
 		}
 
