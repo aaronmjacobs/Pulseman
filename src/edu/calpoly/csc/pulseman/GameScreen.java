@@ -4,6 +4,7 @@ import edu.calpoly.csc.pulseman.World.LevelLoadListener;
 import edu.calpoly.csc.pulseman.util.AtomicFloat;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -76,7 +77,7 @@ public class GameScreen implements GameInterface, KeyListener
 		Image[] desertBG =
 		{ sky, layer1, layer2, layer3 };
 
-		SchemeLoader.createScheme(DESERT, desertProps, desertBG);
+		SchemeLoader.createScheme(DESERT, desertProps, desertBG, new Color(0.0f, 1.0f, 1.0f));
 
 		Image[] monkWalk =
 		{ new Image("res/Player/MonkWalk1.png"), new Image("res/Player/MonkWalk2.png"), new Image("res/Player/MonkWalk3.png"), new Image("res/Player/MonkWalk4.png") };

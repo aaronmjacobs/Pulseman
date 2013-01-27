@@ -217,7 +217,7 @@ public class World
 		Orientation orient;
 		if(type == null)
 		{
-			throw new RuntimeException("Color not found in color map, red: " + color.getRed());
+			throw new RuntimeException("Color not found in color map, red: " + color.getRed() + "\nAt coorinate:" + xPos / kPixelsPerTile + " " + yPos / kPixelsPerTile + "\n");
 		}
 		switch(type)
 		{

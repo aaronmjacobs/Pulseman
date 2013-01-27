@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 
 public class SchemeLoader {
@@ -14,10 +15,12 @@ public class SchemeLoader {
 	private static class Scheme {
 		private Animation[] props;
 		private Image[] backgrounds;
+		private Color col;
 		
-		public Scheme(Animation[] props, Image[] backgrounds) {
+		public Scheme(Animation[] props, Image[] backgrounds, Color col) {
 			this.backgrounds = backgrounds;
 			this.props = props;
+			this.col = col;
 		}
 		
 		public Animation[] getProps() {
@@ -27,10 +30,14 @@ public class SchemeLoader {
 		public Image[] getBackgrounds() {
 			return backgrounds;
 		}
+		
+		public Color getColor() {
+			return col;
+		}
 	}
 	
-	public static void createScheme(String name, Animation[] props, Image[] backgrounds) {
-		schemeMap.put(name, new Scheme(props, backgrounds));
+	public static void createScheme(String name, Animation[] props, Image[] backgrounds, Color color) {
+		schemeMap.put(name, new Scheme(props, backgrounds, color));
 	}
 	
 	public static void loadScheme(String scheme) {
@@ -45,6 +52,9 @@ public class SchemeLoader {
 	
 	public static Image[] getBackgrounds() {
 		return schemeMap.get(curScheme).getBackgrounds();
-		
+	}
+	
+	public static Color getColor() {
+		return schemeMap.get(curScheme).getColor();
 	}
 }

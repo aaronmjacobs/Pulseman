@@ -7,6 +7,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import edu.calpoly.csc.pulseman.SchemeLoader;
+
 public class Tile extends Collidable {
 	private static Image image;
 	public static enum TileType {
@@ -31,7 +33,7 @@ public class Tile extends Collidable {
 	@Override
 	public void render(GameContainer gc, Graphics g) {
 		super.render(gc, g);
-		g.drawImage(image, getHitBox().getX(), getHitBox().getY());
+		g.drawImage(image, getHitBox().getX(), getHitBox().getY(), SchemeLoader.getColor());
 		
 	}
 
