@@ -54,9 +54,11 @@ public class GameScreen implements GameInterface, KeyListener
 	public void init(GameContainer gc) throws SlickException
 	{
 		
-		Image bgImage = new Image("res/bg.png");
-		Image parallax = new Image("res/parallax.png");
-		cam = new Camera(bgImage, parallax);
+		Image sky = new Image("res/sky.png");
+		Image layer1 = new Image("res/mountains.png");
+		Image layer2 = new Image("res/hills.png");
+		Image layer3 = new Image("res/flatlands.png");
+		cam = new Camera(sky, layer1, layer2, layer3);
 		Image[] monkWalk = {new Image("res/Player/MonkWalk1.png"),
 				new Image("res/Player/MonkWalk2.png"),
 				new Image("res/Player/MonkWalk3.png"),

@@ -20,7 +20,7 @@ public class Player extends Entity
 	public static final int WALKL = 2;
 	public static final int JUMPR = 3;
 	public static final int JUMPL = 4;
-	
+
 	Direction dir;
 	int state;
 	private static Animation anim;
@@ -49,24 +49,25 @@ public class Player extends Entity
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		switch (state) {
-            case WALKR:
-            	g.drawImage(anim.getCurrentFrame(), position.x, position.y);
-                break;
-            case WALKL:
-            	g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
-                break;
-            case JUMPR:
-            	g.drawImage(image[1], position.x, position.y);
-                break;
-            case JUMPL:
-            	g.drawImage(image[1], position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
-                break;
-            default:
-            	g.drawImage(image[0], position.x, position.y);
-                break;
-        }
-			
+		switch(state)
+		{
+		case WALKR:
+			g.drawImage(anim.getCurrentFrame(), position.x, position.y);
+			break;
+		case WALKL:
+			g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
+			break;
+		case JUMPR:
+			g.drawImage(image[1], position.x, position.y);
+			break;
+		case JUMPL:
+			g.drawImage(image[1], position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
+			break;
+		default:
+			g.drawImage(image[0], position.x, position.y);
+			break;
+		}
+
 	}
 
 	@Override
@@ -92,8 +93,7 @@ public class Player extends Entity
 		{
 			velocity.y -= JUMP_VELOCIYY;
 		}
-		
-		
+
 		super.update(gc, delta);
 	}
 

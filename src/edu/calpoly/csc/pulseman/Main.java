@@ -14,7 +14,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
-import org.newdawn.slick.geom.Vector2f;
 
 import edu.calpoly.csc.pulseman.MessageHandler.MessageReceiver;
 
@@ -77,7 +76,6 @@ public class Main extends BasicGame
 		public void render(GameContainer gc, Graphics g)
 		{
 			image.draw(0, 0, scale);
-			g.drawString(new String("" + tVelocity), 300, 100);
 		}
 
 	}
