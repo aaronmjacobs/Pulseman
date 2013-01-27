@@ -185,6 +185,10 @@ public class GameScreen implements GameInterface, KeyListener
 			DECAY_VALUE -= .05f;
 			System.out.println("Decay value:" + DECAY_VALUE);
 		}
+		if(key == Input.KEY_L) 
+		{
+			World.getWorld().nextLevel();
+		}
 	}
 
 	public void playerTwoTap()
