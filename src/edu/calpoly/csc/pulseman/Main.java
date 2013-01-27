@@ -45,7 +45,7 @@ public class Main extends BasicGame
 	Sound debugMusic;
 	public static int tVelocity;
 
-	private class Heart
+	/*private class Heart
 	{
 		public Image image;
 		public float scale;
@@ -78,9 +78,8 @@ public class Main extends BasicGame
 			image.draw(0, 0, scale);
 		}
 
-	}
+	}*/
 
-	public static Heart heart;
 
 	public Main()
 	{
@@ -121,7 +120,6 @@ public class Main extends BasicGame
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
 		interfaceMap.get(state).render(gc, g);
-		heart.render(gc, g);
 	}
 
 	@Override
@@ -141,8 +139,6 @@ public class Main extends BasicGame
 
 		debugMusic = new Sound("res/pulse_of_nature.ogg");
 		debugMusic.play();
-		heart = new Heart();
-		heart.init(new Image("res/heart.png"));
 
 		MessageHandler.addmessageReceiver(new MessageReceiver()
 		{
@@ -188,7 +184,6 @@ public class Main extends BasicGame
 	public void update(GameContainer gc, int dt) throws SlickException
 	{
 		interfaceMap.get(state).update(gc, dt);
-		heart.update(gc, dt);
 		if(tVelocity > 0)
 			tVelocity -= 0.0001;
 	}
