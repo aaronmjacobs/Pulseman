@@ -157,6 +157,7 @@ public class Main extends BasicGame
 		app.setDisplayMode(width, height, false);
 		app.setTargetFrameRate(60);
 		app.setVSync(true);
+		app.setIcon("res/monk.png");
 		app.start();
 	}
 
