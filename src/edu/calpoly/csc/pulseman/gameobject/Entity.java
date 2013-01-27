@@ -74,8 +74,8 @@ public abstract class Entity extends Collidable
 			return;
 		}
 
-		boolean oldXCrossover = oldCrossover.getWidth() > 0.1f;
-		boolean oldYCrossover = oldCrossover.getHeight() > 0.1f;
+		boolean oldXCrossover = oldCrossover.getWidth() > 1.0f;
+		boolean oldYCrossover = oldCrossover.getHeight() > 1.0f;
 
 		float diffx = bounds.getCenterX() - collidable.bounds.getCenterX();
 		float diffy = bounds.getCenterY() - collidable.bounds.getCenterY();
