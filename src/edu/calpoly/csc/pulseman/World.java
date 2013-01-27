@@ -148,7 +148,7 @@ public class World {
 			collidables.add(new Tile(xPos, yPos));
 			break;
 		case kMovingTile:
-			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .5f, 
+			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .3f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
 			break;
