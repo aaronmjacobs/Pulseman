@@ -29,14 +29,24 @@ public class Camera
 		float xTranslation = -(float)(p.getHitBox().getX() - Main.getScreenWidth() / 2.0);
 		float yTranslation = -(float)(p.getHitBox().getY() - Main.getScreenHeight() / 2.0);
 
-		if(xTranslation > 0.0f || xTranslation < -Main.getScreenWidth())
+		if(xTranslation > 0.0f)
 		{
 			xTranslation = 0.0f;
 		}
 
-		if(yTranslation > 0.0f || yTranslation < -Main.getScreenHeight())
+		if(yTranslation > 0.0f)
 		{
 			yTranslation = 0.0f;
+		}
+
+		if(xTranslation < -World.getWorld().getLevelWidth() + Main.getScreenWidth())
+		{
+			xTranslation = (float)(-World.getWorld().getLevelWidth() + Main.getScreenWidth());
+		}
+
+		if(yTranslation < -World.getWorld().getLevelHeight() + Main.getScreenHeight())
+		{
+			yTranslation = (float)(-World.getWorld().getLevelHeight() + Main.getScreenHeight());
 		}
 
 		g.drawImage(layer1, xTranslation * 0.2f, yTranslation * 0.2f);
