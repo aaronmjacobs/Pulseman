@@ -67,7 +67,7 @@ public class StartMenu implements GameInterface
 				Main.setState(Main.GameState.GAME);
 			}
 
-			if(Main.getAndroidState() == Main.AndroidStates.NOT_CONNECTED || (x >= connectLoc[0] && x <= connectLoc[0] + connectButton.getWidth() && y >= connectLoc[1] && y <= connectLoc[1] + connectButton.getHeight()))
+			if(Main.getAndroidState() == Main.AndroidStates.NOT_CONNECTED && (x >= connectLoc[0] && x <= connectLoc[0] + connectButton.getWidth() && y >= connectLoc[1] && y <= connectLoc[1] + connectButton.getHeight()))
 			{
 				listenForConnection();
 
