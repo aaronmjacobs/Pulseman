@@ -82,7 +82,7 @@ public class Player extends Entity
 			state = (isOnGround() == true) ? WALKL : JUMPL;
 			dir = Direction.LEFT;
 
-			if(isOnGround() || velocity.x > -PLAYER_SPEED)
+			if(isOnGround() || velocity.x >= -PLAYER_SPEED)
 			{
 				velocity.x = -PLAYER_SPEED;
 			}
@@ -92,7 +92,7 @@ public class Player extends Entity
 			state = (isOnGround() == true) ? WALKR : JUMPR;
 			dir = Direction.RIGHT;
 
-			if(isOnGround() || velocity.x < PLAYER_SPEED)
+			if(isOnGround() || velocity.x <= PLAYER_SPEED)
 			{
 				velocity.x = PLAYER_SPEED;
 			}
