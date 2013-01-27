@@ -31,10 +31,6 @@ public abstract class Entity extends Collidable
 		velocity.y += acceleration.y * delta;
 
 		// Update position
-		if(Math.abs(velocity.x * delta) > 20)
-		{
-			System.out.println("big diff");
-		}
 		position.x += velocity.x * delta;
 		position.y += velocity.y * delta;
 
