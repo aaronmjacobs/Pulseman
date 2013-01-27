@@ -36,7 +36,9 @@ public class Main extends BasicGame
 	private static GameState state = GameState.MENU;
 	private static int curLevel = -1;
 	private static String[] levels =
-	{ "res/level001.png", "res/level002.png" };
+	{ "res/level1.png", "res/level2.png", "res/level3.png", "res/level4.png",
+	  "res/level5.png", "res/level6.png", "res/level7.png", "res/level8.png",
+	  "res/level9.png", "res/level10.png"};
 	private static final int width = 1280, height = 720;
 	private static volatile int androidState = AndroidStates.NOT_CONNECTED;
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
