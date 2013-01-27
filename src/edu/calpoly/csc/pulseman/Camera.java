@@ -11,12 +11,14 @@ public class Camera
 {
 	private Image sky, layer1, layer2, layer3;
 
-	public Camera(Image sky, Image layer1, Image layer2, Image layer3)
+	public Camera(Image[] bgs)
 	{
-		this.sky = sky;
-		this.layer1 = layer1;
-		this.layer2 = layer2;
-		this.layer3 = layer3;
+		if (bgs.length < 4)
+			throw new RuntimeException("Scheme does not have enough backgrounds");
+		this.sky = bgs[0];
+		this.layer1 = bgs[1];
+		this.layer2 = bgs[2];
+		this.layer3 = bgs[3];
 	}
 
 	/**

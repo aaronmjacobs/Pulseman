@@ -36,7 +36,6 @@ public class GameScreen implements GameInterface, KeyListener
 	
 	private boolean pulseEnabled = false;
 
-	private Camera cam;
 	private AtomicFloat timeMult;
 
 	public GameScreen()
@@ -47,8 +46,6 @@ public class GameScreen implements GameInterface, KeyListener
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		cam.render(gc, g, World.getWorld().getPlayer());
-
 		World.getWorld().render(gc, g);
 		LinkedList<String> messageQueue = Main.getMessageQueue();
 		synchronized(messageQueue)
@@ -74,7 +71,6 @@ public class GameScreen implements GameInterface, KeyListener
 		Image layer1 = new Image("res/mountains.png");
 		Image layer2 = new Image("res/hills.png");
 		Image layer3 = new Image("res/flatlands.png");
-		cam = new Camera(sky, layer1, layer2, layer3);
 		Animation[] desertProps = {cactusAnim};
 		Image[] desertBG = {sky, layer1, layer2, layer3};
 

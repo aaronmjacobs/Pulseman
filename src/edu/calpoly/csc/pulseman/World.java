@@ -34,6 +34,7 @@ public class World {
 	private static final float kAlphaToSpeed = 1.0f;
 	
 	private static World world = new World();
+	private static Camera cam;
 	private static String lastLevel;
 	private int lvlWidth, lvlHeight;
 	private List<Collidable> collidables = new ArrayList<Collidable>();
@@ -121,6 +122,8 @@ public class World {
 	public void loadLevel(String fileName) throws SlickException {
 		lastLevel = fileName;
 		Image level = new Image(fileName);
+		Image[] bgs = SchemeLoader.getBackgrounds();
+		cam = new Camera(bgs);
 		int width = level.getWidth(), height = level.getHeight();
 		
 		collidables.clear();
@@ -136,6 +139,7 @@ public class World {
 	}
 	
 	public void render(GameContainer gc, Graphics g) {
+		cam.render(gc, g, player);
 		player.render(gc, g);
 		
 		for (GameObject obj: nonCollidables) {
