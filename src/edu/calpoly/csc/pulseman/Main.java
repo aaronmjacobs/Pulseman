@@ -120,7 +120,7 @@ public class Main extends BasicGame
 		gameOver.init(gc);
 		interfaceMap.put(GameState.GAMEOVER, gameOver);
 
-		debugMusic = new Sound("res/music.ogg");
+		debugMusic = new Sound("res/pulse_of_nature.ogg");
 		debugMusic.play();
 		heart = new Heart();
 		heart.init(new Image("res/heart.png"));
