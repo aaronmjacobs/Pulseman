@@ -2,6 +2,7 @@ package edu.calpoly.csc.pulseman.gameobject;
 
 import java.util.List;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,23 +16,26 @@ public class Enemy extends Entity implements Murderer
 
 	private boolean affectByPulse;
 	private static Image image;
+	private static Animation anim;
 	private Direction direction;
 
-	public static void init(Image image)
+	public static void init(Animation animation)
 	{
-		Enemy.image = image;
+		Enemy.anim = animation;
+		//Enemy.image = image;
 	}
 
 	public Enemy(int x, int y, boolean affectByPulse)
 	{
-		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
+		super(new Rectangle(x, y, anim.getWidth(), anim.getHeight()));
 		this.affectByPulse = affectByPulse;
 		direction = Direction.LEFT;
 	}
 
 	public void render(GameContainer gc, Graphics g)
 	{
-		g.drawImage(image, position.x, position.y);
+		g.drawImage(anim.getCurrentFrame(), position.x, position.y);
+		//g.drawImage(image, position.x, position.y);
 	}
 
 	public void update(GameContainer gc, int delta)
