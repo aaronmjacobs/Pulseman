@@ -22,9 +22,9 @@ import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class GameScreen implements GameInterface, KeyListener
 {
-	public static final float DECAY_VALUE = .99f;
-	public static final float MAX_MULT = 20.0f;
-	public static final float MAX_SPEEDUP = 10.0f;
+	public static float DECAY_VALUE = .99f;
+	public static float MAX_MULT = 20.0f;
+	public static float MAX_SPEEDUP = 10.0f;
 
 	private static final int MS_PER_FRAME = 300;
 
@@ -60,7 +60,7 @@ public class GameScreen implements GameInterface, KeyListener
 	{
 		Image[] cactus =
 		{ new Image("res/cactus/cactus1.png"), new Image("res/cactus/cactus2.png"), new Image("res/cactus/cactus3.png"), new Image("res/cactus/cactus4.png"), };
-		Animation cactusAnim = new Animation(cactus, 1000);
+		Animation cactusAnim = new Animation(cactus, 300);
 
 		heart = new Heart(new Image("res/heart.png"));
 
@@ -148,11 +148,42 @@ public class GameScreen implements GameInterface, KeyListener
 		}
 		if(key == Input.KEY_0)
 		{
+			System.out.println(pulseEnabled ? "Pulse is enabled" : "Pulse disabled");
 			pulseEnabled = !pulseEnabled;
 		}
 		if(key == Input.KEY_ESCAPE) 
 		{
 			Main.reset();
+		}
+		if(key == Input.KEY_R) 
+		{
+			MAX_MULT += .5f;
+			System.out.println("Max mult:" + MAX_MULT);
+		}
+		if(key == Input.KEY_F) 
+		{
+			MAX_MULT -= .5f;
+			System.out.println("Max mult:" + MAX_MULT);
+		}
+		if(key == Input.KEY_T) 
+		{
+			MAX_SPEEDUP += .5f;
+			System.out.println("Max speed up:" + MAX_SPEEDUP);
+		}
+		if(key == Input.KEY_G) 
+		{
+			MAX_SPEEDUP -= .5f;
+			System.out.println("Max speed up:" + MAX_SPEEDUP);
+		}
+		if(key == Input.KEY_Y) 
+		{
+			DECAY_VALUE += .05f;
+			System.out.println("Decay value:" + DECAY_VALUE);
+		}
+		if(key == Input.KEY_H) 
+		{
+			DECAY_VALUE -= .05f;
+			System.out.println("Decay value:" + DECAY_VALUE);
 		}
 	}
 
