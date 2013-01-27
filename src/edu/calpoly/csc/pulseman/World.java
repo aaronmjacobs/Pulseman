@@ -123,7 +123,9 @@ public class World
 
 	public void nextLevel()
 	{
-		SchemeLoader.loadScheme(GameScreen.levelToScheme[Main.getCurrentLevel() + 1]);
+		if (Main.hasNextLevel())
+			SchemeLoader.loadScheme(GameScreen.levelToScheme[Main.getCurrentLevel() + 1]);
+		
 		try
 		{
 			loadLevel(Main.nextLevel());

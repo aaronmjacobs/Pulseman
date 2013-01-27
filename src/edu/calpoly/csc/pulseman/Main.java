@@ -59,6 +59,10 @@ public class Main extends BasicGame
 	{
 		return height;
 	}
+	
+	public static boolean hasNextLevel() {
+		return curLevel + 1 < levels.length;
+	}
 
 	public static int getAndroidState()
 	{
