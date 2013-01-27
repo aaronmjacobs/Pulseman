@@ -28,9 +28,8 @@ public class Main extends BasicGame
 	};
 
 	private static GameState state = GameState.MENU;
-	private static int curLevel = 0;
-	private static String[] levels =
-	{ "level001.png", "level002.png" };
+	private static int curLevel = -1;
+	private static String[] levels = { "res/level001.png", "res/level002.png" };
 	private static final int width = 1280, height = 720;
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
 
@@ -88,6 +87,10 @@ public class Main extends BasicGame
 	public static int getScreenHeight()
 	{
 		return height;
+	}
+	
+	public static String nextLevel() {
+		return levels[++curLevel];
 	}
 
 	public static void setState(GameState state)

@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 
 import edu.calpoly.csc.pulseman.Main;
+import edu.calpoly.csc.pulseman.World;
 import edu.calpoly.csc.pulseman.Main.GameState;
 
 public class Player extends Entity
@@ -62,7 +63,10 @@ public class Player extends Entity
 		{
 			Main.setState(GameState.GAMEOVER);
 		}
-		else
+		else if (collidable instanceof Goal) {
+			World.getWorld().nextLevel();
+		} 
+		else 
 		{
 			super.handleCollision(collidable, oldBounds);
 		}

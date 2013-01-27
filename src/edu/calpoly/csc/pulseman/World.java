@@ -15,6 +15,7 @@ import org.newdawn.slick.geom.Vector2f;
 import edu.calpoly.csc.pulseman.gameobject.Collidable;
 import edu.calpoly.csc.pulseman.gameobject.Enemy;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
+import edu.calpoly.csc.pulseman.gameobject.Goal;
 import edu.calpoly.csc.pulseman.gameobject.KillingObstacle;
 import edu.calpoly.csc.pulseman.gameobject.MovingTile;
 import edu.calpoly.csc.pulseman.gameobject.OscillateBehavior;
@@ -32,7 +33,6 @@ public class World {
 	private List<GameObject> nonCollidables = new ArrayList<GameObject>();
 	private Player player;
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
-	private Vector2f goalPortal = new Vector2f(0.0f, 0.0f);
 	
 	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy, 
 		kFlippedEnemy, kSpike, kGoal};
@@ -61,6 +61,14 @@ public class World {
 	
 	public void loadLastLevel() throws SlickException {
 		loadLevel(lastLevel);
+	}
+	
+	public void nextLevel() {
+		try {
+			loadLevel(Main.nextLevel());
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void loadLevel(String fileName) throws SlickException {
@@ -128,7 +136,11 @@ public class World {
 					new OscillateBehavior(xPos, yPos, .5f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
+		case kGoal:
+			collidables.add(new Goal(xPos, yPos));
+			break;
 		}
+
 	}
 	
 	public Player getPlayer() {

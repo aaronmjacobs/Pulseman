@@ -13,6 +13,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Input;
 
 import edu.calpoly.csc.pulseman.gameobject.Enemy;
+import edu.calpoly.csc.pulseman.gameobject.Goal;
 import edu.calpoly.csc.pulseman.gameobject.KillingObstacle;
 import edu.calpoly.csc.pulseman.gameobject.Player;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
@@ -62,10 +63,11 @@ public class GameScreen implements GameInterface, KeyListener
 				new Image("res/Player/MonkWalk0003.png")};
 		Player.init(new Animation(monkWalk, 300));
 		Enemy.init(new Image("res/enemy.png"));
+		Goal.init(new Image("res/mountain.png"));
 
 		KillingObstacle.init("res/spike.png");
 		Tile.init(new Image("res/brick.png"));
-		World.getWorld().loadLevel("res/level001.png");
+		World.getWorld().nextLevel();
 		gc.getInput().addKeyListener(this);
 	}
 
