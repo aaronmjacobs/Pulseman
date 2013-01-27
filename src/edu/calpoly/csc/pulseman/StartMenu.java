@@ -17,8 +17,8 @@ public class StartMenu implements GameInterface
 	private volatile int countdown = 0;
 
 	private final float[] buttonLoc =
-	{ 200, 400 }, connectLoc =
-	{ 850, 30 };
+	{ 50, 500 }, connectLoc =
+	{ 75, 200 };
 
 	@Override
 	public void render(GameContainer gc, Graphics g)
