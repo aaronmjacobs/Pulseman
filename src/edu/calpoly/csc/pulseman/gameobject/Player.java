@@ -76,6 +76,12 @@ public class Player extends Entity
 		Input input = gc.getInput();
 		anim.update(delta);
 		state = STAND;
+
+		if(bounds.getMinX() < 0.0f || bounds.getMaxX() > World.getWorld().getLevelWidth() || bounds.getMaxY() > World.getWorld().getLevelHeight())
+		{
+			Main.setState(GameState.GAMEOVER);
+		}
+
 		if(input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT))
 		{
 			state = (isOnGround() == true) ? WALKL : JUMPL;
