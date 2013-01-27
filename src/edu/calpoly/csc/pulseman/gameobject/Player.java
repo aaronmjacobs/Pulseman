@@ -99,13 +99,6 @@ public class Player extends Entity
 		{
 			velocity.y -= JUMP_VELOCIYY;
 		}
-		
-		if (position.x < 0.0f) {
-			position.x = 0.0f;
-		}
-		else if (position.x + anim.getCurrentFrame().getWidth() > World.getWorld().getLevelWidth()) {
-			position.x = World.getWorld().getLevelWidth();
-		}
 
 		super.update(gc, delta);
 	}

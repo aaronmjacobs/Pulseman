@@ -12,7 +12,7 @@ import edu.calpoly.csc.pulseman.World;
 public abstract class Entity extends Collidable
 {
 	public static final float GRAVITY = 0.0008f;
-	
+
 	public enum Direction
 	{
 		LEFT, RIGHT
@@ -39,7 +39,7 @@ public abstract class Entity extends Collidable
 	{
 		super.render(gc, g);
 	}
-	
+
 	@Override
 	public void update(GameContainer gc, int delta)
 	{
@@ -51,6 +51,15 @@ public abstract class Entity extends Collidable
 		// Update position
 		position.x += velocity.x * delta;
 		position.y += velocity.y * delta;
+
+		if(position.x < 0.0f)
+		{
+			position.x = 0.0f;
+		}
+		else if(position.x + bounds.getWidth() > World.getWorld().getLevelWidth())
+		{
+			position.x = World.getWorld().getLevelWidth();
+		}
 
 		handleAllCollisions(delta);
 	}
