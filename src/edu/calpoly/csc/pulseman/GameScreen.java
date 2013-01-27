@@ -62,7 +62,7 @@ public class GameScreen implements GameInterface, KeyListener
 				new Image("res/Player/MonkWalk3.png"),
 				new Image("res/Player/MonkWalk4.png")};
 		
-		Player.init(new Animation(monkWalk, 300));
+		Player.init(new Animation(monkWalk, 300), new Image("res/Player/MonkStand.png"), new Image("res/Player/MonkJump5.png"));
 		Enemy.init(new Image("res/enemy.png"));
 		Goal.init(new Image("res/mountain.png"));
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -14,13 +15,24 @@ import edu.calpoly.csc.pulseman.Main.GameState;
 
 public class Player extends Entity
 {
+	public static final int STAND = 0;
+	public static final int WALKR = 1;
+	public static final int WALKL = 2;
+	public static final int JUMPR = 3;
+	public static final int JUMPL = 4;
+	
 	Direction dir;
+	int state;
 	private static Animation anim;
+	private static Image image[];
 	public final static float PLAYER_SPEED = 0.25f, JUMP_VELOCIYY = 0.4f;
 
-	public static void init(Animation animation)
+	public static void init(Animation walkAnim, Image standImg, Image jumpImg)
 	{
-		Player.anim = animation;
+		Player.anim = walkAnim;
+		Player.image = new Image[2];
+		Player.image[0] = standImg;
+		Player.image[1] = jumpImg;
 	}
 
 	public Player(int x, int y)
@@ -37,11 +49,24 @@ public class Player extends Entity
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		if(dir == Direction.RIGHT)
-			g.drawImage(anim.getCurrentFrame(), position.x, position.y);
-		else
-			g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
-
+		switch (state) {
+            case WALKR:
+            	g.drawImage(anim.getCurrentFrame(), position.x, position.y);
+                break;
+            case WALKL:
+            	g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
+                break;
+            case JUMPR:
+            	g.drawImage(image[1], position.x, position.y);
+                break;
+            case JUMPL:
+            	g.drawImage(image[1], position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
+                break;
+            default:
+            	g.drawImage(image[0], position.x, position.y);
+                break;
+        }
+			
 	}
 
 	@Override
@@ -49,13 +74,16 @@ public class Player extends Entity
 	{
 		Input input = gc.getInput();
 		anim.update(delta);
+		state = STAND;
 		if(input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT))
 		{
+			state = (isOnGround() == true) ? WALKL : JUMPL;
 			dir = Direction.LEFT;
 			position.x -= PLAYER_SPEED * delta;
 		}
 		if(input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT))
 		{
+			state = (isOnGround() == true) ? WALKR : JUMPR;
 			dir = Direction.RIGHT;
 			position.x += PLAYER_SPEED * delta;
 		}
@@ -64,7 +92,8 @@ public class Player extends Entity
 		{
 			velocity.y -= JUMP_VELOCIYY;
 		}
-
+		
+		
 		super.update(gc, delta);
 	}
 
