@@ -140,6 +140,10 @@ public class World
 	public void loadLevel(String fileName) throws SlickException
 	{
 		lastLevel = fileName;
+		// If the fileName is empty, then the game has been beated
+		if (fileName.length() == 0) {
+			return;
+		}
 		Image level = new Image(fileName);
 		Image[] bgs = SchemeLoader.getBackgrounds();
 		cam = new Camera(bgs);
