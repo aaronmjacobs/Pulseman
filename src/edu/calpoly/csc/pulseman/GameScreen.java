@@ -1,5 +1,6 @@
 package edu.calpoly.csc.pulseman;
 
+import edu.calpoly.csc.pulseman.World.LevelLoadListener;
 import edu.calpoly.csc.pulseman.util.AtomicFloat;
 
 import org.newdawn.slick.Animation;
@@ -86,6 +87,15 @@ public class GameScreen implements GameInterface, KeyListener
 		Tile.init(new Image("res/brick.png"));
 		World.getWorld().nextLevel();
 		gc.getInput().addKeyListener(this);
+
+		World.getWorld().addLevelLoadListener(new LevelLoadListener()
+		{
+			@Override
+			public void onLevelLoad()
+			{
+				timeMult.set(0.0f);
+			}
+		});
 	}
 
 	@Override
@@ -153,6 +163,8 @@ public class GameScreen implements GameInterface, KeyListener
 
 	private class Heart implements GameObject
 	{
+		private static final float SCALE_RATE = 0.0007f;
+		
 		public Image image;
 		public float scale;
 		public int beat;
@@ -173,10 +185,10 @@ public class GameScreen implements GameInterface, KeyListener
 				beat = 0;
 			if(beat == 1)
 			{
-				scale += .0005 * delta;
+				scale += SCALE_RATE * delta;
 			}
 			else
-				scale -= .0005 * delta;
+				scale -= SCALE_RATE * delta;
 		}
 
 		@Override
@@ -188,8 +200,7 @@ public class GameScreen implements GameInterface, KeyListener
 		@Override
 		public boolean isAffectedByPulse()
 		{
-			// TODO Auto-generated method stub
-			return false;
+			return true;
 		}
 	}
 

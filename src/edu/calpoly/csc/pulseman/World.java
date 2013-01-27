@@ -27,12 +27,13 @@ import edu.calpoly.csc.pulseman.gameobject.Player;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
 import edu.calpoly.csc.pulseman.gameobject.Tile.TileType;
 
-public class World {
+public class World
+{
 	public static int kPixelsPerTile = 48;
 	public static int kVectorCenter = 50;
-	
+
 	private static final float kAlphaToSpeed = 1.0f;
-	
+
 	private static World world = new World();
 	private static Camera cam;
 	private static String lastLevel;
@@ -42,13 +43,17 @@ public class World {
 	private List<Enemy> enemies = new ArrayList<Enemy>();
 	private Player player;
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
-	
-	private static enum BlockType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy,
-		kSpike, kGoal, kTimeMovingTile, kTimeEnemy, kTimeSpike};
-		
+	private ArrayList<LevelLoadListener> levelListeners = new ArrayList<LevelLoadListener>();
+
+	private static enum BlockType
+	{
+		kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy, kSpike, kGoal, kTimeMovingTile, kTimeEnemy, kTimeSpike
+	};
+
 	private static Map<Integer, BlockType> ColorMap = new HashMap<Integer, BlockType>();
-	
-	static {
+
+	static
+	{
 		ColorMap.put(new Integer(255), BlockType.kNothing);
 		ColorMap.put(new Integer(254), BlockType.kPlayerSpawn);
 		ColorMap.put(new Integer(253), BlockType.kTile);
@@ -60,131 +65,158 @@ public class World {
 		ColorMap.put(new Integer(12), BlockType.kTimeEnemy);
 		ColorMap.put(new Integer(13), BlockType.kTimeSpike);
 	}
-	
-	private World() {}
-	
-	public static World getWorld() {
+
+	private World()
+	{
+	}
+
+	public static World getWorld()
+	{
 		return world;
 	}
-	
-	public boolean isTile(int x, int y, Image map) {
+
+	public boolean isTile(int x, int y, Image map)
+	{
 		System.out.println(x / kPixelsPerTile + " " + y / kPixelsPerTile + "\n");
 		BlockType tt = ColorMap.get(map.getColor(x / kPixelsPerTile, y / kPixelsPerTile).getRed());
 		System.out.println(tt);
 		return tt == BlockType.kTile || tt == BlockType.kMovingTile;
 	}
-	
-	public TileType getTileType(int x, int y, Image map) {
-		if (y - kPixelsPerTile > 0 	&& ColorMap.get(map.getColor(
-				x / kPixelsPerTile, (y - kPixelsPerTile) / kPixelsPerTile).getRed())
-				== BlockType.kNothing) {
+
+	public TileType getTileType(int x, int y, Image map)
+	{
+		if(y - kPixelsPerTile > 0 && ColorMap.get(map.getColor(x / kPixelsPerTile, (y - kPixelsPerTile) / kPixelsPerTile).getRed()) == BlockType.kNothing)
+		{
 			return TileType.SURFACE;
-		} else {
+		}
+		else
+		{
 			return TileType.NORMAL;
 		}
 	}
-	
-	public Orientation calcSpikeOrientation(int x, int y, Image map) {
-		if (x - kPixelsPerTile > 0 && isTile(x - kPixelsPerTile, y, map)) 
+
+	public Orientation calcSpikeOrientation(int x, int y, Image map)
+	{
+		if(x - kPixelsPerTile > 0 && isTile(x - kPixelsPerTile, y, map))
 			return Orientation.RIGHT;
-		else if (x + kPixelsPerTile < lvlWidth && isTile(x + kPixelsPerTile, y, map)) 
+		else if(x + kPixelsPerTile < lvlWidth && isTile(x + kPixelsPerTile, y, map))
 			return Orientation.LEFT;
-		else if (y + kPixelsPerTile < lvlHeight && isTile(x, y + kPixelsPerTile, map)) 
+		else if(y + kPixelsPerTile < lvlHeight && isTile(x, y + kPixelsPerTile, map))
 			return Orientation.UP;
-		else if (y - kPixelsPerTile > 0 && isTile(x, y - kPixelsPerTile, map)) 
+		else if(y - kPixelsPerTile > 0 && isTile(x, y - kPixelsPerTile, map))
 			return Orientation.DOWN;
 		return Orientation.UP;
 	}
-	
-	public List<Collidable> getCollidables() {
+
+	public List<Collidable> getCollidables()
+	{
 		return collidables;
 	}
-	
+
 	public List<Enemy> getEnemies()
 	{
 		return enemies;
 	}
-	
-	public void loadLastLevel() throws SlickException {
+
+	public void loadLastLevel() throws SlickException
+	{
 		loadLevel(lastLevel);
 	}
-	
-	public void nextLevel() {
+
+	public void nextLevel()
+	{
 		SchemeLoader.loadScheme(GameScreen.levelToScheme[Main.getCurrentLevel() + 1]);
-		try {
+		try
+		{
 			loadLevel(Main.nextLevel());
-		} catch (SlickException e) {
+		}
+		catch(SlickException e)
+		{
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void loadLevel(String fileName) throws SlickException {
+
+	public void loadLevel(String fileName) throws SlickException
+	{
 		lastLevel = fileName;
 		Image level = new Image(fileName);
 		Image[] bgs = SchemeLoader.getBackgrounds();
 		cam = new Camera(bgs);
 		int width = level.getWidth(), height = level.getHeight();
-		
+
 		collidables.clear();
 		nonCollidables.clear();
 		enemies.clear();
 		lvlWidth = width * kPixelsPerTile;
 		lvlHeight = height * kPixelsPerTile;
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
+		for(int x = 0; x < width; x++)
+		{
+			for(int y = 0; y < height; y++)
+			{
 				PixelToObject(level.getColor(x, y), x * kPixelsPerTile, y * kPixelsPerTile, level);
 			}
 		}
+
+		onLevelLoaded();
 	}
-	
-	public void render(GameContainer gc, Graphics g) {
+
+	public void render(GameContainer gc, Graphics g)
+	{
 		cam.render(gc, g, player);
 		player.render(gc, g);
-		
-		for (GameObject obj: nonCollidables) {
+
+		for(GameObject obj : nonCollidables)
+		{
 			obj.render(gc, g);
 		}
-		for (Enemy enemy : enemies)
+		for(Enemy enemy : enemies)
 		{
 			enemy.render(gc, g);
 		}
-		for (Collidable obj: collidables) {
+		for(Collidable obj : collidables)
+		{
 			obj.render(gc, g);
 		}
-		
+
 	}
-	
-	public void update(GameContainer gc, int dt, int affectedDt) {
-		for (Collidable obj: collidables) {
-			if (obj.isAffectedByPulse())
-				obj.update(gc, affectedDt);
-			else
-				obj.update(gc, dt);
-		}
-		for (GameObject obj: nonCollidables) {
-			if (obj.isAffectedByPulse())
-				obj.update(gc, affectedDt);
-			else
-				obj.update(gc, dt);
-		}
-		for (Enemy enemy : enemies)
+
+	public void update(GameContainer gc, int dt, int affectedDt)
+	{
+		for(Collidable obj : collidables)
 		{
-			if (enemy.isAffectedByPulse())
+			if(obj.isAffectedByPulse())
+				obj.update(gc, affectedDt);
+			else
+				obj.update(gc, dt);
+		}
+		for(GameObject obj : nonCollidables)
+		{
+			if(obj.isAffectedByPulse())
+				obj.update(gc, affectedDt);
+			else
+				obj.update(gc, dt);
+		}
+		for(Enemy enemy : enemies)
+		{
+			if(enemy.isAffectedByPulse())
 				enemy.update(gc, affectedDt);
 			else
 				enemy.update(gc, dt);
 		}
 		player.update(gc, dt);
 	}
-	
-	private void PixelToObject(Color color, int xPos, int yPos, Image map) throws SlickException {
+
+	private void PixelToObject(Color color, int xPos, int yPos, Image map) throws SlickException
+	{
 		BlockType type = ColorMap.get(color.getRed());
 		Orientation orient;
-		if (type == null) {
+		if(type == null)
+		{
 			throw new RuntimeException("Color not found in color map, red: " + color.getRed());
 		}
-		switch(type) {
+		switch(type)
+		{
 		case kNothing:
 			break;
 		case kPlayerSpawn:
@@ -192,7 +224,8 @@ public class World {
 			break;
 		case kTile:
 			collidables.add(new Tile(xPos, yPos));
-			if (getTileType(xPos, yPos, map) == TileType.SURFACE && new Random().nextBoolean()) {
+			if(getTileType(xPos, yPos, map) == TileType.SURFACE && new Random().nextBoolean())
+			{
 				Animation prop = SchemeLoader.getProp();
 				int newObjYPos = yPos - prop.getHeight();
 				nonCollidables.add(new BackgroundObject(prop, xPos, newObjYPos));
@@ -200,59 +233,82 @@ public class World {
 			}
 			break;
 		case kMovingTile:
-			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos,
-					kAlphaToSpeed * color.getAlpha() / 255.0f, 
-					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
+			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, kAlphaToSpeed * color.getAlpha() / 255.0f, new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
 			break;
 		case kEnemy:
 			enemies.add(new Enemy(xPos, yPos, false));
 			break;
 		case kSpike:
 			orient = calcSpikeOrientation(xPos, yPos, map);
-			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
-					new OscillateBehavior(xPos, yPos,
-							kAlphaToSpeed *  color.getAlpha() / 255.0f, 
-					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false, orient));
+			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, new OscillateBehavior(xPos, yPos, kAlphaToSpeed * color.getAlpha() / 255.0f, new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), kPixelsPerTile * (color.getBlue() - kVectorCenter))), false, orient));
 			break;
 		case kGoal:
 			collidables.add(new Goal(xPos, yPos));
 			break;
 		case kTimeMovingTile:
-			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos,
-					kAlphaToSpeed *  color.getAlpha() / 255.0f, 
-					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
+			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, kAlphaToSpeed * color.getAlpha() / 255.0f, new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
 			break;
 		case kTimeEnemy:
 			enemies.add(new Enemy(xPos, yPos, false));
 			break;
 		case kTimeSpike:
 			orient = calcSpikeOrientation(xPos, yPos, map);
-			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
-					new OscillateBehavior(xPos, yPos, kAlphaToSpeed *  color.getAlpha() / 255.0f, 
-					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true, orient));
+			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, new OscillateBehavior(xPos, yPos, kAlphaToSpeed * color.getAlpha() / 255.0f, new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), kPixelsPerTile * (color.getBlue() - kVectorCenter))), true, orient));
 			break;
 		}
 
 	}
-	
-	public Player getPlayer() {
+
+	public Player getPlayer()
+	{
 		return player;
 	}
-	
-	public int getLevelWidth() {
+
+	public int getLevelWidth()
+	{
 		return lvlWidth;
 	}
-	
-	public int getLevelHeight() {
+
+	public int getLevelHeight()
+	{
 		return lvlHeight;
 	}
-	
-	public Vector2f getPlayerSpawn() {
+
+	public Vector2f getPlayerSpawn()
+	{
 		return playerSpawn;
 	}
-	
+
+	public void onLevelLoaded()
+	{
+		synchronized(levelListeners)
+		{
+			for(int i = 0; i < levelListeners.size(); ++i)
+			{
+				levelListeners.get(i).onLevelLoad();
+			}
+		}
+	}
+
+	public void addLevelLoadListener(LevelLoadListener listener)
+	{
+		synchronized(levelListeners)
+		{
+			levelListeners.add(listener);
+		}
+	}
+
+	public void removeLevelLoadListener(LevelLoadListener listener)
+	{
+		synchronized(levelListeners)
+		{
+			levelListeners.remove(listener);
+		}
+	}
+
+	interface LevelLoadListener
+	{
+		public void onLevelLoad();
+	}
+
 }
