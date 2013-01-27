@@ -61,7 +61,10 @@ public class GameScreen implements GameInterface, KeyListener
 		Image[] cactus =
 		{ new Image("res/cactus/cactus1.png"), new Image("res/cactus/cactus2.png"), new Image("res/cactus/cactus3.png"), new Image("res/cactus/cactus4.png"), };
 		Animation cactusAnim = new Animation(cactus, 5000);
-
+		Image[] miniCactus =
+			{ new Image("res/cactus/miniCactus1.png"), new Image("res/cactus/miniCactus2.png"), new Image("res/cactus/miniCactus3.png"), new Image("res/cactus/miniCactus4.png")};
+		Animation miniCactusAnim = new Animation(miniCactus, 5000);
+		
 		heart = new Heart(new Image("res/heart.png"));
 
 		Image sky = new Image("res/sky.png");
@@ -69,7 +72,7 @@ public class GameScreen implements GameInterface, KeyListener
 		Image layer2 = new Image("res/hills.png");
 		Image layer3 = new Image("res/flatlands.png");
 		Animation[] desertProps =
-		{ cactusAnim };
+		{ cactusAnim, miniCactusAnim };
 		Image[] desertBG =
 		{ sky, layer1, layer2, layer3 };
 

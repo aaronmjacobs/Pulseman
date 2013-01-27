@@ -39,7 +39,7 @@ public class SchemeLoader {
 	
 	public static Animation getProp() {
 		Animation[] props = schemeMap.get(curScheme).getProps();
-		int idx = new Random().nextInt() % props.length;
+		int idx = new Random().nextInt(props.length);
 		return props[idx];
 	}
 	
