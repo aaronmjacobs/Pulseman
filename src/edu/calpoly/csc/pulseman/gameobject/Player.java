@@ -30,11 +30,11 @@ public class Player extends Entity
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		if (dir == Direction.RIGHT)
+		if(dir == Direction.RIGHT)
 			g.drawImage(anim.getCurrentFrame(), position.x, position.y);
 		else
 			g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
-		
+
 	}
 
 	@Override
@@ -58,9 +58,7 @@ public class Player extends Entity
 			velocity.y -= 0.4f;
 		}
 
-		acceleration.y = 0.00045f;
-
-		super.update(delta);
+		super.update(gc, delta);
 	}
 
 	@Override
@@ -70,10 +68,11 @@ public class Player extends Entity
 		{
 			Main.setState(GameState.GAMEOVER);
 		}
-		else if (collidable instanceof Goal) {
+		else if(collidable instanceof Goal)
+		{
 			World.getWorld().nextLevel();
-		} 
-		else 
+		}
+		else
 		{
 			super.handleCollision(collidable, oldBounds);
 		}

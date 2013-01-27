@@ -1,6 +1,5 @@
 package edu.calpoly.csc.pulseman.gameobject;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 

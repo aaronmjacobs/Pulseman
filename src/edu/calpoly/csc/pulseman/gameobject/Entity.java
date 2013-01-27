@@ -2,6 +2,7 @@ package edu.calpoly.csc.pulseman.gameobject;
 
 import java.util.List;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -9,7 +10,11 @@ import edu.calpoly.csc.pulseman.World;
 
 public abstract class Entity extends Collidable
 {
-	public enum Direction {LEFT, RIGHT};
+	public enum Direction
+	{
+		LEFT, RIGHT
+	};
+
 	protected static final int TOP = 0, BOTTOM = 1, LEFT = 2, RIGHT = 3;
 
 	protected Vector2f position, velocity, acceleration;
@@ -22,10 +27,13 @@ public abstract class Entity extends Collidable
 		velocity = new Vector2f();
 		acceleration = new Vector2f();
 
+		acceleration.y = 0.00045f;
+
 		floor = null;
 	}
 
-	public void update(int delta)
+	@Override
+	public void update(GameContainer gc, int delta)
 	{
 		// Update velocity
 		velocity.x += acceleration.x * delta;

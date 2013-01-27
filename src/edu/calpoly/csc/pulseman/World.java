@@ -31,6 +31,7 @@ public class World {
 	private int lvlWidth, lvlHeight;
 	private List<Collidable> collidables = new ArrayList<Collidable>();
 	private List<GameObject> nonCollidables = new ArrayList<GameObject>();
+	private List<Enemy> enemies = new ArrayList<Enemy>();
 	private Player player;
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
 	
@@ -89,6 +90,10 @@ public class World {
 	
 	public void render(GameContainer gc, Graphics g) {
 		player.render(gc, g);
+		for (Enemy enemy : enemies)
+		{
+			enemy.render(gc, g);
+		}
 		for (Collidable obj: collidables) {
 			obj.render(gc, g);
 		}
@@ -103,6 +108,10 @@ public class World {
 		}
 		for (GameObject obj: nonCollidables) {
 			obj.update(gc, dt);
+		}
+		for (Enemy enemy : enemies)
+		{
+			enemy.update(gc, dt);
 		}
 		player.update(gc, dt);
 	}
@@ -127,7 +136,7 @@ public class World {
 							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
 			break;
 		case kEnemy:
-			collidables.add(new Enemy(xPos, yPos));
+			enemies.add(new Enemy(xPos, yPos));
 			break;
 		case kSpike:
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
