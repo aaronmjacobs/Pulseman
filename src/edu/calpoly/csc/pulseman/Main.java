@@ -3,7 +3,6 @@ package edu.calpoly.csc.pulseman;
 import java.io.File;
 import java.net.InetAddress;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import org.lwjgl.LWJGLUtil;
@@ -18,8 +17,6 @@ import edu.calpoly.csc.pulseman.MessageHandler.MessageReceiver;
 
 public class Main extends BasicGame
 {
-	private volatile static LinkedList<String> messageQueue = new LinkedList<String>();
-
 	public enum GameState
 	{
 		MENU, GAME, GAMEOVER
@@ -153,10 +150,4 @@ public class Main extends BasicGame
 		if(tVelocity > 0)
 			tVelocity -= 0.0001;
 	}
-
-	public static LinkedList<String> getMessageQueue()
-	{
-		return messageQueue;
-	}
-
 }
