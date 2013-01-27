@@ -31,10 +31,8 @@ public class Player extends Entity
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		/*if (dir == Direction.RIGHT)
-			g.drawImage(anim.getCurrentFrame(), position.x, position.y);*/
-		/*else (dir == Direction.Left) 
-			g.dr*/
+		g.drawImage(anim.getCurrentFrame(), position.x, position.y);
+		
 	}
 
 	@Override
