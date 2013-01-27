@@ -33,7 +33,7 @@ public class GameScreen implements GameInterface, KeyListener
 	private static final String FOREST = "forest";
 
 	public static final String[] levelToScheme =
-	{ DESERT, DESERT, DESERT };
+	{ DESERT, DESERT, DESERT, DESERT };
 
 	private boolean pulseEnabled = false;
 
