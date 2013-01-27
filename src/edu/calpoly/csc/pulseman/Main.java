@@ -114,6 +114,10 @@ public class Main extends BasicGame
 	{
 		Main.state = state;
 	}
+	
+	public static int getCurrentLevel() {
+		return curLevel;
+	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException

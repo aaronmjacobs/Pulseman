@@ -9,6 +9,9 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Tile extends Collidable {
 	private static Image image;
+	public static enum TileType {
+		NORMAL, LBCORNER, LRCORNER, URCORNER, ULCORNER, SURFACE
+	}
 	
 	
 	static public void init(Image image) {

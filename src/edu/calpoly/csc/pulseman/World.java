@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,6 +14,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import edu.calpoly.csc.pulseman.gameobject.BackgroundObject;
 import edu.calpoly.csc.pulseman.gameobject.Collidable;
 import edu.calpoly.csc.pulseman.gameobject.Enemy;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
@@ -22,6 +25,7 @@ import edu.calpoly.csc.pulseman.gameobject.MovingTile;
 import edu.calpoly.csc.pulseman.gameobject.OscillateBehavior;
 import edu.calpoly.csc.pulseman.gameobject.Player;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
+import edu.calpoly.csc.pulseman.gameobject.Tile.TileType;
 
 public class World {
 	public static int kPixelsPerTile = 48;
@@ -38,21 +42,22 @@ public class World {
 	private Player player;
 	private Vector2f playerSpawn = new Vector2f(0.0f, 0.0f);
 	
-	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy,
+	private static enum BlockType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy,
 		kSpike, kGoal, kTimeMovingTile, kTimeEnemy, kTimeSpike};
-	private static Map<Integer, TileType> ColorMap = new HashMap<Integer, TileType>();
+		
+	private static Map<Integer, BlockType> ColorMap = new HashMap<Integer, BlockType>();
 	
 	static {
-		ColorMap.put(new Integer(255), TileType.kNothing);
-		ColorMap.put(new Integer(254), TileType.kPlayerSpawn);
-		ColorMap.put(new Integer(253), TileType.kTile);
-		ColorMap.put(new Integer(252), TileType.kEnemy);
-		ColorMap.put(new Integer(250), TileType.kMovingTile);
-		ColorMap.put(new Integer(249), TileType.kSpike);
-		ColorMap.put(new Integer(248), TileType.kGoal);
-		ColorMap.put(new Integer(11), TileType.kTimeMovingTile);
-		ColorMap.put(new Integer(12), TileType.kTimeEnemy);
-		ColorMap.put(new Integer(13), TileType.kTimeSpike);
+		ColorMap.put(new Integer(255), BlockType.kNothing);
+		ColorMap.put(new Integer(254), BlockType.kPlayerSpawn);
+		ColorMap.put(new Integer(253), BlockType.kTile);
+		ColorMap.put(new Integer(252), BlockType.kEnemy);
+		ColorMap.put(new Integer(250), BlockType.kMovingTile);
+		ColorMap.put(new Integer(249), BlockType.kSpike);
+		ColorMap.put(new Integer(248), BlockType.kGoal);
+		ColorMap.put(new Integer(11), BlockType.kTimeMovingTile);
+		ColorMap.put(new Integer(12), BlockType.kTimeEnemy);
+		ColorMap.put(new Integer(13), BlockType.kTimeSpike);
 	}
 	
 	private World() {}
@@ -63,9 +68,19 @@ public class World {
 	
 	public boolean isTile(int x, int y, Image map) {
 		System.out.println(x / kPixelsPerTile + " " + y / kPixelsPerTile + "\n");
-		TileType tt = ColorMap.get(map.getColor(x / kPixelsPerTile, y / kPixelsPerTile).getRed());
+		BlockType tt = ColorMap.get(map.getColor(x / kPixelsPerTile, y / kPixelsPerTile).getRed());
 		System.out.println(tt);
-		return tt == TileType.kTile || tt == TileType.kMovingTile;
+		return tt == BlockType.kTile || tt == BlockType.kMovingTile;
+	}
+	
+	public TileType getTileType(int x, int y, Image map) {
+		if (y - kPixelsPerTile > 0 	&& ColorMap.get(map.getColor(
+				x / kPixelsPerTile, (y - kPixelsPerTile) / kPixelsPerTile).getRed())
+				== BlockType.kNothing) {
+			return TileType.SURFACE;
+		} else {
+			return TileType.NORMAL;
+		}
 	}
 	
 	public Orientation calcSpikeOrientation(int x, int y, Image map) {
@@ -94,11 +109,13 @@ public class World {
 	}
 	
 	public void nextLevel() {
+		SchemeLoader.loadScheme(GameScreen.levelToScheme[Main.getCurrentLevel() + 1]);
 		try {
 			loadLevel(Main.nextLevel());
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public void loadLevel(String fileName) throws SlickException {
@@ -120,6 +137,10 @@ public class World {
 	
 	public void render(GameContainer gc, Graphics g) {
 		player.render(gc, g);
+		
+		for (GameObject obj: nonCollidables) {
+			obj.render(gc, g);
+		}
 		for (Enemy enemy : enemies)
 		{
 			enemy.render(gc, g);
@@ -127,9 +148,7 @@ public class World {
 		for (Collidable obj: collidables) {
 			obj.render(gc, g);
 		}
-		for (GameObject obj: nonCollidables) {
-			obj.render(gc, g);
-		}
+		
 	}
 	
 	public void update(GameContainer gc, int dt, int affectedDt) {
@@ -156,7 +175,7 @@ public class World {
 	}
 	
 	private void PixelToObject(Color color, int xPos, int yPos, Image map) throws SlickException {
-		TileType type = ColorMap.get(color.getRed());
+		BlockType type = ColorMap.get(color.getRed());
 		Orientation orient;
 		if (type == null) {
 			throw new RuntimeException("Color not found in color map, red: " + color.getRed());
@@ -169,6 +188,12 @@ public class World {
 			break;
 		case kTile:
 			collidables.add(new Tile(xPos, yPos));
+			if (getTileType(xPos, yPos, map) == TileType.SURFACE && new Random().nextBoolean()) {
+				Animation prop = SchemeLoader.getProp();
+				int newObjYPos = yPos - prop.getHeight();
+				nonCollidables.add(new BackgroundObject(prop, xPos, newObjYPos));
+
+			}
 			break;
 		case kMovingTile:
 			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos,

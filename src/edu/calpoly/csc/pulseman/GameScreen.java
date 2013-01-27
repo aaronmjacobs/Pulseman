@@ -24,7 +24,16 @@ public class GameScreen implements GameInterface, KeyListener
 	public static final float DECAY_VALUE = .99f;
 	public static final float MAX_MULT = 20.0f;
 	public static final float MAX_SPEEDUP = 10.0f;
+	
+	private static final int MS_PER_FRAME = 300;
 
+	
+	private static final String DESERT = "desert";
+	private static final String MOUNTAIN = "mountain";
+	private static final String FOREST = "forest";
+	
+	public static final String[] levelToScheme = {DESERT, DESERT, DESERT};
+	
 	private boolean pulseEnabled = false;
 
 	private Camera cam;
@@ -54,12 +63,24 @@ public class GameScreen implements GameInterface, KeyListener
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
+		Image[] cactus = {new Image("res/cactus/cactus1.png"),
+			new Image("res/cactus/cactus2.png"),
+			new Image("res/cactus/cactus3.png"),
+			new Image("res/cactus/cactus4.png"),
+		};
+		Animation cactusAnim = new Animation(cactus, 300);
 		
 		Image sky = new Image("res/sky.png");
 		Image layer1 = new Image("res/mountains.png");
 		Image layer2 = new Image("res/hills.png");
 		Image layer3 = new Image("res/flatlands.png");
 		cam = new Camera(sky, layer1, layer2, layer3);
+		Animation[] desertProps = {cactusAnim};
+		Image[] desertBG = {sky, layer1, layer2, layer3};
+
+		SchemeLoader.createScheme(DESERT, desertProps, desertBG);
+		
+		
 		Image[] monkWalk = {new Image("res/Player/MonkWalk1.png"),
 				new Image("res/Player/MonkWalk2.png"),
 				new Image("res/Player/MonkWalk3.png"),
@@ -68,7 +89,6 @@ public class GameScreen implements GameInterface, KeyListener
 				new Image("res/Goomba/GoombaFrame2.png"),
 				new Image("res/Goomba/GoombaFrame3.png"),
 				new Image("res/Goomba/GoombaFrame4.png")};
-		
 		Player.init(new Animation(monkWalk, 300), new Image("res/Player/MonkStand.png"), new Image("res/Player/MonkJump5.png"));
 		Enemy.init(new Animation(enemyWalk, 300));
 		Goal.init(new Image("res/mountain.png"));
