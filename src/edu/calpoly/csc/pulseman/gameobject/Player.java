@@ -88,4 +88,9 @@ public class Player extends Entity
 			}
 		}
 	}
+
+	@Override
+	public boolean isAffectedByPulse() {
+		return false;
+	}
 }

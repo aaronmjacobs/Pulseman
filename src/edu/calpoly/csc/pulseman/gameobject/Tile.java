@@ -33,4 +33,9 @@ public class Tile extends Collidable {
 		
 	}
 
+	@Override
+	public boolean isAffectedByPulse() {
+		return false;
+	}
+
 }

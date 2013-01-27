@@ -107,7 +107,7 @@ public class World {
 		}
 	}
 	
-	public void update(GameContainer gc, int dt) {
+	public void update(GameContainer gc, int dt, int affectedDt) {
 		for (Collidable obj: collidables) {
 			obj.update(gc, dt);
 		}
@@ -147,7 +147,7 @@ public class World {
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
 					new OscillateBehavior(xPos, yPos, .5f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
+							kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));
 			break;
 		case kGoal:
 			collidables.add(new Goal(xPos, yPos));

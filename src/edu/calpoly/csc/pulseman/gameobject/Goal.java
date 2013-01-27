@@ -35,4 +35,9 @@ public class Goal extends Collidable {
 		ps.update(delta);
 	}
 
+	@Override
+	public boolean isAffectedByPulse() {
+		return true;
+	}
+
 }

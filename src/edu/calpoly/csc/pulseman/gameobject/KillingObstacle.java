@@ -13,6 +13,7 @@ public class KillingObstacle extends Collidable implements Murderer
 {
 	static Map<String, Image> imageMap = new HashMap<String, Image>();
 	ObjectBehavior behavior;
+	boolean timeAffectable;
 	private Image image;
 
 	public static void init(String imageName) throws SlickException
@@ -20,10 +21,11 @@ public class KillingObstacle extends Collidable implements Murderer
 		imageMap.put(imageName, new Image(imageName));
 	}
 
-	public KillingObstacle(String imgName, int x, int y, ObjectBehavior behavior)
+	public KillingObstacle(String imgName, int x, int y, ObjectBehavior behavior, 
+			boolean timeAffectable)
 	{
 		super(new Rectangle(x, y, imageMap.get(imgName).getWidth(), imageMap.get(imgName).getHeight()));
-
+		this.timeAffectable = timeAffectable;
 		image = imageMap.get(imgName);
 		this.behavior = behavior;
 	}
@@ -38,5 +40,10 @@ public class KillingObstacle extends Collidable implements Murderer
 	public void update(GameContainer gc, int delta)
 	{
 		behavior.update(getHitBox(), delta);
+	}
+
+	@Override
+	public boolean isAffectedByPulse() {
+		return timeAffectable;
 	}
 }

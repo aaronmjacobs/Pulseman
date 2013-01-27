@@ -76,13 +76,15 @@ public class GameScreen implements GameInterface, KeyListener
 	public void update(GameContainer gc, int dt)
 	{
 		timeMult.set(timeMult.get() * DECAY_VALUE);
-
+		int affectedDt;
 		if(PULSE_ENABLED)
 		{
-			dt = (int)((float)dt * MAX_SPEEDUP * Math.min(timeMult.get(), MAX_MULT) / MAX_MULT);
+			affectedDt = (int)((float)dt * MAX_SPEEDUP * Math.min(timeMult.get(), MAX_MULT) / MAX_MULT);
+		} else {
+			affectedDt = dt;
 		}
 
-		World.getWorld().update(gc, dt);
+		World.getWorld().update(gc, dt, affectedDt);
 	}
 
 	@Override
