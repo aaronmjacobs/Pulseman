@@ -70,29 +70,20 @@ public abstract class Entity extends Collidable
 			tileVel.x /= delta;
 			tileVel.y /= delta;
 
-			if(Math.abs(tileVel.x) > Math.abs(velocity.x) || (tileVel.x > 0.0f && velocity.x < 0.0f || tileVel.x < 0.0f && velocity.x > 0.0f))
+			velocity.x = tileVel.x;
+
+			if(this instanceof Player)
 			{
-				velocity.x = tileVel.x;
+				Input input = gc.getInput();
 
-				if(this instanceof Player)
+				if(input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT))
 				{
-					Input input = gc.getInput();
+					velocity.x -= Player.PLAYER_SPEED;
+				}
 
-					if(input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT))
-					{
-						if(isOnGround())
-						{
-							velocity.x -= Player.PLAYER_SPEED;
-						}
-					}
-
-					if(input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT))
-					{
-						if(isOnGround())
-						{
-							velocity.x += Player.PLAYER_SPEED;
-						}
-					}
+				if(input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT))
+				{
+					velocity.x += Player.PLAYER_SPEED;
 				}
 			}
 
@@ -112,7 +103,7 @@ public abstract class Entity extends Collidable
 		}
 		else if(position.x + bounds.getWidth() > World.getWorld().getLevelWidth())
 		{
-			position.x = World.getWorld().getLevelWidth();
+			position.x = World.getWorld().getLevelWidth() - bounds.getWidth();
 		}
 
 		if(isOnGround())
@@ -141,15 +132,6 @@ public abstract class Entity extends Collidable
 		Rectangle oldBounds = new Rectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 
 		bounds.setLocation(position);
-
-		/*if(floor != null && floor instanceof MovingTile)
-		{
-			MovingTile tile = (MovingTile)floor;
-			tile.updateOther(bounds);
-
-			position.x = bounds.getX();
-			position.y = bounds.getY();
-		}*/
 
 		floor = null;
 

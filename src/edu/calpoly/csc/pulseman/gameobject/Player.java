@@ -72,7 +72,7 @@ public class Player extends Entity
 		anim.update(delta);
 		state = STAND;
 
-		if(bounds.getMinX() < 0.0f || bounds.getMaxX() > World.getWorld().getLevelWidth() || bounds.getMaxY() > World.getWorld().getLevelHeight())
+		if(bounds.getMaxY() > World.getWorld().getLevelHeight())
 		{
 			Main.setState(GameState.GAMEOVER);
 		}
@@ -82,7 +82,7 @@ public class Player extends Entity
 			state = (isOnGround() == true) ? WALKL : JUMPL;
 			dir = Direction.LEFT;
 
-			if(isOnGround() || velocity.x > -PLAYER_SPEED)
+			if(isOnGround() || velocity.x >= -PLAYER_SPEED)
 			{
 				velocity.x = -PLAYER_SPEED;
 			}
@@ -92,7 +92,7 @@ public class Player extends Entity
 			state = (isOnGround() == true) ? WALKR : JUMPR;
 			dir = Direction.RIGHT;
 
-			if(isOnGround() || velocity.x < PLAYER_SPEED)
+			if(isOnGround() || velocity.x <= PLAYER_SPEED)
 			{
 				velocity.x = PLAYER_SPEED;
 			}
