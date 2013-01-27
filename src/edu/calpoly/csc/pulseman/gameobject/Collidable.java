@@ -39,6 +39,11 @@ public abstract class Collidable implements GameObject
 			colors.add(emitter.new ColorRecord(1.0f, new Color(0.2f, 0.2f, 1.0f)));
 			emitter.colors = colors;
 			ps.addEmitter(emitter);
+			
+			// Arbitrary numbers to make the particle system 
+			// start with particles already emitted
+			for(int i = 0; i < 100; i++)
+				ps.update(50);
 		}
 	}
 

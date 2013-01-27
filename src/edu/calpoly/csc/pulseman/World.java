@@ -101,7 +101,7 @@ public class World
 			return Orientation.LEFT;
 		else if(y + kPixelsPerTile < lvlHeight && isTile(x, y + kPixelsPerTile, map))
 			return Orientation.UP;
-		else if(y - kPixelsPerTile > 0 && isTile(x, y - kPixelsPerTile, map))
+		else if(y - kPixelsPerTile> 0 && isTile(x, y - kPixelsPerTile, map))
 			return Orientation.DOWN;
 		return Orientation.UP;
 	}
