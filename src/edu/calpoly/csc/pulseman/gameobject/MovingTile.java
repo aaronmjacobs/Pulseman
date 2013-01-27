@@ -7,6 +7,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.particles.ConfigurableEmitter;
 import org.newdawn.slick.particles.ConfigurableEmitter.ColorRecord;
 import org.newdawn.slick.particles.ParticleSystem;
@@ -38,6 +39,11 @@ public class MovingTile extends Tile
 	public void updateOther(Rectangle rect)
 	{
 		behavior.updateOther(rect);
+	}
+	
+	public Vector2f getPositionChange()
+	{
+		return behavior.getPositionChange();
 	}
 	
 	@Override

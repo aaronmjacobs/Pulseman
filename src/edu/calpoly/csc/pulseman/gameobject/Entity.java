@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -11,7 +12,8 @@ import edu.calpoly.csc.pulseman.World;
 
 public abstract class Entity extends Collidable
 {
-	public static final float GRAVITY = 0.0008f;
+	public static final float GRAVITY = 0.0008f, FRICTION = 0.004f,
+			FRICTION_THRESHOLD = 0.05f;
 
 	public enum Direction
 	{
@@ -35,6 +37,11 @@ public abstract class Entity extends Collidable
 		floor = null;
 	}
 
+	public boolean isOnGround()
+	{
+		return floor != null;
+	}
+
 	public void render(GameContainer gc, Graphics g)
 	{
 		super.render(gc, g);
@@ -44,9 +51,56 @@ public abstract class Entity extends Collidable
 	public void update(GameContainer gc, int delta)
 	{
 		super.update(gc, delta);
+
+		updatePosition(gc, delta);
+
+		handleAllCollisions(delta);
+	}
+
+	protected void updatePosition(GameContainer gc, int delta)
+	{
 		// Update velocity
 		velocity.x += acceleration.x * delta;
 		velocity.y += acceleration.y * delta;
+
+		if(floor != null && floor instanceof MovingTile)
+		{
+			MovingTile tile = (MovingTile)floor;
+			Vector2f tileVel = tile.getPositionChange();
+			tileVel.x /= delta;
+			tileVel.y /= delta;
+
+			if(Math.abs(tileVel.x) > Math.abs(velocity.x) || (tileVel.x > 0.0f && velocity.x < 0.0f || tileVel.x < 0.0f && velocity.x > 0.0f))
+			{
+				velocity.x = tileVel.x;
+
+				if(this instanceof Player)
+				{
+					Input input = gc.getInput();
+
+					if(input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT))
+					{
+						if(isOnGround())
+						{
+							velocity.x -= Player.PLAYER_SPEED;
+						}
+					}
+
+					if(input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT))
+					{
+						if(isOnGround())
+						{
+							velocity.x += Player.PLAYER_SPEED;
+						}
+					}
+				}
+			}
+
+			if(Math.abs(tileVel.y) > Math.abs(velocity.y))
+			{
+				velocity.y = tileVel.y + 0.01f;
+			}
+		}
 
 		// Update position
 		position.x += velocity.x * delta;
@@ -61,7 +115,25 @@ public abstract class Entity extends Collidable
 			position.x = World.getWorld().getLevelWidth();
 		}
 
-		handleAllCollisions(delta);
+		if(isOnGround())
+		{
+			if(velocity.x > FRICTION_THRESHOLD)
+			{
+				velocity.x -= FRICTION * delta;
+				if(velocity.x < FRICTION_THRESHOLD)
+				{
+					velocity.x = 0;
+				}
+			}
+			else if(velocity.x < -FRICTION_THRESHOLD)
+			{
+				velocity.x += FRICTION * delta;
+				if(velocity.x > -FRICTION_THRESHOLD)
+				{
+					velocity.x = 0;
+				}
+			}
+		}
 	}
 
 	private void handleAllCollisions(int delta)
@@ -70,14 +142,14 @@ public abstract class Entity extends Collidable
 
 		bounds.setLocation(position);
 
-		if(floor != null && floor instanceof MovingTile)
+		/*if(floor != null && floor instanceof MovingTile)
 		{
 			MovingTile tile = (MovingTile)floor;
 			tile.updateOther(bounds);
 
 			position.x = bounds.getX();
 			position.y = bounds.getY();
-		}
+		}*/
 
 		floor = null;
 
@@ -172,7 +244,10 @@ public abstract class Entity extends Collidable
 				}
 
 				floor = collidable;
-				velocity.y = 0.0f;
+				if(velocity.y > 0.0f)
+				{
+					velocity.y = 0.0f;
+				}
 			}
 		}
 

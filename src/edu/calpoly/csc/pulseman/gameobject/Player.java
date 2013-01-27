@@ -41,11 +41,6 @@ public class Player extends Entity
 		dir = Direction.LEFT;
 	}
 
-	public boolean isOnGround()
-	{
-		return floor != null;
-	}
-
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
@@ -86,13 +81,21 @@ public class Player extends Entity
 		{
 			state = (isOnGround() == true) ? WALKL : JUMPL;
 			dir = Direction.LEFT;
-			position.x -= PLAYER_SPEED * delta;
+
+			if(isOnGround() || velocity.x > -PLAYER_SPEED)
+			{
+				velocity.x = -PLAYER_SPEED;
+			}
 		}
 		if(input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT))
 		{
 			state = (isOnGround() == true) ? WALKR : JUMPR;
 			dir = Direction.RIGHT;
-			position.x += PLAYER_SPEED * delta;
+
+			if(isOnGround() || velocity.x < PLAYER_SPEED)
+			{
+				velocity.x = PLAYER_SPEED;
+			}
 		}
 
 		if(input.isKeyDown(Input.KEY_SPACE) && floor != null)

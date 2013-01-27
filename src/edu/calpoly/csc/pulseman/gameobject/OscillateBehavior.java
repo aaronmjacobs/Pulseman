@@ -46,5 +46,10 @@ public class OscillateBehavior implements ObjectBehavior
 		box.setX(box.getX() + positionChange.x);
 		box.setY(box.getY() + positionChange.y);
 	}
+	
+	public Vector2f getPositionChange()
+	{
+		return positionChange;
+	}
 
 }
