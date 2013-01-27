@@ -41,7 +41,7 @@ public class StartMenu implements GameInterface
 			g.drawImage(connectedButton, connectLoc[0], connectLoc[1]);
 		}
 
-		g.drawString("You are a meditating monk. Head towards the light.\n" + "Use the beat to control nature's speed.", Main.getScreenWidth() / 2, Main.getScreenHeight() / 2);
+		//g.drawString("You are a meditating monk. Head towards the light.\n" + "Use the beat to control nature's speed.", Main.getScreenWidth() / 2, Main.getScreenHeight() / 2);
 	}
 
 	@Override
