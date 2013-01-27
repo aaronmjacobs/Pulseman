@@ -78,7 +78,7 @@ public class World
 	public boolean isTile(int x, int y, Image map)
 	{
 		BlockType tt = ColorMap.get(map.getColor(x / kPixelsPerTile, y / kPixelsPerTile).getRed());
-		return tt == BlockType.kTile || tt == BlockType.kMovingTile;
+		return tt == BlockType.kTile || tt == BlockType.kMovingTile || tt == BlockType.kTimeMovingTile;
 	}
 
 	public TileType getTileType(int x, int y, Image map)
