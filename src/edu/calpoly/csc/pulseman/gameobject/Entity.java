@@ -3,6 +3,7 @@ package edu.calpoly.csc.pulseman.gameobject;
 import java.util.List;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -34,9 +35,15 @@ public abstract class Entity extends Collidable
 		floor = null;
 	}
 
+	public void render(GameContainer gc, Graphics g)
+	{
+		super.render(gc, g);
+	}
+	
 	@Override
 	public void update(GameContainer gc, int delta)
 	{
+		super.update(gc, delta);
 		// Update velocity
 		velocity.x += acceleration.x * delta;
 		velocity.y += acceleration.y * delta;
