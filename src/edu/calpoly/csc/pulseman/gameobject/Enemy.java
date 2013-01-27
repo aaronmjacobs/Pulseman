@@ -5,7 +5,6 @@ import java.util.List;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
 import edu.calpoly.csc.pulseman.World;
@@ -13,16 +12,18 @@ import edu.calpoly.csc.pulseman.World;
 public class Enemy extends Entity implements Murderer
 {
 	public static final float ENEMY_SPEED = Player.PLAYER_SPEED * 1.25f;
-
+	public static final int WALKL = 0;
+	public static final int WALKR = 1;
+	
+	
 	private boolean affectByPulse;
-	private static Image image;
+	private int state;
 	private static Animation anim;
 	private Direction direction;
 
 	public static void init(Animation animation)
 	{
 		Enemy.anim = animation;
-		//Enemy.image = image;
 	}
 
 	public Enemy(int x, int y, boolean affectByPulse)
@@ -34,14 +35,17 @@ public class Enemy extends Entity implements Murderer
 
 	public void render(GameContainer gc, Graphics g)
 	{
-		g.drawImage(anim.getCurrentFrame(), position.x, position.y);
-		//g.drawImage(image, position.x, position.y);
+		if (state == WALKR)
+			g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
+		if (state == WALKL)
+			g.drawImage(anim.getCurrentFrame(), position.x, position.y);
 	}
 
 	public void update(GameContainer gc, int delta)
 	{
 		if(direction == Direction.LEFT)
 		{
+			state = WALKL;
 			boolean leftIntersect = false, bottomLeftIntersect = false;
 			Rectangle left = new Rectangle(bounds.getX() - (bounds.getWidth() / 6), bounds.getY() - (bounds.getHeight() / 4), bounds.getWidth(), bounds.getHeight());
 			Rectangle bottomLeft = new Rectangle(left.getX(), left.getY() + left.getHeight(), left.getWidth(), left.getHeight());
@@ -68,6 +72,7 @@ public class Enemy extends Entity implements Murderer
 		}
 		else
 		{
+			state = WALKR;
 			boolean rightIntersect = false, bottomRightIntersect = false;
 			Rectangle right = new Rectangle(bounds.getX() + (bounds.getWidth() / 6), bounds.getY() - (bounds.getHeight() / 4), bounds.getWidth(), bounds.getHeight());
 			Rectangle bottomRight = new Rectangle(right.getX(), right.getY() + right.getHeight(), right.getWidth(), right.getHeight());
@@ -102,6 +107,7 @@ public class Enemy extends Entity implements Murderer
 			position.x += ENEMY_SPEED * delta;
 		}
 
+		anim.update(delta);
 		super.update(gc, delta);
 	}
 
