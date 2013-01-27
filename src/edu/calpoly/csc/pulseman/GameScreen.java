@@ -4,6 +4,7 @@ import edu.calpoly.csc.pulseman.util.AtomicFloat;
 
 import java.util.LinkedList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -55,7 +56,11 @@ public class GameScreen implements GameInterface, KeyListener
 		Image bgImage = new Image("res/bg.png");
 		Image parallax = new Image("res/parallax.png");
 		cam = new Camera(bgImage, parallax);
-		Player.init(new Image("res/monk.png"));
+		Image[] monkWalk = {new Image("res/Player/MonkWalk0000.png"),
+				new Image("res/Player/MonkWalk0001.png"),
+				new Image("res/Player/MonkWalk0002.png"),
+				new Image("res/Player/MonkWalk0003.png")};
+		Player.init(new Animation(monkWalk, 300));
 		Enemy.init(new Image("res/enemy.png"));
 
 		KillingObstacle.init("res/spike.png");
