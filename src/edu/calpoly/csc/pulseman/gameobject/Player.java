@@ -16,7 +16,7 @@ public class Player extends Entity
 {
 	Direction dir;
 	private static Animation anim;
-	private final static float PLAYER_SPEED = 0.25f;
+	public final static float PLAYER_SPEED = 0.25f;
 
 	public static void init(Animation animation)
 	{
