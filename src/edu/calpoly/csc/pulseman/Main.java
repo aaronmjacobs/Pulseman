@@ -34,51 +34,13 @@ public class Main extends BasicGame
 	private static GameState state = GameState.MENU;
 	private static int curLevel = -1;
 	private static String[] levels =
-	{ "res/level2.png", "res/level2.png", "res/level3.png", "res/level4.png",
-	  "res/level5.png", "res/level6.png", "res/level7.png", "res/level8.png",
-	  "res/level9.png", "res/level10.png"};
+	{ "res/level2.png", "res/level2.png", "res/level3.png", "res/level4.png", "res/level5.png", "res/level6.png", "res/level7.png", "res/level8.png", "res/level9.png", "res/level10.png" };
 	private static final int width = 1280, height = 720;
 	private static volatile int androidState = AndroidStates.NOT_CONNECTED;
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
 
 	Sound debugMusic;
 	public static int tVelocity;
-
-	/*private class Heart
-	{
-		public Image image;
-		public float scale;
-		public int beat;
-
-		public void init(Image image)
-		{
-			this.image = image;
-			scale = 1;
-			beat = 1;
-		}
-
-		public void update(GameContainer gc, int delta)
-		{
-			if(scale > 1.2)
-				beat = 0;
-			if(scale < 1.0)
-				beat = 1;
-			if(beat == 1)
-			{
-				scale += .0005 * delta;
-			}
-			else
-				scale -= .0005 * delta;
-
-		}
-
-		public void render(GameContainer gc, Graphics g)
-		{
-			image.draw(0, 0, scale);
-		}
-
-	}*/
-
 
 	public Main()
 	{
@@ -114,8 +76,9 @@ public class Main extends BasicGame
 	{
 		Main.state = state;
 	}
-	
-	public static int getCurrentLevel() {
+
+	public static int getCurrentLevel()
+	{
 		return curLevel;
 	}
 
