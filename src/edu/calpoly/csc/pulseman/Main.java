@@ -10,6 +10,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -36,7 +37,7 @@ public class Main extends BasicGame
 	private static volatile int androidState = AndroidStates.NOT_CONNECTED;
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
 
-	Sound debugMusic;
+	private Music music;
 	public static int tVelocity;
 
 	public Main()
@@ -116,8 +117,8 @@ public class Main extends BasicGame
 		winScreen.init(gc);
 		interfaceMap.put(GameState.WIN, winScreen);
 
-		debugMusic = new Sound("res/pulse_of_nature.ogg");
-		debugMusic.play();
+		music = new Music("res/pulse_of_nature.ogg");
+		music.loop();
 
 		MessageHandler.addmessageReceiver(new MessageReceiver()
 		{
