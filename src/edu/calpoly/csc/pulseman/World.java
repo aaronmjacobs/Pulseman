@@ -127,9 +127,7 @@ public class World {
 							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
 			break;
 		case kEnemy:
-			collidables.add(new Enemy(xPos, yPos, new OscillateBehavior(xPos, yPos, .5f, 
-					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
-							kPixelsPerTile * (color.getBlue() - kVectorCenter)))));
+			collidables.add(new Enemy(xPos, yPos));
 			break;
 		case kSpike:
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, 
