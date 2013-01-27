@@ -16,7 +16,7 @@ public class Player extends Entity
 {
 	Direction dir;
 	private static Animation anim;
-	public final static float PLAYER_SPEED = 0.25f;
+	public final static float PLAYER_SPEED = 0.25f, JUMP_VELOCIYY = 0.4f;
 
 	public static void init(Animation animation)
 	{
@@ -27,6 +27,11 @@ public class Player extends Entity
 	{
 		super(new Rectangle(x, y, anim.getWidth(), anim.getHeight()));
 		dir = Direction.LEFT;
+	}
+
+	public boolean isOnGround()
+	{
+		return floor != null;
 	}
 
 	@Override
@@ -57,7 +62,7 @@ public class Player extends Entity
 
 		if(input.isKeyDown(Input.KEY_SPACE) && floor != null)
 		{
-			velocity.y -= 0.4f;
+			velocity.y -= JUMP_VELOCIYY;
 		}
 
 		super.update(gc, delta);
@@ -90,7 +95,8 @@ public class Player extends Entity
 	}
 
 	@Override
-	public boolean isAffectedByPulse() {
+	public boolean isAffectedByPulse()
+	{
 		return false;
 	}
 }

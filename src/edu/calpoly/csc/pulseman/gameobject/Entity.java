@@ -10,6 +10,8 @@ import edu.calpoly.csc.pulseman.World;
 
 public abstract class Entity extends Collidable
 {
+	public static final float GRAVITY = 0.0008f;
+	
 	public enum Direction
 	{
 		LEFT, RIGHT
@@ -27,7 +29,7 @@ public abstract class Entity extends Collidable
 		velocity = new Vector2f();
 		acceleration = new Vector2f();
 
-		acceleration.y = 0.00045f;
+		acceleration.y = GRAVITY;
 
 		floor = null;
 	}
