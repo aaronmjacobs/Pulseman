@@ -26,7 +26,7 @@ public class KillingObstacle extends Collidable implements Murderer
 	public KillingObstacle(String imgName, int x, int y, ObjectBehavior behavior, 
 			boolean timeAffectable, Orientation orient)
 	{
-		super(new Rectangle(x, y, imageMap.get(imgName).getWidth(), imageMap.get(imgName).getHeight()));
+		super(new Rectangle(x, y, imageMap.get(imgName).getWidth(), imageMap.get(imgName).getHeight()), timeAffectable);
 		this.timeAffectable = timeAffectable;
 		image = imageMap.get(imgName);
 		this.behavior = behavior;

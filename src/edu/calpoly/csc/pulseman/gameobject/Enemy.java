@@ -28,13 +28,14 @@ public class Enemy extends Entity implements Murderer
 
 	public Enemy(int x, int y, boolean affectByPulse)
 	{
-		super(new Rectangle(x, y, anim.getWidth(), anim.getHeight()));
+		super(new Rectangle(x, y, anim.getWidth(), anim.getHeight()), affectByPulse);
 		this.affectByPulse = affectByPulse;
 		direction = Direction.LEFT;
 	}
 
 	public void render(GameContainer gc, Graphics g)
 	{
+		super.render(gc, g);
 		if (state == WALKR)
 			g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
 		if (state == WALKL)
@@ -43,6 +44,7 @@ public class Enemy extends Entity implements Murderer
 
 	public void update(GameContainer gc, int delta)
 	{
+		super.update(gc, delta);
 		if(direction == Direction.LEFT)
 		{
 			state = WALKL;

@@ -11,35 +11,25 @@ import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.particles.effects.FireEmitter;
 
 public class Goal extends Collidable {
-	private static Image image;
-	private ParticleSystem ps;
+	public static Image portalImage;
 	
 	public Goal(int x, int y) throws SlickException {
-		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
-		ps = new ParticleSystem(new Image("res/orb.png"));
-		/*ConfigurableEmitter emitter = new ConfigurableEmitter("emitter");
-		emitter.useAdditive = true;
-		emitter.useOriented = true;
-		emitter.spawnCount.setMax(20.0f);
-		emitter.spawnCount.setMax(10.0f);
-		ps.addEmitter(emitter);*/
-		ps.addEmitter(new FireEmitter());
+		super(new Rectangle(x, y, portalImage.getWidth(), portalImage.getHeight()), true);
 	}
 
 	public static void init(Image image) {
-		Goal.image = image;
+		Goal.portalImage = image;
 	}
 	
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-		//g.drawImage(image, getHitBox().getX(), getHitBox().getY());
-		ps.render(getHitBox().getX() + getHitBox().getWidth() / 2.0f, 
-				getHitBox().getY() + getHitBox().getHeight() / 2.0f);
+		super.render(gc, g);
+		g.drawImage(portalImage, getHitBox().getX(), getHitBox().getY());
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) {
-		ps.update(delta);
+		super.update(gc, delta);
 	}
 
 	@Override

@@ -19,20 +19,25 @@ public class Tile extends Collidable {
 	}
 	
 	public Tile(int x, int y) {
-		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
+		super(new Rectangle(x, y, image.getWidth(), image.getHeight()), false);
+	}
+	
+	public Tile(int x, int y, boolean affectedByTime) {
+		super(new Rectangle(x, y, image.getWidth(), image.getHeight()), affectedByTime);
 	}
 	
 	
 	
 	@Override
 	public void render(GameContainer gc, Graphics g) {
+		super.render(gc, g);
 		g.drawImage(image, getHitBox().getX(), getHitBox().getY());
 		
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) {
-		// TODO Auto-generated method stub
+		super.update(gc, delta);
 		
 	}
 

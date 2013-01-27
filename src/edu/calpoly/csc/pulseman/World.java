@@ -247,7 +247,7 @@ public class World
 			collidables.add(new KillingObstacle("res/spike.png", xPos, yPos, new OscillateBehavior(xPos, yPos, kAlphaToSpeed * color.getAlpha() / 255.0f, new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), kPixelsPerTile * (color.getBlue() - kVectorCenter))), false, orient));
 			break;
 		case kGoal:
-			collidables.add(new Goal(xPos, yPos));
+			collidables.add(new Goal(xPos, yPos - Goal.portalImage.getHeight() + kPixelsPerTile));
 			break;
 		case kTimeMovingTile:
 			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, kAlphaToSpeed * color.getAlpha() / 255.0f, new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), kPixelsPerTile * (color.getBlue() - kVectorCenter))), true));

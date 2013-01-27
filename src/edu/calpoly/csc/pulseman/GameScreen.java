@@ -11,6 +11,7 @@ import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Input;
 
+import edu.calpoly.csc.pulseman.gameobject.Collidable;
 import edu.calpoly.csc.pulseman.gameobject.Enemy;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
 import edu.calpoly.csc.pulseman.gameobject.Goal;
@@ -80,8 +81,8 @@ public class GameScreen implements GameInterface, KeyListener
 		{ new Image("res/Goomba/GoombaFrame1.png"), new Image("res/Goomba/GoombaFrame2.png"), new Image("res/Goomba/GoombaFrame3.png"), new Image("res/Goomba/GoombaFrame4.png") };
 		Player.init(new Animation(monkWalk, 300), new Image("res/Player/MonkStand.png"), new Image("res/Player/MonkJump5.png"));
 		Enemy.init(new Animation(enemyWalk, 300));
-		Goal.init(new Image("res/mountain.png"));
-		MovingTile.init(new Image("res/orb.png"));
+		Goal.init(new Image("res/portal.png"));
+		Collidable.init(new Image("res/orb.png"));
 
 		KillingObstacle.init("res/spike.png");
 		Tile.init(new Image("res/brick.png"));

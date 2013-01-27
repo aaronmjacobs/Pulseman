@@ -22,9 +22,9 @@ public abstract class Entity extends Collidable
 	protected Vector2f position, velocity, acceleration;
 	protected Collidable floor;
 
-	public Entity(Rectangle rect)
+	public Entity(Rectangle rect, boolean affectedByPulse)
 	{
-		super(rect);
+		super(rect, affectedByPulse);
 		position = new Vector2f(rect.getX(), rect.getY());
 		velocity = new Vector2f();
 		acceleration = new Vector2f();

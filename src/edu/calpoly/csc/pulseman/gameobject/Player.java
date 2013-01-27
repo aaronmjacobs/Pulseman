@@ -37,7 +37,7 @@ public class Player extends Entity
 
 	public Player(int x, int y)
 	{
-		super(new Rectangle(x, y, anim.getWidth(), anim.getHeight()));
+		super(new Rectangle(x, y, anim.getWidth(), anim.getHeight()), false);
 		dir = Direction.LEFT;
 	}
 
