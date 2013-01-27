@@ -1,5 +1,7 @@
 package edu.calpoly.csc.pulseman.gameobject;
 
+import java.util.List;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -64,7 +66,7 @@ public class Player extends Entity
 	@Override
 	protected void handleCollision(Collidable collidable, Rectangle oldBounds)
 	{
-		if(collidable instanceof KillingObstacle)
+		if(collidable instanceof Murderer)
 		{
 			Main.setState(GameState.GAMEOVER);
 		}
@@ -75,6 +77,15 @@ public class Player extends Entity
 		else
 		{
 			super.handleCollision(collidable, oldBounds);
+
+			List<Enemy> enemies = World.getWorld().getEnemies();
+			for(int i = 0; i < enemies.size(); ++i)
+			{
+				if(bounds.intersects(enemies.get(i).bounds))
+				{
+					handleCollision(enemies.get(i), oldBounds);
+				}
+			}
 		}
 	}
 }

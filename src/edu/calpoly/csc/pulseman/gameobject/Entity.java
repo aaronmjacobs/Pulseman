@@ -62,8 +62,8 @@ public abstract class Entity extends Collidable
 		}
 
 		floor = null;
-		List<Collidable> collidables = World.getWorld().getCollidables();
 
+		List<Collidable> collidables = World.getWorld().getCollidables();
 		for(int i = 0; i < collidables.size(); ++i)
 		{
 			if(bounds.intersects(collidables.get(i).bounds))

@@ -60,6 +60,11 @@ public class World {
 		return collidables;
 	}
 	
+	public List<Enemy> getEnemies()
+	{
+		return enemies;
+	}
+	
 	public void loadLastLevel() throws SlickException {
 		loadLevel(lastLevel);
 	}

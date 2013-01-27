@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Enemy extends Entity
+public class Enemy extends Entity implements Murderer
 {
 	private static Image image;
 
