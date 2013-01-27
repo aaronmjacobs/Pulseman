@@ -41,7 +41,7 @@ public class KillingObstacle extends Collidable implements Murderer
 			rotation = 0;
 		} else if (orient == Orientation.LEFT) {
 			rotation = 90;
-		} else if (orient == Orientation.UP) {
+		} else if (orient == Orientation.DOWN) {
 			rotation = 180;
 		} else if (orient == Orientation.RIGHT) {
 			rotation = 270;

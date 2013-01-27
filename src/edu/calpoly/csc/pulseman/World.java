@@ -62,18 +62,21 @@ public class World {
 	}
 	
 	public boolean isTile(int x, int y, Image map) {
-		TileType tt = ColorMap.get(map.getColor(x / kPixelsPerTile, y / kPixelsPerTile));
+		System.out.println(x / kPixelsPerTile + " " + y / kPixelsPerTile + "\n");
+		TileType tt = ColorMap.get(map.getColor(x / kPixelsPerTile, y / kPixelsPerTile).getRed());
+		System.out.println(tt);
 		return tt == TileType.kTile || tt == TileType.kMovingTile;
 	}
 	
 	public Orientation calcSpikeOrientation(int x, int y, Image map) {
-		if (x - 1 > 0 && isTile(x - 1, y, map)) 
-			return Orientation.LEFT;
-		else if (x + 1 < Main.getScreenWidth() && isTile(x + 1, y, map)) 
+		System.out.println("blah");
+		if (x - kPixelsPerTile > 0 && isTile(x - kPixelsPerTile, y, map)) 
 			return Orientation.RIGHT;
-		else if (y + 1 < Main.getScreenHeight() && isTile(x, y + 1, map)) 
+		else if (x + kPixelsPerTile < lvlWidth && isTile(x + kPixelsPerTile, y, map)) 
+			return Orientation.LEFT;
+		else if (y + kPixelsPerTile < lvlHeight && isTile(x, y + kPixelsPerTile, map)) 
 			return Orientation.UP;
-		else if (y - 1 < 0 && isTile(x, y - 1, map)) 
+		else if (y - kPixelsPerTile > 0 && isTile(x, y - kPixelsPerTile, map)) 
 			return Orientation.DOWN;
 		return Orientation.UP;
 	}
