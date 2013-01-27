@@ -21,7 +21,7 @@ public class GameOver implements GameInterface {
 	@Override
 	public void update(GameContainer gc, int dt) throws SlickException {
 		
-		if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+		if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) || gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
 			World.getWorld().loadLastLevel();
 			Main.setState(Main.GameState.GAME);;
 		}
