@@ -35,7 +35,7 @@ public class World {
 	private Vector2f goalPortal = new Vector2f(0.0f, 0.0f);
 	
 	private static enum TileType {kNothing, kTile, kPlayerSpawn, kMovingTile, kEnemy, 
-		kFlippedEnemy, kSpike};
+		kFlippedEnemy, kSpike, kGoal};
 	private static Map<Integer, TileType> ColorMap = new HashMap<Integer, TileType>();
 	
 	static {
@@ -46,6 +46,7 @@ public class World {
 		ColorMap.put(new Integer(251), TileType.kFlippedEnemy);
 		ColorMap.put(new Integer(250), TileType.kMovingTile);
 		ColorMap.put(new Integer(249), TileType.kSpike);
+		ColorMap.put(new Integer(248), TileType.kGoal);
 	}
 	
 	private World() {}
