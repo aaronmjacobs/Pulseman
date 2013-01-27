@@ -85,9 +85,13 @@ public class GameScreen implements GameInterface, KeyListener
 		
 		Image[] grass =
 			{ new Image("res/grass/grass1.png"), new Image("res/grass/grass2.png"), new Image("res/grass/grass3.png"), new Image("res/grass/grass4.png"), };
-		Animation grassAnim = new Animation(grass, 5000);
+		Image[] tree =
+			{ new Image("res/tree/tree1.png"), new Image("res/tree/tree2.png"), new Image("res/tree/tree3.png"), new Image("res/tree/tree4.png"), };
+		
+		Animation treeAnim = new Animation(tree, 5000);
+		Animation grassAnim = new Animation(grass, 500);
 		Animation[] grassLandProps =
-			{ grassAnim };
+			{ grassAnim, treeAnim };
 		SchemeLoader.createScheme(FLATLANDS, grassLandProps, flatLandBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
 
 		Image[] plateauBG = { new Image("res/bg/34.png"), new Image("res/bg/33.png"), new Image("res/bg/32.png"), new Image("res/bg/31.png")};
@@ -95,7 +99,7 @@ public class GameScreen implements GameInterface, KeyListener
 
 		
 		Image[] canyonBG = { new Image("res/bg/44.png"), new Image("res/bg/43.png"), new Image("res/bg/42.png"), new Image("res/bg/41.png")};
-		SchemeLoader.createScheme(CANYON, grassLandProps, canyonBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
+		SchemeLoader.createScheme(CANYON, desertProps, canyonBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
 
 
 		
