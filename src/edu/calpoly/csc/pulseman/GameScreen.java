@@ -30,11 +30,11 @@ public class GameScreen implements GameInterface, KeyListener
 	private static final int MS_PER_FRAME = 300;
 
 	private static final String DESERT = "desert";
-	private static final String MOUNTAIN = "mountain";
+	private static final String FLATLANDS = "flatlands";
 	private static final String FOREST = "forest";
 
 	public static final String[] levelToScheme =
-	{ DESERT, DESERT, DESERT, DESERT };
+	{ DESERT, DESERT, FLATLANDS, FLATLANDS, FLATLANDS, FLATLANDS};
 
 	private boolean pulseEnabled = false;
 
@@ -78,6 +78,13 @@ public class GameScreen implements GameInterface, KeyListener
 		{ sky, layer1, layer2, layer3 };
 
 		SchemeLoader.createScheme(DESERT, desertProps, desertBG, new Color(253.0f / 255.0f , 210.0f / 255.0f, 78.0f / 255.0f));
+
+		Image[] grass =
+			{ new Image("res/grass/grass1.png"), new Image("res/grass/grass2.png"), new Image("res/grass/grass3.png"), new Image("res/grass/grass4.png"), };
+		Animation grassAnim = new Animation(grass, 5000);
+		Animation[] grassLandProps =
+			{ grassAnim };
+		SchemeLoader.createScheme(FLATLANDS, grassLandProps, desertBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
 
 		Image[] monkWalk =
 		{ new Image("res/Player/MonkWalk1.png"), new Image("res/Player/MonkWalk2.png"), new Image("res/Player/MonkWalk3.png"), new Image("res/Player/MonkWalk4.png") };
