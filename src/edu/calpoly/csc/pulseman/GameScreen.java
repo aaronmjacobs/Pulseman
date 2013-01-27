@@ -4,6 +4,7 @@ import edu.calpoly.csc.pulseman.util.AtomicFloat;
 
 import java.util.LinkedList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -24,7 +25,7 @@ public class GameScreen implements GameInterface, KeyListener
 
 	private static final boolean PULSE_ENABLED = false;
 
-	private Camera cam = new Camera();
+	private Camera cam;
 	private AtomicFloat timeMult;
 
 	public GameScreen()
@@ -51,7 +52,15 @@ public class GameScreen implements GameInterface, KeyListener
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
-		Player.init(new Image("res/monk.png"));
+		
+		Image bgImage = new Image("res/bg.png");
+		Image parallax = new Image("res/parallax.png");
+		cam = new Camera(bgImage, parallax);
+		Image[] monkWalk = {new Image("res/Player/MonkWalk0000.png"),
+				new Image("res/Player/MonkWalk0001.png"),
+				new Image("res/Player/MonkWalk0002.png"),
+				new Image("res/Player/MonkWalk0003.png")};
+		Player.init(new Animation(monkWalk, 300));
 		Enemy.init(new Image("res/enemy.png"));
 
 		KillingObstacle.init("res/spike.png");
