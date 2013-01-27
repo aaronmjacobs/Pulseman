@@ -112,14 +112,23 @@ public class World {
 	
 	public void update(GameContainer gc, int dt, int affectedDt) {
 		for (Collidable obj: collidables) {
-			obj.update(gc, dt);
+			if (obj.isAffectedByPulse())
+				obj.update(gc, affectedDt);
+			else
+				obj.update(gc, dt);
 		}
 		for (GameObject obj: nonCollidables) {
-			obj.update(gc, dt);
+			if (obj.isAffectedByPulse())
+				obj.update(gc, affectedDt);
+			else
+				obj.update(gc, dt);
 		}
 		for (Enemy enemy : enemies)
 		{
-			enemy.update(gc, dt);
+			if (enemy.isAffectedByPulse())
+				enemy.update(gc, affectedDt);
+			else
+				enemy.update(gc, dt);
 		}
 		player.update(gc, dt);
 	}
@@ -139,7 +148,7 @@ public class World {
 			collidables.add(new Tile(xPos, yPos));
 			break;
 		case kMovingTile:
-			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .5f, 
+			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, .3f, 
 					new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), 
 							kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
 			break;
