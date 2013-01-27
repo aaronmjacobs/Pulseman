@@ -8,11 +8,13 @@ import java.net.InetAddress;
 import java.net.ProtocolException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 public class MessageHandler
 {
-	public static final int PORT = 42000, SOCKET_TIMEOUT = 5000;
+	public static final int PORT = 42000, SOCKET_TIMEOUT = 10000;
 
 	private static Socket clientSocket = null;
 	private static ServerSocket serverSocket = null;
@@ -33,8 +35,11 @@ public class MessageHandler
 		try
 		{
 			serverSocket = new ServerSocket(PORT);
+			serverSocket.setSoTimeout(SOCKET_TIMEOUT);
+			System.out.println("Waiting");
 			clientSocket = serverSocket.accept();
-			//clientSocket.setSoTimeout(SOCKET_TIMEOUT);
+			System.out.println("Accepted");
+			// clientSocket.setSoTimeout(SOCKET_TIMEOUT);
 
 			synchronized(messageReceivers)
 			{
@@ -49,11 +54,32 @@ public class MessageHandler
 
 			receiver = new Receiver();
 			new Thread(receiver, "Message Receiver").start();
+
+			return;
+		}
+		catch(SocketTimeoutException e)
+		{
+			//
+		}
+		catch(SocketException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		catch(IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+
+		disconnect();
+
+		synchronized(messageReceivers)
+		{
+			for(int i = 0; i < messageReceivers.size(); ++i)
+			{
+				messageReceivers.get(i).onConnectionLost(null);
+			}
 		}
 	}
 

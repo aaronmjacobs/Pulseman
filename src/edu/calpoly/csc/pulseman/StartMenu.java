@@ -6,37 +6,78 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-public class StartMenu implements GameInterface {
+public class StartMenu implements GameInterface
+{
 	Image menuButton;
 	Image menuTitle;
-	private final float[] buttonLoc = {200, 400};
-	
+	Image connectButton, connectingButton, connectedButton;
+
+	private final float[] buttonLoc =
+	{ 200, 400 }, connectLoc =
+	{ 850, 30 };
+
 	@Override
-	public void render(GameContainer gc, Graphics g) {
+	public void render(GameContainer gc, Graphics g)
+	{
 		g.drawImage(menuTitle, 200, 0);
 		g.drawImage(menuButton, buttonLoc[0], buttonLoc[1]);
-		g.drawString("You are a meditating monk. Head towards the light.\n" +
-					 "Use the beat to control nature's speed.", 
-		 Main.getScreenWidth() / 2, Main.getScreenHeight() / 2);
+
+		if(Main.getAndroidState() == Main.AndroidStates.NOT_CONNECTED)
+		{
+			g.drawImage(connectButton, connectLoc[0], connectLoc[1]);
+		}
+		else if(Main.getAndroidState() == Main.AndroidStates.CONNECTING)
+		{
+			g.drawImage(connectingButton, connectLoc[0], connectLoc[1]);
+		}
+		else
+		{
+			g.drawImage(connectedButton, connectLoc[0], connectLoc[1]);
+		}
+
+		g.drawString("You are a meditating monk. Head towards the light.\n" + "Use the beat to control nature's speed.", Main.getScreenWidth() / 2, Main.getScreenHeight() / 2);
 	}
 
 	@Override
-	public void init(GameContainer gc) throws SlickException {
+	public void init(GameContainer gc) throws SlickException
+	{
 		menuButton = new Image("res/subtitle.png");
 		menuTitle = new Image("res/title.png");
-		
+		connectButton = new Image("res/connect.png");
+		connectingButton = new Image("res/connecting.png");
+		connectedButton = new Image("res/connected.png");
 	}
 
 	@Override
-	public void update(GameContainer gc, int dt) {
+	public void update(GameContainer gc, int dt)
+	{
 		Input input = gc.getInput();
-		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+		{
 			int x = input.getMouseX();
 			int y = input.getMouseY();
-			if (x >= buttonLoc[0] && x <= buttonLoc[0] + menuButton.getWidth()
-			 && y >= buttonLoc[1] && y <= buttonLoc[1] + menuButton.getHeight())
+			if(x >= buttonLoc[0] && x <= buttonLoc[0] + menuButton.getWidth() && y >= buttonLoc[1] && y <= buttonLoc[1] + menuButton.getHeight())
+			{
 				Main.setState(Main.GameState.GAME);
+			}
+
+			if(x >= connectLoc[0] && x <= connectLoc[0] + connectButton.getWidth() && y >= connectLoc[1] && y <= connectLoc[1] + connectButton.getHeight())
+			{
+				listenForConnection();
+			}
 		}
 	}
 
+	public static void listenForConnection()
+	{
+		new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				Main.setAndroidConnecting();
+				MessageHandler.listenForConnection();
+			}
+		}).start();
+	}
 }

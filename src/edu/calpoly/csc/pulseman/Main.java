@@ -27,10 +27,18 @@ public class Main extends BasicGame
 		MENU, GAME, GAMEOVER
 	};
 
+	public class AndroidStates
+	{
+		public static final int NOT_CONNECTED = 0, CONNECTING = 1,
+				CONNECTED = 2;
+	}
+
 	private static GameState state = GameState.MENU;
 	private static int curLevel = -1;
-	private static String[] levels = { "res/level001.png", "res/level002.png" };
+	private static String[] levels =
+	{ "res/level001.png", "res/level002.png" };
 	private static final int width = 1280, height = 720;
+	private static volatile int androidState = AndroidStates.NOT_CONNECTED;
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
 
 	Sound debugMusic;
@@ -88,8 +96,19 @@ public class Main extends BasicGame
 	{
 		return height;
 	}
-	
-	public static String nextLevel() {
+
+	public static int getAndroidState()
+	{
+		return androidState;
+	}
+
+	public static void setAndroidConnecting()
+	{
+		androidState = AndroidStates.CONNECTING;
+	}
+
+	public static String nextLevel()
+	{
 		return levels[++curLevel];
 	}
 
@@ -137,21 +156,24 @@ public class Main extends BasicGame
 			public void onConnectionEstablished(InetAddress client)
 			{
 				System.out.println("Connection established: " + client.getHostAddress());
+				androidState = AndroidStates.CONNECTED;
 			}
 
 			@Override
 			public void onConnectionLost(InetAddress client)
 			{
-				System.out.println("Connection lost: " + client.getHostAddress());
-				listenForConnection();
+				if(client != null)
+				{
+					System.out.println("Connection lost: " + client.getHostAddress());
+				}
+
+				androidState = AndroidStates.NOT_CONNECTED;
 			}
 		});
 	}
 
 	public static void main(String[] arg) throws SlickException
 	{
-		listenForConnection();
-
 		System.setProperty("org.lwjgl.librarypath", new File(new File(System.getProperty("user.dir"), "native"), LWJGLUtil.getPlatformName()).getAbsolutePath());
 		System.setProperty("net.java.games.input.librarypath", System.getProperty("org.lwjgl.librarypath"));
 		AppGameContainer app = new AppGameContainer(new Main());
@@ -169,18 +191,6 @@ public class Main extends BasicGame
 		heart.update(gc, dt);
 		if(tVelocity > 0)
 			tVelocity -= 0.0001;
-	}
-
-	public static void listenForConnection()
-	{
-		new Thread(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				MessageHandler.listenForConnection();
-			}
-		}).start();
 	}
 
 	public static LinkedList<String> getMessageQueue()
