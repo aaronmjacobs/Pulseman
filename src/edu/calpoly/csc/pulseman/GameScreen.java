@@ -60,7 +60,7 @@ public class GameScreen implements GameInterface, KeyListener
 	{
 		Image[] cactus =
 		{ new Image("res/cactus/cactus1.png"), new Image("res/cactus/cactus2.png"), new Image("res/cactus/cactus3.png"), new Image("res/cactus/cactus4.png"), };
-		Animation cactusAnim = new Animation(cactus, 1000);
+		Animation cactusAnim = new Animation(cactus, 5000);
 
 		heart = new Heart(new Image("res/heart.png"));
 
