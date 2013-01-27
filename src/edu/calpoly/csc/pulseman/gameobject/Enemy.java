@@ -13,6 +13,7 @@ public class Enemy extends Entity implements Murderer
 {
 	public static final float ENEMY_SPEED = Player.PLAYER_SPEED * 1.25f;
 
+	private boolean affectByPulse;
 	private static Image image;
 	private Direction direction;
 
@@ -21,9 +22,10 @@ public class Enemy extends Entity implements Murderer
 		Enemy.image = image;
 	}
 
-	public Enemy(int x, int y)
+	public Enemy(int x, int y, boolean affectByPulse)
 	{
 		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
+		this.affectByPulse = affectByPulse;
 		direction = Direction.LEFT;
 	}
 
@@ -97,5 +99,10 @@ public class Enemy extends Entity implements Murderer
 		}
 
 		super.update(gc, delta);
+	}
+
+	@Override
+	public boolean isAffectedByPulse() {
+		return affectByPulse;
 	}
 }
