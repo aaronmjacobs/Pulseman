@@ -10,7 +10,7 @@ public class GameOver implements GameInterface {
 	Image gameoverImage;
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-		g.drawImage(gameoverImage, 0, 200);		
+		g.drawImage(gameoverImage, 0, 0);		
 	}
 
 	@Override

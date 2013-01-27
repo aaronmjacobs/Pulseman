@@ -12,7 +12,7 @@ import org.newdawn.slick.SlickException;
 public class StartMenu implements GameInterface
 {
 	private Image menuButton;
-	private Image menuTitle;
+	private Image menuBackground;
 	private Image connectButton, connectingButton, connectedButton;
 	private volatile int countdown = 0;
 
@@ -23,7 +23,7 @@ public class StartMenu implements GameInterface
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		g.drawImage(menuTitle, 200, 0);
+		g.drawImage(menuBackground, 0, 0);
 		g.drawImage(menuButton, buttonLoc[0], buttonLoc[1]);
 
 		if(Main.getAndroidState() == Main.AndroidStates.NOT_CONNECTED)
@@ -48,10 +48,10 @@ public class StartMenu implements GameInterface
 	public void init(GameContainer gc) throws SlickException
 	{
 		menuButton = new Image("res/subtitle.png");
-		menuTitle = new Image("res/title.png");
 		connectButton = new Image("res/connect.png");
 		connectingButton = new Image("res/connecting.png");
 		connectedButton = new Image("res/connected.png");
+		menuBackground = new Image("res/mainscreen.png");
 	}
 
 	@Override
