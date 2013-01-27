@@ -1,5 +1,6 @@
 package edu.calpoly.csc.pulseman.gameobject;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -11,30 +12,30 @@ import edu.calpoly.csc.pulseman.Main.GameState;
 
 public class Player extends Entity
 {
-	private static Image image;
+	private static Animation anim;
 	private final static float PLAYER_SPEED = 0.25f;
 
-	public static void init(Image image)
+	public static void init(Animation animation)
 	{
-		Player.image = image;
+		Player.anim = animation;
 	}
 
 	public Player(int x, int y)
 	{
-		super(new Rectangle(x, y, image.getWidth(), image.getHeight()));
+		super(new Rectangle(x, y, anim.getWidth(), anim.getHeight()));
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g)
 	{
-		g.drawImage(image, position.x, position.y);
+		g.drawImage(anim.getCurrentFrame(), position.x, position.y);
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta)
 	{
 		Input input = gc.getInput();
-
+		anim.update(delta);
 		if(input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT))
 		{
 			position.x -= PLAYER_SPEED * delta;
