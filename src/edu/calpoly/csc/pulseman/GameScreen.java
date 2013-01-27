@@ -24,7 +24,7 @@ public class GameScreen implements GameInterface, KeyListener
 	public static final float MAX_MULT = 20.0f;
 	public static final float MAX_SPEEDUP = 10.0f;
 
-	private static final boolean PULSE_ENABLED = false;
+	private boolean pulseEnabled = false;
 
 	private Camera cam;
 	private AtomicFloat timeMult;
@@ -81,7 +81,7 @@ public class GameScreen implements GameInterface, KeyListener
 	{
 		timeMult.set(timeMult.get() * DECAY_VALUE);
 		int affectedDt;
-		if(PULSE_ENABLED)
+		if(pulseEnabled)
 		{
 			affectedDt = (int)((float)dt * MAX_SPEEDUP * Math.min(timeMult.get(), MAX_MULT) / MAX_MULT);
 		} else {
@@ -121,7 +121,7 @@ public class GameScreen implements GameInterface, KeyListener
 		}
 		else if(key == Input.KEY_0)
 		{
-			Main.setState(Main.GameState.GAMEOVER);
+			pulseEnabled = !pulseEnabled;
 		}
 	}
 
