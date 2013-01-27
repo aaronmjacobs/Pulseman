@@ -33,7 +33,8 @@ public class Tile extends Collidable {
 	@Override
 	public void render(GameContainer gc, Graphics g) {
 		super.render(gc, g);
-		float scale = (image.getHeight() + 3) / image.getHeight();
+		float scale = ((float)image.getHeight() + 3.0f) / (float)image.getHeight();
+		System.out.println("scale " + scale + "\n");
 		image.draw(getHitBox().getX(), getHitBox().getY(), scale, SchemeLoader.getColor());
 	}
 

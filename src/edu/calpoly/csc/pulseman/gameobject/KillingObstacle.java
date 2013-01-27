@@ -40,11 +40,11 @@ public class KillingObstacle extends Collidable implements Murderer
 		if (orient == Orientation.UP) {
 			rotation = 0;
 		} else if (orient == Orientation.LEFT) {
-			rotation = 90;
+			rotation = 270;
 		} else if (orient == Orientation.DOWN) {
 			rotation = 180;
 		} else if (orient == Orientation.RIGHT) {
-			rotation = 270;
+			rotation = 90;
 		}
 		image.rotate(rotation);
 		g.drawImage(image, getHitBox().getX(), getHitBox().getY());
