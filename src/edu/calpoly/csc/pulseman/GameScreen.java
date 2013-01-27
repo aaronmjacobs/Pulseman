@@ -77,7 +77,7 @@ public class GameScreen implements GameInterface, KeyListener
 		Image[] desertBG =
 		{ sky, layer1, layer2, layer3 };
 
-		SchemeLoader.createScheme(DESERT, desertProps, desertBG, new Color(0.0f, 1.0f, 1.0f));
+		SchemeLoader.createScheme(DESERT, desertProps, desertBG, new Color(253.0f / 255.0f , 210.0f / 255.0f, 78.0f / 255.0f));
 
 		Image[] monkWalk =
 		{ new Image("res/Player/MonkWalk1.png"), new Image("res/Player/MonkWalk2.png"), new Image("res/Player/MonkWalk3.png"), new Image("res/Player/MonkWalk4.png") };
