@@ -23,7 +23,7 @@ public class GameOver implements GameInterface {
 		
 		if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) || gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
 			World.getWorld().loadLastLevel();
-			Main.setState(Main.GameState.GAME);;
+			Main.setState(Main.GameState.GAME);
 		}
 		if(gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) 
 		{

@@ -173,48 +173,14 @@ public class GameScreen implements GameInterface, KeyListener
 	@Override
 	public void keyPressed(int key, char c)
 	{
-		if(key == Input.KEY_1)
+		if(key == Input.KEY_ENTER)
 		{
 			playerTwoTap();
 		}
-		if(key == Input.KEY_0)
-		{
-			System.out.println(pulseEnabled ? "Pulse is enabled" : "Pulse disabled");
-			pulseEnabled = !pulseEnabled;
-		}
+
 		if(key == Input.KEY_ESCAPE)
 		{
 			Main.reset();
-		}
-		if(key == Input.KEY_R)
-		{
-			MAX_MULT += .5f;
-			System.out.println("Max mult:" + MAX_MULT);
-		}
-		if(key == Input.KEY_F)
-		{
-			MAX_MULT -= .5f;
-			System.out.println("Max mult:" + MAX_MULT);
-		}
-		if(key == Input.KEY_T)
-		{
-			MAX_SPEEDUP += .5f;
-			System.out.println("Max speed up:" + MAX_SPEEDUP);
-		}
-		if(key == Input.KEY_G)
-		{
-			MAX_SPEEDUP -= .5f;
-			System.out.println("Max speed up:" + MAX_SPEEDUP);
-		}
-		if(key == Input.KEY_Y)
-		{
-			DECAY_VALUE += .05f;
-			System.out.println("Decay value:" + DECAY_VALUE);
-		}
-		if(key == Input.KEY_H)
-		{
-			DECAY_VALUE -= .05f;
-			System.out.println("Decay value:" + DECAY_VALUE);
 		}
 		if(key == Input.KEY_L)
 		{
