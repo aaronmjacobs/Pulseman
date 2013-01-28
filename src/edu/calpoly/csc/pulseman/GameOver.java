@@ -6,30 +6,36 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-public class GameOver implements GameInterface {
+public class GameOver implements GameInterface
+{
 	Image gameoverImage;
+
 	@Override
-	public void render(GameContainer gc, Graphics g) {
-		g.drawImage(gameoverImage, 0, 0);		
+	public void render(GameContainer gc, Graphics g)
+	{
+		g.drawImage(gameoverImage, 0, 0);
 	}
 
 	@Override
-	public void init(GameContainer gc) throws SlickException {
-		 gameoverImage = new Image("res/gameover.png");
+	public void init(GameContainer gc) throws SlickException
+	{
+		gameoverImage = new Image("res/gameover.png");
 	}
 
 	@Override
-	public void update(GameContainer gc, int dt) throws SlickException {
-		
-		if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) || gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
+	public void update(GameContainer gc, int dt) throws SlickException
+	{
+
+		if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) || gc.getInput().isKeyDown(Input.KEY_SPACE))
+		{
 			World.getWorld().loadLastLevel();
 			Main.setState(Main.GameState.GAME);
 		}
-		if(gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) 
+		if(gc.getInput().isKeyDown(Input.KEY_ESCAPE))
 		{
 			Main.reset();
 		}
-		
+
 	}
 
 }
