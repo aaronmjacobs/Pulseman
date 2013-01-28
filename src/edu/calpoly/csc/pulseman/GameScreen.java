@@ -107,8 +107,10 @@ public class GameScreen implements GameInterface, KeyListener
 		{ new Image("res/Player/MonkWalk1.png"), new Image("res/Player/MonkWalk2.png"), new Image("res/Player/MonkWalk3.png"), new Image("res/Player/MonkWalk4.png") };
 		Image[] enemyWalk =
 		{ new Image("res/Goomba/GoombaFrame1.png"), new Image("res/Goomba/GoombaFrame2.png"), new Image("res/Goomba/GoombaFrame3.png"), new Image("res/Goomba/GoombaFrame4.png") };
-		Player.init(new Animation(monkWalk, 300), new Image("res/Player/MonkStand.png"), new Image("res/Player/MonkJump5.png"));
-		Enemy.init(new Animation(enemyWalk, 300));
+		Image[] enemy2Walk =
+			{ new Image("res/Goomba/GoombaImmuneFrame1.png"), new Image("res/Goomba/GoombaImmuneFrame2.png"), new Image("res/Goomba/GoombaImmuneFrame3.png"), new Image("res/Goomba/GoombaImmuneFrame4.png") };
+		Player.init(new Animation(monkWalk, 200), new Image("res/Player/MonkStand.png"), new Image("res/Player/MonkJump5.png"));
+		Enemy.init(new Animation(enemyWalk, 200), new Animation(enemy2Walk, 200));
 		Goal.init(new Image("res/portal.png"));
 		Collidable.init(new Image("res/orb.png"));
 

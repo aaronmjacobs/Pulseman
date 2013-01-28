@@ -17,12 +17,13 @@ public class Enemy extends Entity implements Murderer
 
 	private boolean affectByPulse;
 	private int state;
-	private static Animation anim;
+	private static Animation anim, anim2;
 	private Direction direction;
 
-	public static void init(Animation animation)
+	public static void init(Animation animation, Animation animation2)
 	{
 		Enemy.anim = animation;
+		Enemy.anim2 = animation2;
 	}
 
 	public Enemy(int x, int y, boolean affectByPulse)
@@ -35,10 +36,19 @@ public class Enemy extends Entity implements Murderer
 	public void render(GameContainer gc, Graphics g)
 	{
 		super.render(gc, g);
-		if(state == WALKR)
-			g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
-		if(state == WALKL)
-			g.drawImage(anim.getCurrentFrame(), position.x, position.y);
+		if (affectByPulse == true) {
+			if (state == WALKR)
+				g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
+			if (state == WALKL)
+				g.drawImage(anim.getCurrentFrame(), position.x, position.y);
+		}
+		else {
+			if (state == WALKR)
+				g.drawImage(anim2.getCurrentFrame(), position.x, position.y, anim2.getWidth(), 0, 0, anim2.getHeight());
+			if (state == WALKL)
+				g.drawImage(anim2.getCurrentFrame(), position.x, position.y);
+		}
+			
 	}
 
 	@Override
@@ -118,8 +128,10 @@ public class Enemy extends Entity implements Murderer
 		{
 			position.x += ENEMY_SPEED * delta;
 		}
-
-		anim.update(delta);
+		if (affectByPulse == true)
+			anim.update(delta);
+		else
+			anim2.update(delta);
 		super.update(gc, delta);
 	}
 
