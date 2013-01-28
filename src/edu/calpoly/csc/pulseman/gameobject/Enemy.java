@@ -14,8 +14,7 @@ public class Enemy extends Entity implements Murderer
 	public static final float ENEMY_SPEED = Player.PLAYER_SPEED * 1.25f;
 	public static final int WALKL = 0;
 	public static final int WALKR = 1;
-	
-	
+
 	private boolean affectByPulse;
 	private int state;
 	private static Animation anim;
@@ -36,9 +35,9 @@ public class Enemy extends Entity implements Murderer
 	public void render(GameContainer gc, Graphics g)
 	{
 		super.render(gc, g);
-		if (state == WALKR)
+		if(state == WALKR)
 			g.drawImage(anim.getCurrentFrame(), position.x, position.y, anim.getWidth(), 0, 0, anim.getHeight());
-		if (state == WALKL)
+		if(state == WALKL)
 			g.drawImage(anim.getCurrentFrame(), position.x, position.y);
 	}
 
@@ -53,6 +52,11 @@ public class Enemy extends Entity implements Murderer
 			Rectangle left = new Rectangle(bounds.getX() - (bounds.getWidth() / 6), bounds.getY() - (bounds.getHeight() / 4), bounds.getWidth(), bounds.getHeight());
 			Rectangle bottomLeft = new Rectangle(left.getX(), left.getY() + left.getHeight(), left.getWidth(), left.getHeight());
 
+			if(position.x <= 0.0f + bounds.getWidth())
+			{
+				leftIntersect = true;
+			}
+			
 			List<Collidable> collidables = World.getWorld().getCollidables();
 			for(int i = 0; i < collidables.size(); ++i)
 			{
@@ -79,6 +83,11 @@ public class Enemy extends Entity implements Murderer
 			boolean rightIntersect = false, bottomRightIntersect = false;
 			Rectangle right = new Rectangle(bounds.getX() + (bounds.getWidth() / 6), bounds.getY() - (bounds.getHeight() / 4), bounds.getWidth(), bounds.getHeight());
 			Rectangle bottomRight = new Rectangle(right.getX(), right.getY() + right.getHeight(), right.getWidth(), right.getHeight());
+
+			if(position.x + bounds.getWidth() * 2 > World.getWorld().getLevelWidth())
+			{
+				rightIntersect = true;
+			}
 
 			List<Collidable> collidables = World.getWorld().getCollidables();
 			for(int i = 0; i < collidables.size(); ++i)
@@ -115,7 +124,8 @@ public class Enemy extends Entity implements Murderer
 	}
 
 	@Override
-	public boolean isAffectedByPulse() {
+	public boolean isAffectedByPulse()
+	{
 		return affectByPulse;
 	}
 }
