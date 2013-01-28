@@ -37,7 +37,7 @@ public class GameScreen implements GameInterface, KeyListener
 	public static final String[] levelToScheme =
 	{ DESERT, DESERT, FLATLANDS, PLATEAU, CANYON, CANYON, FLATLANDS, PLATEAU };
 
-	private boolean pulseEnabled = false;
+	private boolean pulseEnabled = true;
 
 	private AtomicFloat timeMult;
 	private Heart heart;
