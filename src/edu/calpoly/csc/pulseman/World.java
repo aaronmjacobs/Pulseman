@@ -237,7 +237,6 @@ public class World
 			}
 			break;
 		case kMovingTile:
-			System.out.println(color.getAlpha());
 			collidables.add(new MovingTile(xPos, yPos, new OscillateBehavior(xPos, yPos, kAlphaToSpeed * color.getAlpha() / 255.0f, new Vector2f(kPixelsPerTile * (color.getGreen() - kVectorCenter), kPixelsPerTile * (color.getBlue() - kVectorCenter))), false));
 			break;
 		case kEnemy:
