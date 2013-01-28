@@ -84,7 +84,7 @@ public class GameScreen implements GameInterface, KeyListener
 		{ new Image("res/bg/24.png"), new Image("res/bg/23.png"), new Image("res/bg/22.png"), new Image("res/bg/21.png") };
 
 		Image[] grass =
-		{ new Image("res/grass/grass1.png"), new Image("res/grass/grass2.png"), new Image("res/grass/grass3.png"), new Image("res/grass/grass4.png"), };
+		{ new Image("res/Grass/grass1.png"), new Image("res/Grass/grass2.png"), new Image("res/Grass/grass3.png"), new Image("res/Grass/grass4.png"), };
 		Image[] tree =
 		{ new Image("res/tree/tree1.png"), new Image("res/tree/tree2.png"), new Image("res/tree/tree3.png"), new Image("res/tree/tree4.png"), };
 
