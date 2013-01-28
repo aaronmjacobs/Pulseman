@@ -34,9 +34,8 @@ public class GameScreen implements GameInterface, KeyListener
 	private static final String PLATEAU = "plateau";
 	private static final String CANYON = "canyon";
 
-
 	public static final String[] levelToScheme =
-	{ DESERT, DESERT, FLATLANDS, PLATEAU, CANYON, CANYON, CANYON, CANYON};
+	{ DESERT, DESERT, FLATLANDS, PLATEAU, CANYON, CANYON, FLATLANDS, PLATEAU };
 
 	private boolean pulseEnabled = false;
 
@@ -65,9 +64,9 @@ public class GameScreen implements GameInterface, KeyListener
 		{ new Image("res/cactus/cactus1.png"), new Image("res/cactus/cactus2.png"), new Image("res/cactus/cactus3.png"), new Image("res/cactus/cactus4.png"), };
 		Animation cactusAnim = new Animation(cactus, 5000);
 		Image[] miniCactus =
-			{ new Image("res/cactus/miniCactus1.png"), new Image("res/cactus/miniCactus2.png"), new Image("res/cactus/miniCactus3.png"), new Image("res/cactus/miniCactus4.png")};
+		{ new Image("res/cactus/miniCactus1.png"), new Image("res/cactus/miniCactus2.png"), new Image("res/cactus/miniCactus3.png"), new Image("res/cactus/miniCactus4.png") };
 		Animation miniCactusAnim = new Animation(miniCactus, 5000);
-		
+
 		heart = new Heart(new Image("res/heart.png"));
 
 		Image sky = new Image("res/sky.png");
@@ -79,36 +78,35 @@ public class GameScreen implements GameInterface, KeyListener
 		Image[] desertBG =
 		{ sky, layer1, layer2, layer3 };
 
-		SchemeLoader.createScheme(DESERT, desertProps, desertBG, new Color(253.0f / 255.0f , 210.0f / 255.0f, 78.0f / 255.0f));
-		Image[] flatLandBG = { new Image("res/bg/24.png"), new Image("res/bg/23.png"), new Image("res/bg/22.png"), new Image("res/bg/21.png")};
-		
-		
+		SchemeLoader.createScheme(DESERT, desertProps, desertBG, new Color(253.0f / 255.0f, 210.0f / 255.0f, 78.0f / 255.0f));
+		Image[] flatLandBG =
+		{ new Image("res/bg/24.png"), new Image("res/bg/23.png"), new Image("res/bg/22.png"), new Image("res/bg/21.png") };
+
 		Image[] grass =
-			{ new Image("res/grass/grass1.png"), new Image("res/grass/grass2.png"), new Image("res/grass/grass3.png"), new Image("res/grass/grass4.png"), };
+		{ new Image("res/grass/grass1.png"), new Image("res/grass/grass2.png"), new Image("res/grass/grass3.png"), new Image("res/grass/grass4.png"), };
 		Image[] tree =
-			{ new Image("res/tree/tree1.png"), new Image("res/tree/tree2.png"), new Image("res/tree/tree3.png"), new Image("res/tree/tree4.png"), };
-		
+		{ new Image("res/tree/tree1.png"), new Image("res/tree/tree2.png"), new Image("res/tree/tree3.png"), new Image("res/tree/tree4.png"), };
+
 		Animation treeAnim = new Animation(tree, 5000);
 		Animation grassAnim = new Animation(grass, 500);
 		Animation[] grassLandProps =
-			{ grassAnim, treeAnim };
-		SchemeLoader.createScheme(FLATLANDS, grassLandProps, flatLandBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
+		{ grassAnim, treeAnim };
+		SchemeLoader.createScheme(FLATLANDS, grassLandProps, flatLandBG, new Color(44.0f / 255.0f, 24.0f / 255.0f, 12.0f / 255.0f));
 
-		Image[] plateauBG = { new Image("res/bg/34.png"), new Image("res/bg/33.png"), new Image("res/bg/32.png"), new Image("res/bg/31.png")};
-		SchemeLoader.createScheme(PLATEAU, grassLandProps, plateauBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
+		Image[] plateauBG =
+		{ new Image("res/bg/34.png"), new Image("res/bg/33.png"), new Image("res/bg/32.png"), new Image("res/bg/31.png") };
+		SchemeLoader.createScheme(PLATEAU, grassLandProps, plateauBG, new Color(44.0f / 255.0f, 24.0f / 255.0f, 12.0f / 255.0f));
 
-		
-		Image[] canyonBG = { new Image("res/bg/44.png"), new Image("res/bg/43.png"), new Image("res/bg/42.png"), new Image("res/bg/41.png")};
-		SchemeLoader.createScheme(CANYON, desertProps, canyonBG, new Color(44.0f / 255.0f , 24.0f / 255.0f, 12.0f / 255.0f));
+		Image[] canyonBG =
+		{ new Image("res/bg/44.png"), new Image("res/bg/43.png"), new Image("res/bg/42.png"), new Image("res/bg/41.png") };
+		SchemeLoader.createScheme(CANYON, desertProps, canyonBG, new Color(44.0f / 255.0f, 24.0f / 255.0f, 12.0f / 255.0f));
 
-
-		
 		Image[] monkWalk =
 		{ new Image("res/Player/MonkWalk1.png"), new Image("res/Player/MonkWalk2.png"), new Image("res/Player/MonkWalk3.png"), new Image("res/Player/MonkWalk4.png") };
 		Image[] enemyWalk =
 		{ new Image("res/Goomba/GoombaFrame1.png"), new Image("res/Goomba/GoombaFrame2.png"), new Image("res/Goomba/GoombaFrame3.png"), new Image("res/Goomba/GoombaFrame4.png") };
 		Image[] enemy2Walk =
-			{ new Image("res/Goomba/GoombaImmuneFrame1.png"), new Image("res/Goomba/GoombaImmuneFrame2.png"), new Image("res/Goomba/GoombaImmuneFrame3.png"), new Image("res/Goomba/GoombaImmuneFrame4.png") };
+		{ new Image("res/Goomba/GoombaImmuneFrame1.png"), new Image("res/Goomba/GoombaImmuneFrame2.png"), new Image("res/Goomba/GoombaImmuneFrame3.png"), new Image("res/Goomba/GoombaImmuneFrame4.png") };
 		Player.init(new Animation(monkWalk, 200), new Image("res/Player/MonkStand.png"), new Image("res/Player/MonkJump5.png"));
 		Enemy.init(new Animation(enemyWalk, 200), new Animation(enemy2Walk, 200));
 		Goal.init(new Image("res/portal.png"));
@@ -116,7 +114,7 @@ public class GameScreen implements GameInterface, KeyListener
 
 		KillingObstacle.init("res/spike.png");
 		Tile.init(new Image("res/brick.png"));
-		
+
 		gc.getInput().addKeyListener(this);
 
 		World.getWorld().addLevelLoadListener(new LevelLoadListener()
@@ -127,7 +125,7 @@ public class GameScreen implements GameInterface, KeyListener
 				timeMult.set(0.0f);
 			}
 		});
-		
+
 		World.getWorld().nextLevel();
 		World.getWorld().loadLastLevel();
 	}
@@ -184,41 +182,41 @@ public class GameScreen implements GameInterface, KeyListener
 			System.out.println(pulseEnabled ? "Pulse is enabled" : "Pulse disabled");
 			pulseEnabled = !pulseEnabled;
 		}
-		if(key == Input.KEY_ESCAPE) 
+		if(key == Input.KEY_ESCAPE)
 		{
 			Main.reset();
 		}
-		if(key == Input.KEY_R) 
+		if(key == Input.KEY_R)
 		{
 			MAX_MULT += .5f;
 			System.out.println("Max mult:" + MAX_MULT);
 		}
-		if(key == Input.KEY_F) 
+		if(key == Input.KEY_F)
 		{
 			MAX_MULT -= .5f;
 			System.out.println("Max mult:" + MAX_MULT);
 		}
-		if(key == Input.KEY_T) 
+		if(key == Input.KEY_T)
 		{
 			MAX_SPEEDUP += .5f;
 			System.out.println("Max speed up:" + MAX_SPEEDUP);
 		}
-		if(key == Input.KEY_G) 
+		if(key == Input.KEY_G)
 		{
 			MAX_SPEEDUP -= .5f;
 			System.out.println("Max speed up:" + MAX_SPEEDUP);
 		}
-		if(key == Input.KEY_Y) 
+		if(key == Input.KEY_Y)
 		{
 			DECAY_VALUE += .05f;
 			System.out.println("Decay value:" + DECAY_VALUE);
 		}
-		if(key == Input.KEY_H) 
+		if(key == Input.KEY_H)
 		{
 			DECAY_VALUE -= .05f;
 			System.out.println("Decay value:" + DECAY_VALUE);
 		}
-		if(key == Input.KEY_L) 
+		if(key == Input.KEY_L)
 		{
 			World.getWorld().nextLevel();
 		}
