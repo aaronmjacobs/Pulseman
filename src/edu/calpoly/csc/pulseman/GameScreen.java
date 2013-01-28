@@ -33,10 +33,9 @@ public class GameScreen implements GameInterface, KeyListener
 	private static final String FLATLANDS = "flatlands";
 	private static final String PLATEAU = "plateau";
 	private static final String CANYON = "canyon";
-	private static final String CAVE = "cave";
 
 	public static final String[] levelToScheme =
-	{ DESERT, DESERT, FLATLANDS, FLATLANDS, PLATEAU, CANYON, CAVE, CAVE };
+	{ DESERT, DESERT, FLATLANDS, PLATEAU, CANYON, CANYON, FLATLANDS, PLATEAU };
 
 	private boolean pulseEnabled = true;
 
@@ -100,13 +99,8 @@ public class GameScreen implements GameInterface, KeyListener
 
 		Image[] canyonBG =
 		{ new Image("res/bg/44.png"), new Image("res/bg/43.png"), new Image("res/bg/42.png"), new Image("res/bg/41.png") };
-		SchemeLoader.createScheme(CANYON, desertProps, canyonBG, new Color(213.0f / 255.0f, 190.0f / 255.0f, 118.0f / 255.0f));
+		SchemeLoader.createScheme(CANYON, desertProps, canyonBG, new Color(44.0f / 255.0f, 24.0f / 255.0f, 12.0f / 255.0f));
 
-		Image[] caveBG =
-		{ new Image("res/bg/54.png"), new Image("res/bg/53.png"), new Image("res/bg/52.png"), new Image("res/bg/51.png") };
-		SchemeLoader.createScheme(CAVE, grassLandProps, caveBG, new Color(34.0f / 255.0f, 79.0f / 255.0f, 45.0f / 255.0f));
-
-		
 		Image[] monkWalk =
 		{ new Image("res/Player/MonkWalk1.png"), new Image("res/Player/MonkWalk2.png"), new Image("res/Player/MonkWalk3.png"), new Image("res/Player/MonkWalk4.png") };
 		Image[] enemyWalk =
