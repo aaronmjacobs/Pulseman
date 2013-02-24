@@ -28,7 +28,7 @@ public class GameScreen implements GameInterface, KeyListener
 	public static final float MAX_SPEEDUP = 10.0f;
 
 	private static final float INITIAL_TIME_MULT = 2.0f;
-	private static final float FADE_THRESHOLD = 1.0f;
+	private static final float FADE_THRESHOLD = 0.5f;
 
 	private static final String DESERT = "desert";
 	private static final String FLATLANDS = "flatlands";
