@@ -63,7 +63,7 @@ public class GameScreen implements GameInterface, KeyListener
 			alpha = 0.0f;
 		}
 
-		g.setColor(new org.newdawn.slick.Color(0.5f, 0.5f, 0.5f, alpha));
+		g.setColor(new org.newdawn.slick.Color(0.2f, 0.2f, 0.2f, alpha));
 		g.fillRect(0.0f, 0.0f, gc.getScreenWidth(), gc.getScreenHeight());
 
 		heart.render(gc, g);
