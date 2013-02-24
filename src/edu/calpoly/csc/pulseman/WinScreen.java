@@ -9,11 +9,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.particles.ConfigurableEmitter;
-import org.newdawn.slick.particles.ConfigurableEmitter.Range;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.particles.ConfigurableEmitter.ColorRecord;
-
-import edu.calpoly.csc.pulseman.gameobject.Entity.Direction;
 
 public class WinScreen implements GameInterface {
 	public static final int PS_SPEED = 3;
@@ -21,7 +18,6 @@ public class WinScreen implements GameInterface {
 	
 	private ParticleSystem ps;
 	private ParticleSystem ps2;
-	private ParticleSystem ps3;
 	private Image player;
 	private int psX, psY;
 	private int playerX, playerY;

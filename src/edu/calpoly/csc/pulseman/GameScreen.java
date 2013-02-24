@@ -1,5 +1,6 @@
 package edu.calpoly.csc.pulseman;
 
+import edu.calpoly.csc.pulseman.Main.GameState;
 import edu.calpoly.csc.pulseman.World.LevelLoadListener;
 import edu.calpoly.csc.pulseman.util.AtomicFloat;
 
@@ -17,17 +18,17 @@ import edu.calpoly.csc.pulseman.gameobject.Enemy;
 import edu.calpoly.csc.pulseman.gameobject.GameObject;
 import edu.calpoly.csc.pulseman.gameobject.Goal;
 import edu.calpoly.csc.pulseman.gameobject.KillingObstacle;
-import edu.calpoly.csc.pulseman.gameobject.MovingTile;
 import edu.calpoly.csc.pulseman.gameobject.Player;
 import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class GameScreen implements GameInterface, KeyListener
 {
-	public static float DECAY_VALUE = .99f;
-	public static float MAX_MULT = 20.0f;
-	public static float MAX_SPEEDUP = 10.0f;
+	public static final float DECAY_VALUE = .99f;
+	public static final float MAX_MULT = 20.0f;
+	public static final float MAX_SPEEDUP = 10.0f;
 
-	private static final int MS_PER_FRAME = 300;
+	private static final float INITIAL_TIME_MULT = 2.0f;
+	private static final float FADE_THRESHOLD = 1.0f;
 
 	private static final String DESERT = "desert";
 	private static final String FLATLANDS = "flatlands";
@@ -42,6 +43,8 @@ public class GameScreen implements GameInterface, KeyListener
 	private AtomicFloat timeMult;
 	private Heart heart;
 
+	private float lastSpeedMultiplier = 0.0f;
+
 	public GameScreen()
 	{
 		timeMult = new AtomicFloat(0.0f);
@@ -53,6 +56,15 @@ public class GameScreen implements GameInterface, KeyListener
 		World.getWorld().render(gc, g);
 
 		g.resetTransform();
+
+		float alpha = (FADE_THRESHOLD - lastSpeedMultiplier) / FADE_THRESHOLD;
+		if(alpha < 0.0f)
+		{
+			alpha = 0.0f;
+		}
+
+		g.setColor(new org.newdawn.slick.Color(0.5f, 0.5f, 0.5f, alpha));
+		g.fillRect(0.0f, 0.0f, gc.getScreenWidth(), gc.getScreenHeight());
 
 		heart.render(gc, g);
 	}
@@ -122,7 +134,7 @@ public class GameScreen implements GameInterface, KeyListener
 			@Override
 			public void onLevelLoad()
 			{
-				timeMult.set(0.0f);
+				timeMult.set(INITIAL_TIME_MULT);
 			}
 		});
 
@@ -137,7 +149,13 @@ public class GameScreen implements GameInterface, KeyListener
 		int affectedDt;
 		if(pulseEnabled)
 		{
-			affectedDt = (int)((float)dt * MAX_SPEEDUP * Math.min(timeMult.get(), MAX_MULT) / MAX_MULT);
+			lastSpeedMultiplier = MAX_SPEEDUP * Math.min(timeMult.get(), MAX_MULT) / MAX_MULT;
+			affectedDt = (int)(dt * lastSpeedMultiplier + 0.5f);
+
+			if(affectedDt == 0)
+			{
+				Main.setState(GameState.GAMEOVER);
+			}
 		}
 		else
 		{
