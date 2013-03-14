@@ -12,6 +12,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Sound;
 
 import edu.calpoly.csc.pulseman.gameobject.Collidable;
 import edu.calpoly.csc.pulseman.gameobject.Enemy;
@@ -23,9 +24,11 @@ import edu.calpoly.csc.pulseman.gameobject.Tile;
 
 public class GameScreen implements GameInterface, KeyListener
 {
-	public static final float DECAY_VALUE = .99f;
+	public static final float DIASTOLE_DECAY_VALUE = 0.99f;
+	public static final float SYSTOLE_DECAY_VALUE = 0.95f;
 	public static final float MAX_MULT = 20.0f;
 	public static final float MAX_SPEEDUP = 10.0f;
+	public static final float TIME_INCREASE = 1.5f;
 
 	private static final float INITIAL_TIME_MULT = 2.0f;
 	private static final float FADE_THRESHOLD = 0.5f;
@@ -39,9 +42,12 @@ public class GameScreen implements GameInterface, KeyListener
 	{ DESERT, DESERT, FLATLANDS, PLATEAU, CANYON, CANYON, FLATLANDS, PLATEAU };
 
 	private boolean pulseEnabled = true;
+	private volatile boolean isDiastole = false;
+	private volatile float decayValue = DIASTOLE_DECAY_VALUE;
 
 	private AtomicFloat timeMult;
 	private Heart heart;
+	private Sound diastole, systole;
 
 	private float lastSpeedMultiplier = 0.0f;
 
@@ -72,6 +78,9 @@ public class GameScreen implements GameInterface, KeyListener
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
+		diastole = new Sound("res/sounds/diastole.wav");
+		systole = new Sound("res/sounds/systole.wav");
+		
 		Image[] cactus =
 		{ new Image("res/cactus/cactus1.png"), new Image("res/cactus/cactus2.png"), new Image("res/cactus/cactus3.png"), new Image("res/cactus/cactus4.png"), };
 		Animation cactusAnim = new Animation(cactus, 5000);
@@ -145,7 +154,7 @@ public class GameScreen implements GameInterface, KeyListener
 	@Override
 	public void update(GameContainer gc, int dt)
 	{
-		timeMult.set(timeMult.get() * DECAY_VALUE);
+		timeMult.set(timeMult.get() * decayValue);
 		int affectedDt;
 		if(pulseEnabled)
 		{
@@ -205,10 +214,26 @@ public class GameScreen implements GameInterface, KeyListener
 			World.getWorld().nextLevel();
 		}
 	}
-
+	// Add support for diastole / systole
 	public void playerTwoTap()
 	{
-		timeMult.set(timeMult.get() + 1.0f);
+		if(Main.getState() != Main.GameState.GAME)
+		{
+			return;
+		}
+		
+		isDiastole = !isDiastole;
+		if(isDiastole)
+		{
+			diastole.play();
+			decayValue = SYSTOLE_DECAY_VALUE;
+		}
+		else
+		{
+			systole.play();
+			decayValue = DIASTOLE_DECAY_VALUE;
+		}
+		timeMult.set(timeMult.get() + TIME_INCREASE);
 	}
 
 	@Override

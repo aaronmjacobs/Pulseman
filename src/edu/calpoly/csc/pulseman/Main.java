@@ -90,6 +90,11 @@ public class Main extends BasicGame
 	{
 		Main.state = state;
 	}
+	
+	public static GameState getState()
+	{
+		return state;
+	}
 
 	public static int getCurrentLevel()
 	{
