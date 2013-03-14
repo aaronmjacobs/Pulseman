@@ -145,6 +145,14 @@ public class MessageHandler
 		return clientSocket != null && out != null && in != null && clientSocket.isConnected();
 	}
 
+	public static void send(String message)
+	{
+		if(isConnected())
+		{
+			out.write(message);
+		}
+	}
+
 	private static class Receiver implements Runnable
 	{
 		private boolean alive;
@@ -162,15 +170,12 @@ public class MessageHandler
 		@Override
 		public void run()
 		{
-			int counter = 0;
 			String inputLine;
 
 			try
 			{
 				while(alive && (inputLine = in.readLine()) != null)
 				{
-					out.println("received: " + counter++);
-
 					synchronized(messageReceivers)
 					{
 						for(int i = 0; i < messageReceivers.size(); ++i)
