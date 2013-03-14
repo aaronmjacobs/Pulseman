@@ -1,7 +1,12 @@
 package edu.calpoly.csc.pulseman;
 
 import java.io.File;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +36,7 @@ public class Main extends BasicGame
 	private static GameState state = GameState.MENU;
 	private static int curLevel = -1;
 	private static String[] levels =
-	{ "res/level1.png", "res/level2.png", "res/level3.png", "res/level4.png",
-	  "res/level5.png", "res/level6.png", "res/level7.png", "res/level8.png"};
+	{ "res/level1.png", "res/level2.png", "res/level3.png", "res/level4.png", "res/level5.png", "res/level6.png", "res/level7.png", "res/level8.png" };
 	private static final int width = 1280, height = 720;
 	private static volatile int androidState = AndroidStates.NOT_CONNECTED;
 	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
@@ -45,12 +49,13 @@ public class Main extends BasicGame
 		super("Pulse of Nature");
 	}
 
-	public static void reset() {
+	public static void reset()
+	{
 		curLevel = -1;
 		World.getWorld().nextLevel();
 		state = GameState.MENU;
 	}
-	
+
 	public static int getScreenWidth()
 	{
 		return width;
@@ -60,8 +65,9 @@ public class Main extends BasicGame
 	{
 		return height;
 	}
-	
-	public static boolean hasNextLevel() {
+
+	public static boolean hasNextLevel()
+	{
 		return curLevel + 1 < levels.length;
 	}
 
@@ -78,10 +84,13 @@ public class Main extends BasicGame
 	public static String nextLevel()
 	{
 		curLevel++;
-		if (curLevel == levels.length) {
+		if(curLevel == levels.length)
+		{
 			state = GameState.WIN;
 			return "";
-		} else {
+		}
+		else
+		{
 			return levels[curLevel];
 		}
 	}
@@ -90,7 +99,7 @@ public class Main extends BasicGame
 	{
 		Main.state = state;
 	}
-	
+
 	public static GameState getState()
 	{
 		return state;
@@ -121,13 +130,13 @@ public class Main extends BasicGame
 		GameOver gameOver = new GameOver();
 		gameOver.init(gc);
 		interfaceMap.put(GameState.GAMEOVER, gameOver);
-		
+
 		WinScreen winScreen = new WinScreen();
 		winScreen.init(gc);
 		interfaceMap.put(GameState.WIN, winScreen);
 
 		music = new Music("res/pulse_of_nature.ogg");
-		music.loop();
+		// music.loop();
 
 		MessageHandler.addmessageReceiver(new MessageReceiver()
 		{
@@ -176,5 +185,42 @@ public class Main extends BasicGame
 		interfaceMap.get(state).update(gc, dt);
 		if(tVelocity > 0)
 			tVelocity -= 0.0001;
+	}
+
+	public static String getIPAddress()
+	{
+		ArrayList<String> ipAddresses = new ArrayList<String>();
+		try
+		{
+			Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+			while(interfaces.hasMoreElements())
+			{
+				NetworkInterface current = interfaces.nextElement();
+				if(!current.isUp() || current.isLoopback() || current.isVirtual())
+					continue;
+				Enumeration<InetAddress> addresses = current.getInetAddresses();
+				while(addresses.hasMoreElements())
+				{
+					InetAddress current_addr = addresses.nextElement();
+					if(!current_addr.isAnyLocalAddress() & current_addr instanceof Inet4Address)
+					{
+						ipAddresses.add(current_addr.getHostAddress());
+					}
+				}
+			}
+			
+			// Return the last address after sorting (most likely the real IP?)
+			Collections.sort(ipAddresses);
+			if(!ipAddresses.isEmpty())
+			{
+				return ipAddresses.get(ipAddresses.size() - 1);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

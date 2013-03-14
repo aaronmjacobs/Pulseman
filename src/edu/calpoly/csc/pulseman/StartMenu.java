@@ -15,6 +15,7 @@ public class StartMenu implements GameInterface
 	private Image menuBackground;
 	private Image connectButton, connectingButton, connectedButton;
 	private volatile int countdown = 0;
+	private String ip = null;
 
 	private final float[] buttonLoc =
 	{ 50, 500 }, connectLoc =
@@ -41,6 +42,10 @@ public class StartMenu implements GameInterface
 			g.drawImage(connectedButton, connectLoc[0], connectLoc[1]);
 		}
 
+		if(ip != null)
+		{
+			g.drawString("Your IP address is: " + ip, 100, 100);
+		}
 		//g.drawString("You are a meditating monk. Head towards the light.\n" + "Use the beat to control nature's speed.", Main.getScreenWidth() / 2, Main.getScreenHeight() / 2);
 	}
 
@@ -52,6 +57,8 @@ public class StartMenu implements GameInterface
 		connectingButton = new Image("res/connecting.png");
 		connectedButton = new Image("res/connected.png");
 		menuBackground = new Image("res/mainscreen.png");
+		
+		ip = Main.getIPAddress();
 	}
 
 	@Override
