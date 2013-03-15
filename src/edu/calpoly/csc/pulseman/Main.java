@@ -16,6 +16,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
+import org.newdawn.slick.MusicListener;
 import org.newdawn.slick.SlickException;
 
 import edu.calpoly.csc.pulseman.MessageHandler.MessageReceiver;
@@ -39,9 +40,9 @@ public class Main extends BasicGame
 	{ "res/level1.png", "res/level2.png", "res/level3.png", "res/level4.png", "res/level5.png", "res/level6.png", "res/level7.png", "res/level8.png" };
 	private static final int width = 1280, height = 720;
 	private static volatile int androidState = AndroidStates.NOT_CONNECTED;
-	Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
+	private static Map<GameState, GameInterface> interfaceMap = new HashMap<GameState, GameInterface>();
 
-	private Music music;
+	private Music intro, loop;
 	public static int tVelocity;
 
 	public Main()
@@ -97,6 +98,10 @@ public class Main extends BasicGame
 
 	public static void setState(GameState state)
 	{
+		if(Main.state != GameState.GAME && state == GameState.GAME)
+		{
+			((GameScreen)interfaceMap.get(GameState.GAME)).resetHeart();
+		}
 		Main.state = state;
 	}
 
@@ -135,8 +140,23 @@ public class Main extends BasicGame
 		winScreen.init(gc);
 		interfaceMap.put(GameState.WIN, winScreen);
 
-		music = new Music("res/pulse_of_nature.ogg");
-		// music.loop();
+		intro = new Music("res/music/intro.ogg");
+		loop = new Music("res/music/loop.ogg");
+		intro.addListener(new MusicListener()
+		{
+			@Override
+			public void musicSwapped(Music m1, Music m2)
+			{
+				//
+			}
+			
+			@Override
+			public void musicEnded(Music m)
+			{
+				loop.loop();
+			}
+		});
+		intro.play();
 
 		MessageHandler.addmessageReceiver(new MessageReceiver()
 		{
