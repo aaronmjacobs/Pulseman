@@ -19,17 +19,27 @@ public class StartMenu implements GameInterface
 				STORY_2 = 2;
 	}
 	
-	private int state = MenuState.MAIN;
+	private int state = MenuState.MAIN, nextState;
 	
 	private Image menuButton;
 	private Image menuBackground;
 	private Image connectButton, connectingButton, connectedButton;
 	private volatile int countdown = 0;
 	private String ip = null;
+	
+	private static final float FADE_INCREMENT = 0.03f;
+	private float fadeAmount = 0.0f;
+	private boolean fadingOut = false;
 
 	private final float[] buttonLoc =
 	{ 50, 500 }, connectLoc =
 	{ 75, 200 };
+	
+	public void setState(int state)
+	{
+		nextState = state;
+		fadingOut = true;
+	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g)
@@ -62,11 +72,43 @@ public class StartMenu implements GameInterface
 		}
 		else if(state == MenuState.STORY_1)
 		{
+			g.drawImage(menuBackground, 0, 0);
 			//TODO
 		}
 		else if(state == MenuState.STORY_2)
 		{
 			//TODO
+		}
+		
+		if(fadeAmount >= 1.0f)
+		{
+			state = nextState;
+			fadingOut = false;
+		}
+		
+		if(fadingOut)
+		{
+			fadeAmount += FADE_INCREMENT;
+			
+			if(fadeAmount > 1.0f)
+			{
+				fadeAmount = 1.0f;
+			}
+		}
+		else if(fadeAmount > 0.0f)
+		{
+			fadeAmount -= FADE_INCREMENT;
+			
+			if(fadeAmount < 0.0f)
+			{
+				fadeAmount = 0.0f;
+			}
+		}
+		
+		if(fadeAmount > 0.0f)
+		{
+			g.setColor(new Color(0.0f, 0.0f, 0.0f, fadeAmount));
+			g.fillRect(0.0f, 0.0f, gc.getWidth(), gc.getHeight());
 		}
 	}
 
@@ -86,33 +128,46 @@ public class StartMenu implements GameInterface
 	public void update(GameContainer gc, int dt)
 	{
 		Input input = gc.getInput();
-		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+		
+		if(state == MenuState.MAIN)
 		{
-			int x = input.getMouseX();
-			int y = input.getMouseY();
-			if(x >= buttonLoc[0] && x <= buttonLoc[0] + menuButton.getWidth() && y >= buttonLoc[1] && y <= buttonLoc[1] + menuButton.getHeight())
+			if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
 			{
-				Main.setState(Main.GameState.GAME);
-			}
-
-			if(Main.getAndroidState() == Main.AndroidStates.NOT_CONNECTED && (x >= connectLoc[0] && x <= connectLoc[0] + connectButton.getWidth() && y >= connectLoc[1] && y <= connectLoc[1] + connectButton.getHeight()))
-			{
-				listenForConnection();
-				state = MenuState.STORY_1;
-
-				countdown = MessageHandler.SOCKET_TIMEOUT / 1000 + 1;
-				new Timer("Countdown Timer").schedule(new TimerTask()
+				int x = input.getMouseX();
+				int y = input.getMouseY();
+				if(x >= buttonLoc[0] && x <= buttonLoc[0] + menuButton.getWidth() && y >= buttonLoc[1] && y <= buttonLoc[1] + menuButton.getHeight())
 				{
-					@Override
-					public void run()
+					Main.setState(Main.GameState.GAME);
+				}
+
+				if(Main.getAndroidState() == Main.AndroidStates.NOT_CONNECTED && (x >= connectLoc[0] && x <= connectLoc[0] + connectButton.getWidth() && y >= connectLoc[1] && y <= connectLoc[1] + connectButton.getHeight()))
+				{
+					listenForConnection();
+					setState(MenuState.STORY_1);
+					//TODO
+
+					countdown = MessageHandler.SOCKET_TIMEOUT / 1000 + 1;
+					new Timer("Countdown Timer").schedule(new TimerTask()
 					{
-						if(--countdown < 0)
+						@Override
+						public void run()
 						{
-							cancel();
+							if(--countdown < 0)
+							{
+								cancel();
+							}
 						}
-					}
-				}, 0, 1000);
+					}, 0, 1000);
+				}
 			}
+		}
+		else if(state == MenuState.STORY_1)
+		{
+			
+		}
+		else if(state == MenuState.STORY_2)
+		{
+			
 		}
 	}
 
