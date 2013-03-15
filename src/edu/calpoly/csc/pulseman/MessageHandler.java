@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class MessageHandler
 {
@@ -22,7 +24,9 @@ public class MessageHandler
 	private static BufferedReader in = null;
 
 	private static Receiver receiver = null;
+	private static MessageSender messageSender;
 
+	private static Queue<String> messageQueue = new LinkedList<String>();
 	private static ArrayList<MessageReceiver> messageReceivers = new ArrayList<MessageReceiver>();
 
 	public static synchronized void listenForConnection()
@@ -54,6 +58,9 @@ public class MessageHandler
 
 			receiver = new Receiver();
 			new Thread(receiver, "Message Receiver").start();
+			
+			messageSender = new MessageSender();
+			new Thread(messageSender, "Message Sender").start();
 
 			return;
 		}
@@ -88,6 +95,11 @@ public class MessageHandler
 		if(receiver != null)
 		{
 			receiver.kill();
+		}
+
+		if(messageSender != null)
+		{
+			messageSender.kill();
 		}
 
 		if(out != null)
@@ -145,11 +157,13 @@ public class MessageHandler
 		return clientSocket != null && out != null && in != null && clientSocket.isConnected();
 	}
 
-	public static void send(String message)
+	public static void sendMessage(String message)
 	{
-		if(isConnected())
+		synchronized(messageQueue)
 		{
-			out.write(message);
+			messageQueue.offer(message);
+
+			messageQueue.notifyAll();
 		}
 	}
 
@@ -261,5 +275,74 @@ public class MessageHandler
 		 * Called when the connection to the client is lost
 		 */
 		public void onConnectionLost(InetAddress client);
+	}
+
+	private static class MessageSender implements Runnable
+	{
+		private volatile boolean alive;
+
+		public MessageSender()
+		{
+			alive = true;
+		}
+
+		public void kill()
+		{
+			synchronized(messageQueue)
+			{
+				alive = false;
+				messageQueue.notifyAll();
+			}
+		}
+
+		@Override
+		public void run()
+		{
+			try
+			{
+				while(alive)
+				{
+					synchronized(messageQueue)
+					{
+						while(messageQueue.isEmpty())
+						{
+							try
+							{
+								messageQueue.wait();
+							}
+							catch(InterruptedException e)
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							if(!alive)
+							{
+								break;
+							}
+						}
+					}
+
+					if(!alive)
+					{
+						// disconnect();
+						return;
+					}
+
+					synchronized(messageQueue)
+					{
+						if(isConnected())
+						{
+							out.println(messageQueue.poll());
+						}
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			// disconnect();
+		}
 	}
 }
