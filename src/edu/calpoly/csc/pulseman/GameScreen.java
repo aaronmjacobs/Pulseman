@@ -32,6 +32,7 @@ public class GameScreen implements GameInterface, KeyListener
 
 	private static final float INITIAL_TIME_MULT = 2.0f;
 	private static final float FADE_THRESHOLD = 0.5f;
+	private static final float MESSAGE_ADJUSTMENT = 0.07f;
 
 	private static final String DESERT = "desert";
 	private static final String FLATLANDS = "flatlands";
@@ -75,7 +76,9 @@ public class GameScreen implements GameInterface, KeyListener
 			alpha = 0.0f;
 		}
 
-		MessageHandler.sendMessage("" + (1.0f - alpha));
+		// Adjust for the fact that 1.0f - alpha won't go exactly to 0
+		// (use a linear function to correct for it)
+		MessageHandler.sendMessage("" + (1.0f - alpha - (-MESSAGE_ADJUSTMENT * (1.0f - alpha) + MESSAGE_ADJUSTMENT)));
 
 		g.setColor(new org.newdawn.slick.Color(0.2f, 0.2f, 0.2f, alpha));
 		g.fillRect(0.0f, 0.0f, gc.getScreenWidth(), gc.getScreenHeight());
