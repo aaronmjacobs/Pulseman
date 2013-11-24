@@ -1,4 +1,4 @@
-Pulseman
+Pulse of Nature
 ========
 
-Pulseman game (Global Game Jam 2013)
+Game created for the 2013 Global Game Jam.
